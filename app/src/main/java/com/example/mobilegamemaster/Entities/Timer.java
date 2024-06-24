@@ -4,16 +4,11 @@ import android.os.CountDownTimer;
 import android.widget.TextView;
 
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
-
-import com.example.mobilegamemaster.database.Repository;
-import com.google.android.material.timepicker.TimeFormat;
 
 import java.sql.Time;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;

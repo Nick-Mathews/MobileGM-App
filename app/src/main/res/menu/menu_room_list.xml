@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Add Room"
+        android:id="@+id/addroom"/>
+    <item android:title="Edit/Delete Room"
+        android:id="@+id/editdeleteroom"/>
+    <item android:title="Report Logs"
+        android:id="@+id/reportlogs"/>
+</menu>

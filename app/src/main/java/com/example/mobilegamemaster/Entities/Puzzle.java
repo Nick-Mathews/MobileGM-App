@@ -12,6 +12,7 @@ public class Puzzle {
     private String hint;
     private String solution;
 
+
     public Puzzle(int puzzleID, int puzzleNum, int roomID, String nudge, String hint, String solution) {
         this.puzzleID = puzzleID;
         this.puzzleNum = puzzleNum;

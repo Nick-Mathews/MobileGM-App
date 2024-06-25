@@ -5,10 +5,9 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.RoomStart"
-    android:background="@drawable/hans_eiskonen_timer">
-    <!--Photo by Hans Eiskonen on Unsplash-->
-
+    android:background="@drawable/pleasure_win"
+    tools:context=".UI.RoomWin">
+    <!---Image by Alexa from Pixabay-->
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/titleLayout"
         android:layout_width="match_parent"
@@ -44,34 +43,64 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/_00_60_00"
-            android:textColor="#3949AB"
+            android:textColor="#081FB1"
             android:textSize="60sp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/roomTitleLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/timerLayout"
-        android:layout_marginTop="125sp">
+        app:layout_constraintBottom_toTopOf="@id/finishButtonLayout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timerLayout">
+
         <TextView
-            android:id="@+id/roomNameView"
+            android:id="@+id/winText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/room_name"
-            android:textSize="32sp"/>
+            android:text="Win message here"
+            android:textAlignment="center"
+            android:textColor="#081FB1"
+            android:textSize="32sp"
+            android:textStyle="bold" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <Button
-        android:id="@+id/startButton"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/finishButtonLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/start"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/finishTextLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/roomTitleLayout"
-        android:layout_marginTop="175sp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timerLayout"
+        android:gravity="center"
+        >
+        <Button
+            android:id="@+id/finishButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/finish"
+
+             />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/finishTextLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/finishButtonLayout">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/press_finish_to_continue"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.constraintlayout.widget.ConstraintLayout>

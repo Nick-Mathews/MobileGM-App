@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:text="@string/mobile_game_master"
             android:textAlignment="center"
-            android:textColor="#E2ED0606"
+            android:textColor="#8A3030"
             android:textSize="60sp"
             android:textStyle="bold" />
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -34,8 +34,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
         android:text="@string/choose_your_game"
-        android:textColor="#C50F02"
-        android:textSize="20sp"
+        android:textColor="#8A3030"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/startTextLinearLayout" />

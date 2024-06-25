@@ -10,8 +10,9 @@
         android:layout_height="wrap_content"
         android:text="Room Names"
         android:textAlignment="center"
-        android:textColor="#D0F1455F"
-        android:textSize="20sp"
+        android:textColor="#FD18430C"
+        android:textSize="34sp"
+        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

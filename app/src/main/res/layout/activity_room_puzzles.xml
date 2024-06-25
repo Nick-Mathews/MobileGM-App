@@ -5,7 +5,10 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.RoomPuzzles">
+    tools:context=".UI.RoomPuzzles"
+    android:background="@drawable/marcel_strauss_q_mark">
+    <!--Photo by Marcel Strauss on Unsplash-->
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/titleLayout"
         android:layout_width="match_parent"
@@ -42,7 +45,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/_00_60_00"
-            android:textColor="#3949AB"
+            android:textColor="#081FB1"
             android:textSize="60sp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -86,11 +89,19 @@
         android:id="@+id/hintTextLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/hintButtonLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/solutionEntryLayout">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_box_text"
+            android:textAlignment="center"
+            android:textColor="#081FB1"
+            android:textStyle="bold" />
         <TextView
             android:id="@+id/hintTextView"
             android:layout_width="match_parent"
@@ -98,7 +109,6 @@
             android:layout_marginStart="8sp"
             android:layout_marginEnd="8sp"
             android:background="#A6A3A3"
-            android:text="@string/hint_box_text"
             android:textAlignment="viewStart"
             android:textStyle="bold" />
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -114,12 +124,13 @@
         >
 
         <TextView
-            android:id="@+id/roomTextView"
+            android:id="@+id/puzzleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/room_name"
+            android:text="@string/puzzle"
             android:layout_gravity="center"
-            android:layout_marginTop="4sp"/>
+            android:layout_marginTop="4sp"
+            android:textSize="18sp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -133,18 +144,17 @@
             android:layout_width="match_parent"
             android:layout_height="75sp"
             android:layout_marginTop="4sp"
-            android:text="@string/enter_puzzle_solution_here"
-            android:autofillHints="@string/enter_puzzle_solution_here"
-            android:textAlignment="center"
-            android:textSize="20sp"
+            android:autofillHints="answer"
+            android:hint="@string/enter_puzzle_answer_here"
             android:inputType="text"
-            />
+            android:textAlignment="center"
+            android:textSize="20sp" />
 
         <Button
-            android:id="@+id/endButton"
+            android:id="@+id/submitButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="End"
+            android:text="Submit"
             android:layout_gravity="center"
              />
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -158,6 +168,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:text="@string/room_name"
         android:gravity="center"
-        android:textSize="24sp"
+        android:textSize="16sp"
         android:layout_marginBottom="12sp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

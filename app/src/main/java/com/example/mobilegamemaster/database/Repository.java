@@ -17,6 +17,7 @@ public class Repository {
     private final PuzzleDAO mPuzzleDAO;
     private List<Room> mAllRooms;
     private List<Puzzle> mAllPuzzles;
+    private List<Puzzle> mRoomPuzzles;
     private Room mRoom;
 
     private static final int NUMBER_OF_THREADS=4;
@@ -97,11 +98,23 @@ public class Repository {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
 
         return mAllPuzzles;
 
+    }
+
+    public List<Puzzle> getmRoomPuzzles(int roomID){
+        databaseExecutor.execute(()->{
+            mRoomPuzzles = mPuzzleDAO.getRoomPuzzles(roomID);
+        });
+        try {
+            Thread.sleep(1000);
+        } catch(InterruptedException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        return mRoomPuzzles;
     }
 
 

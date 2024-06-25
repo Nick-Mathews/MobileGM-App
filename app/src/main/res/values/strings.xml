@@ -9,13 +9,16 @@
     <string name="nudge">Nudge</string>
     <string name="hint">Hint</string>
     <string name="solution">Solution</string>
-    <string name="hint_box_text">Press buttons above for a light Nudge, a clear Hint, or the puzzle Solution.</string>
+    <string name="hint_box_text">Press button above for a Nudge, a Hint, or the Solution.</string>
     <string name="enter_answer">Enter Answer to Continue:</string>
-    <string name="enter_puzzle_solution_here">Enter solution here</string>
+    <string name="enter_puzzle_answer_here">Enter answer here</string>
     <string name="continuetext">Continue</string>
     <string name="cancel">Cancel</string>
     <string name="room">Room:</string>
     <string name="abandon_room">Abandon Room</string>
     <string name="save_and_finish">Save and Finish</string>
     <string name="next_puzzle">Next Puzzle</string>
+    <string name="puzzle">Puzzle </string>
+    <string name="press_finish_to_continue">Press Finish to Continue</string>
+    <string name="finish">Finish</string>
 </resources>

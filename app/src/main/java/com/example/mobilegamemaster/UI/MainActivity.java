@@ -53,12 +53,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        //TODO: complete start screen menu options
         if (item.getItemId() == R.id.addroom) {
             Intent intent = new Intent(MainActivity.this, AddRoom.class);
             startActivity(intent);
         }
-
+//TODO: complete start screen menu options
         if (item.getItemId() == R.id.editdeleteroom) {
             return true;
         }

@@ -14,33 +14,32 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mobilegamemaster.R;
 
-public class RoomStart extends AppCompatActivity {
-
+public class RoomWin extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_room_start);
+        setContentView(R.layout.activity_room_win);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        int currentID = getIntent().getIntExtra("id", -1);
-        String currentName = getIntent().getStringExtra("name");
+        String endTime = getIntent().getStringExtra("time");
+        TextView timerText = findViewById(R.id.countdownTimerView);
+        timerText.setText(endTime);
 
-        TextView nameView = findViewById(R.id.roomNameView);
-        nameView.setText(currentName);
+        TextView winText = findViewById(R.id.winText);
+        String name = getIntent().getStringExtra("name");
+        String msg = "You've Beaten " + name + "!";
+        winText.setText(msg);
 
-        Button startButton = findViewById(R.id.startButton);
-        startButton.setOnClickListener(new View.OnClickListener() {
+        Button finishButton = findViewById(R.id.finishButton);
+        finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RoomStart.this, RoomPuzzles.class);
-                intent.putExtra("name", currentName);
-                intent.putExtra("id", currentID);
-                intent.putExtra("puzzle_num", 0);
+                Intent intent = new Intent(RoomWin.this, MainActivity.class);
                 startActivity(intent);
             }
         });

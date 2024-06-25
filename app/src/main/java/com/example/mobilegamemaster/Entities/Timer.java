@@ -64,7 +64,7 @@ public class Timer {
             throw new RuntimeException(e);
         }
 
-        CountDownTimer roomTimer = new CountDownTimer(3600000, 1000) {
+        return new CountDownTimer(3600000, 1000) {
             public void onTick(long millisUntilFinished) {
                 // Used for formatting digit to be in 2 digits only
                 NumberFormat f = new DecimalFormat("00");
@@ -79,13 +79,15 @@ public class Timer {
             public void onFinish() {
                 String endTime = "00:00:00";
                 textView.setText(endTime);
+                //TODO: store final time, room name, time left
             }
         };
-        return roomTimer;
     }
 
     public void endCountdownTimer(CountDownTimer timer, TextView textView, String finalTime) {
         timer.cancel();
         textView.setText(finalTime);
+        //TODO: store final time, room name, time left
+        //TODO: intent that goes to loss screen
     }
 }

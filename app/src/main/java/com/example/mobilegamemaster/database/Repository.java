@@ -4,8 +4,10 @@ import android.app.Application;
 
 import com.example.mobilegamemaster.DAO.PuzzleDAO;
 import com.example.mobilegamemaster.DAO.RoomDAO;
+import com.example.mobilegamemaster.DAO.TimerDAO;
 import com.example.mobilegamemaster.Entities.Puzzle;
 import com.example.mobilegamemaster.Entities.Room;
+import com.example.mobilegamemaster.Entities.Timer;
 
 import java.util.List;
 
@@ -15,9 +17,11 @@ import java.util.concurrent.Executors;
 public class Repository {
     private final RoomDAO mRoomDAO;
     private final PuzzleDAO mPuzzleDAO;
+    private final TimerDAO mTimerDAO;
     private List<Room> mAllRooms;
     private List<Puzzle> mAllPuzzles;
     private List<Puzzle> mRoomPuzzles;
+    private List<Timer> mAllTimers;
     private Room mRoom;
 
     private static final int NUMBER_OF_THREADS=4;
@@ -27,6 +31,7 @@ public class Repository {
         RoomDatabaseBuilder db = RoomDatabaseBuilder.getDatabase(application);
         mRoomDAO = db.roomDAO();
         mPuzzleDAO = db.puzzleDAO();
+        mTimerDAO = db.timerDAO();
     }
     public List<Room> getmAllRooms()  {
         databaseExecutor.execute(()->{
@@ -145,6 +150,54 @@ public class Repository {
     public void update (Puzzle puzzle) throws InterruptedException {
         databaseExecutor.execute(()->{
             mPuzzleDAO.update(puzzle);
+        });
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new InterruptedException(e.getMessage());
+        }
+    }
+    public List<Timer> getmAllTimers()  {
+        databaseExecutor.execute(()->{
+            mAllTimers=mTimerDAO.getAllTimers();
+        });
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return mAllTimers;
+    }
+
+    public void delete (Timer timer) throws InterruptedException {
+        databaseExecutor.execute(()->{
+            mTimerDAO.delete(timer);
+        });
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new InterruptedException(e.getMessage());
+        }
+    }
+
+    public void insert (Timer timer) throws InterruptedException{
+        databaseExecutor.execute(()->{
+            mTimerDAO.insert(timer);
+        });
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new InterruptedException(e.getMessage());
+        }
+    }
+
+    public void update (Timer timer) throws InterruptedException {
+        databaseExecutor.execute(()->{
+            mTimerDAO.update(timer);
         });
 
         try {

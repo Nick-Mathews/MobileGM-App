@@ -18,13 +18,13 @@ import com.example.mobilegamemaster.database.Repository;
 
 import java.util.List;
 
-public class RoomWin extends AppCompatActivity {
+public class RoomLoss extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_room_win);
+        setContentView(R.layout.activity_room_loss);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -45,11 +45,11 @@ public class RoomWin extends AppCompatActivity {
         TextView timerText = findViewById(R.id.countdownTimerView);
         timerText.setText(timeLeft);
 
-        //DISPLAY WIN MESSAGE ON TEXTVIEW
-        TextView winText = findViewById(R.id.winText);
+        //DISPLAY LOSS MESSAGE ON TEXTVIEW
+        TextView lossText = findViewById(R.id.lossText);
         String name = getIntent().getStringExtra("name");
-        String msg = "You've Beaten " + name + "!";
-        winText.setText(msg);
+        String msg = "You've Lost " + name + "...";
+        lossText.setText(msg);
 
         //DETERMINE TIMER ID, CREATE TIMER OBJECT AND INSERT INTO REPOSITORY
         if (allTimers.isEmpty()) {
@@ -70,7 +70,7 @@ public class RoomWin extends AppCompatActivity {
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RoomWin.this, MainActivity.class);
+                Intent intent = new Intent(RoomLoss.this, MainActivity.class);
                 startActivity(intent);
             }
         });

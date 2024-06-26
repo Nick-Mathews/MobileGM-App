@@ -1,10 +1,15 @@
 package com.example.mobilegamemaster.Entities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.CountDownTimer;
 import android.widget.TextView;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import com.example.mobilegamemaster.UI.RoomLoss;
+import com.example.mobilegamemaster.UI.RoomPuzzles;
 
 import java.sql.Time;
 import java.text.DecimalFormat;
@@ -19,75 +24,49 @@ public class Timer {
     @PrimaryKey(autoGenerate = true)
     int timerID;
     int roomID;
-    Date startTime;
-    Date endTime;
-    Date gameDate;
-    String simpleGameDate;
-    String simpleStartTime;
-    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy", Locale.US);
-    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm a", Locale.US);
+    String endTime;
+    String gameDate;
+    String timeLeft;
 
-    public Timer(int roomID) {
+    public Timer(int timerID, int roomID, String endTime, String gameDate, String timeLeft) {
+        this.timerID = timerID;
+        this.roomID = roomID;
+        this.endTime = endTime;
+        this.gameDate = gameDate;
+        this.timeLeft = timeLeft;
+    }
+
+    public int getTimerID() {
+        return timerID;
+    }
+    public void setTimerID(int timerID) {
+        this.timerID = timerID;
+    }
+
+    public int getRoomID() {
+        return roomID;
+    }
+    public void setRoomID(int roomID) {
         this.roomID = roomID;
     }
-    public Date getStartTime() {
-        return startTime;
-    }
-    public void setStartTime(Time startTime) {
-        this.startTime = startTime;
-    }
-
-    public Date getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
-    public void setEndTime(Time endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 
-    public Date getGameDate() {
+    public String getGameDate() {
         return gameDate;
     }
-    public void setGameDate(Date gameDate) {
+    public void setGameDate(String gameDate) {
         this.gameDate = gameDate;
     }
 
-    public CountDownTimer startCountdownTimer(TextView textView) throws RuntimeException {
-        startTime = Calendar.getInstance().getTime();
-        try {
-            simpleStartTime = timeFormat.format(startTime);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            simpleGameDate = dateFormat.format(startTime);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        return new CountDownTimer(3600000, 1000) {
-            public void onTick(long millisUntilFinished) {
-                // Used for formatting digit to be in 2 digits only
-                NumberFormat f = new DecimalFormat("00");
-                long hour = (millisUntilFinished / 3600000) % 24;
-                long min = (millisUntilFinished / 60000) % 60;
-                long sec = (millisUntilFinished / 1000) % 60;
-                String timeText = f.format(hour) + ":" + f.format(min) + ":" + f.format(sec);
-                textView.setText(timeText);
-            }
-
-
-            public void onFinish() {
-                String endTime = "00:00:00";
-                textView.setText(endTime);
-                //TODO: store final time, room name, time left
-            }
-        };
+    public String getTimeLeft() {
+        return timeLeft;
     }
-
-    public void endCountdownTimer(CountDownTimer timer, TextView textView, String finalTime) {
-        timer.cancel();
-        textView.setText(finalTime);
-        //TODO: store final time, room name, time left
-        //TODO: intent that goes to loss screen
+    public void setTimeLeft(String timeLeft) {
+        this.timeLeft = timeLeft;
     }
 }

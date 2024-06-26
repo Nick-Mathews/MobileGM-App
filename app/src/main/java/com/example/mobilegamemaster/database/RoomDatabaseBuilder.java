@@ -7,14 +7,17 @@ import androidx.room.RoomDatabase;
 
 import com.example.mobilegamemaster.DAO.PuzzleDAO;
 import com.example.mobilegamemaster.DAO.RoomDAO;
+import com.example.mobilegamemaster.DAO.TimerDAO;
 import com.example.mobilegamemaster.Entities.Puzzle;
 import com.example.mobilegamemaster.Entities.Room;
+import com.example.mobilegamemaster.Entities.Timer;
 
-@Database(entities = {Room.class, Puzzle.class}, version = 3, exportSchema = false)
+@Database(entities = {Room.class, Puzzle.class, Timer.class}, version = 4, exportSchema = false)
 public abstract class RoomDatabaseBuilder extends RoomDatabase{
 
     public abstract RoomDAO roomDAO();
     public abstract PuzzleDAO puzzleDAO();
+    public abstract TimerDAO timerDAO();
     private static volatile RoomDatabaseBuilder Instance;
 
     static RoomDatabaseBuilder getDatabase(final Context context) {

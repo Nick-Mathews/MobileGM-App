@@ -16,12 +16,17 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mobilegamemaster.Entities.Puzzle;
-import com.example.mobilegamemaster.Entities.Room;
-import com.example.mobilegamemaster.Entities.Timer;
 import com.example.mobilegamemaster.R;
 import com.example.mobilegamemaster.database.Repository;
 
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class RoomPuzzles extends AppCompatActivity {
 
@@ -54,15 +59,37 @@ public class RoomPuzzles extends AppCompatActivity {
         Button hintButton = findViewById(R.id.hintbutton);
         Button solutionButton = findViewById(R.id.solutionbutton);
 
-        Timer timer = new Timer(currentID);
         TextView countDownTimerView = findViewById(R.id.countdownTimerView);
-        CountDownTimer countDownTimer = timer.startCountdownTimer(countDownTimerView);
+        NumberFormat f = new DecimalFormat("00");
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm a", Locale.US);
+
+        //TODO: SET TIMER TO 60 MINUTES
+        CountDownTimer countDownTimer = new CountDownTimer(30000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                long min = (millisUntilFinished / 60000) % 60;
+                long sec = (millisUntilFinished / 1000) % 60;
+                String timeText = f.format(min) + ":" + f.format(sec);
+                countDownTimerView.setText(timeText);
+            }
+
+            @Override
+            public void onFinish() {
+                String endTime = String.valueOf(countDownTimerView.getText());
+                Intent intent = new Intent(RoomPuzzles.this, RoomLoss.class);
+                intent.putExtra("time_left", endTime);
+                intent.putExtra("name", currentName);
+                Date end = Calendar.getInstance().getTime();
+                intent.putExtra("end_time", timeFormat.format(end));
+                intent.putExtra("end_date", dateFormat.format(end));
+                intent.putExtra("id", currentID);
+                startActivity(intent);
+            }
+        };
         countDownTimer.start();
 
 
-
-
-        //TODO: UPDATE THE HINTS AND VARIABLES OR SEND A TOAST THAT THE SOLUTION WAS INCORRECT
         nudgeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,22 +125,23 @@ public class RoomPuzzles extends AppCompatActivity {
                 String solution = currentPuzzle.getSolution();
                 if (String.valueOf(solutionTextView.getText()).equals(solution)) {
                     if (currentPuzzle.getPuzzleNum() == allPuzzles.size() - 1) {
-                        String currentTime = countDownTimerView.getText().toString();
-                        timer.endCountdownTimer(countDownTimer, countDownTimerView, currentTime);
+                        countDownTimer.cancel();
                         Intent intent = new Intent(RoomPuzzles.this, RoomWin.class);
                         intent.putExtra("name", currentName);
+                        intent.putExtra("time_left", countDownTimerView.getText());
+                        Date end = Calendar.getInstance().getTime();
+                        intent.putExtra("end_time", timeFormat.format(end));
+                        intent.putExtra("end_date", dateFormat.format(end));
                         intent.putExtra("id", currentID);
-                        intent.putExtra("time", countDownTimerView.getText());
                         startActivity(intent);
-                    }
-                    else {
+                    } else {
                         String msg = "Correct!";
                         Toast toast = Toast.makeText(RoomPuzzles.this, msg, Toast.LENGTH_LONG);
                         toast.show();
                         TextView view = findViewById(R.id.hintTextView);
                         view.setText("");
 
-                        currentPuzzle.setPuzzleNum(currentPuzzle.getPuzzleNum()+1);
+                        currentPuzzle.setPuzzleNum(currentPuzzle.getPuzzleNum() + 1);
                         currentPuzzle.setNudge(allPuzzles.get(currentPuzzle.getPuzzleNum()).getNudge());
                         currentPuzzle.setHint(allPuzzles.get(currentPuzzle.getPuzzleNum()).getHint());
                         currentPuzzle.setSolution(allPuzzles.get(currentPuzzle.getPuzzleNum()).getSolution());
@@ -123,8 +151,7 @@ public class RoomPuzzles extends AppCompatActivity {
                         puzzleText.setText(text);
                         solutionTextView.setText("");
                     }
-                }
-                else {
+                } else {
                     String msg = "That answer is incorrect";
                     Toast toast = Toast.makeText(RoomPuzzles.this, msg, Toast.LENGTH_LONG);
                     toast.show();

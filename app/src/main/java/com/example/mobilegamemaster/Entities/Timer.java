@@ -1,36 +1,25 @@
 package com.example.mobilegamemaster.Entities;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.CountDownTimer;
-import android.widget.TextView;
-
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.example.mobilegamemaster.UI.RoomLoss;
-import com.example.mobilegamemaster.UI.RoomPuzzles;
-
-import java.sql.Time;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 @Entity(tableName="timers")
 public class Timer {
     @PrimaryKey(autoGenerate = true)
     int timerID;
     int roomID;
+    String roomName;
+    String startTime;
     String endTime;
     String gameDate;
     String timeLeft;
 
-    public Timer(int timerID, int roomID, String endTime, String gameDate, String timeLeft) {
+    public Timer(int timerID, int roomID, String roomName, String startTime, String endTime, String gameDate, String timeLeft) {
         this.timerID = timerID;
         this.roomID = roomID;
+        this.roomName = roomName;
+        this.startTime = startTime;
         this.endTime = endTime;
         this.gameDate = gameDate;
         this.timeLeft = timeLeft;
@@ -49,6 +38,21 @@ public class Timer {
     public void setRoomID(int roomID) {
         this.roomID = roomID;
     }
+
+    public String getRoomName() {
+        return roomName;
+    }
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
     public String getEndTime() {
         return endTime;
     }

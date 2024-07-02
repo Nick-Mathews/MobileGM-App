@@ -2,7 +2,6 @@ package com.example.mobilegamemaster.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,7 +15,10 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.mobilegamemaster.R;
 
 public class RoomStart extends AppCompatActivity {
-
+    //CREATE ROOM ID AND ROOM NAME VARIABLES, AND ROOM NAME TEXT VIEWS
+    int roomID;
+    String roomName;
+    TextView nameView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,18 +30,20 @@ public class RoomStart extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        int currentID = getIntent().getIntExtra("id", -1);
-        String currentName = getIntent().getStringExtra("name");
-        TextView nameView = findViewById(R.id.roomNameView);
-        nameView.setText(currentName);
+        //POPULATE ROOM ID AND ROOM NAME; SET ROOM NAME TO TEXT VIEW
+        roomID = getIntent().getIntExtra("id", -1);
+        roomName = getIntent().getStringExtra("name");
+        nameView = findViewById(R.id.roomNameView);
+        nameView.setText(roomName);
 
+        //CREATE START BUTTON AND SET ONCLICK LISTENER
         Button startButton = findViewById(R.id.startButton);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RoomStart.this, RoomPuzzles.class);
-                intent.putExtra("name", currentName);
-                intent.putExtra("id", currentID);
+                intent.putExtra("name", roomName);
+                intent.putExtra("id", roomID);
                 intent.putExtra("puzzle_num", 0);
                 startActivity(intent);
             }

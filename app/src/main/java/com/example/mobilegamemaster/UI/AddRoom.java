@@ -18,10 +18,11 @@ import com.example.mobilegamemaster.R;
 import com.example.mobilegamemaster.database.Repository;
 
 public class AddRoom extends AppCompatActivity {
-    //CREATE REPOSITORY AND PUZZLENUM VARIABLE
-    Repository repository = new Repository(getApplication());
-    int puzzleNum = 0;
+    //CREATE REPOSITORY, PUZZLENUM, ROOMID AND NEWROOM VARIABLES
+    Repository repository;
+    int puzzleNum;
     int roomID;
+    Room newRoom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,9 @@ public class AddRoom extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        //POPULATE REPOSITORY AND SET INITIAL PUZZLENUM
+        repository  = new Repository(getApplication());
+        puzzleNum = 1;
 
         //SET ROOM NAME TEXTVIEW
         EditText nameTextView = findViewById(R.id.enterNameText);
@@ -58,9 +62,9 @@ public class AddRoom extends AppCompatActivity {
                         roomID = 1;
                     }
                     else {
-                        roomID = repository.getmAllRooms().get(repository.getmAllRooms().size() - 1).getRoomID() + 1;
+                        roomID = repository.getmAllRooms().get(repository.getmAllRooms().size()-1).getRoomID() + 1;
                     }
-                    Room newRoom = new Room(roomID, nameText);
+                    newRoom = new Room(roomID, nameText);
                     try {
                         repository.insert(newRoom);
                     } catch (Exception e) {

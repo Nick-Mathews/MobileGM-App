@@ -20,7 +20,10 @@ import com.example.mobilegamemaster.Entities.Room;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    //CREATE REPOSITORY, ROOM LIST
     Repository repository;
+    List<Room> allRooms;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +36,15 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        RecyclerView recyclerView = findViewById(R.id.chooseGameRecyclerView);
+        //POPULATE REPOSITORY, SET ROOM LIST, AND ADD ROOM LIST TO THE ADAPTER
         repository = new Repository(getApplication());
-
-        List<Room> allRooms = repository.getmAllRooms();
-
+        allRooms = repository.getmAllRooms();
         final RoomAdapter roomAdapter = new RoomAdapter(this);
         roomAdapter.setRooms(allRooms);
 
+
+        //SET LAYOUT MANAGER AND ADAPTER ON RECYCLER VIEW
+        RecyclerView recyclerView = findViewById(R.id.chooseGameRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(roomAdapter);
     }
@@ -51,19 +55,22 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    //ADMIN MENU OPTIONS FOR ADDING, EDITING OR DELETING ROOMS AND PUZZLES AND ACCESS TO THE LOG TABLES
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.addroom) {
+        if (item.getItemId() == R.id.add_room) {
             Intent intent = new Intent(MainActivity.this, AddRoom.class);
             startActivity(intent);
         }
-//TODO: complete start screen menu options
-        if (item.getItemId() == R.id.editdeleteroom) {
-            return true;
+
+        if (item.getItemId() == R.id.edit_delete_room) {
+            Intent intent = new Intent(MainActivity.this, RoomList.class);
+            startActivity(intent);
         }
 
-        if (item.getItemId() == R.id.reportlogs) {
-            return true;
+        if (item.getItemId() == R.id.report_logs) {
+            Intent intent = new Intent(MainActivity.this, RoomLogs.class);
+            startActivity(intent);
         }
 
         if(item.getItemId()==android.R.id.home){
@@ -74,16 +81,17 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    //UPDATES LIST OF ROOMS AND RECYCLERVIEW WHEN RETURNING FROM ADMIN FUNCTIONS
     @Override
     protected void onResume(){
         super.onResume();
-
-        List<Room> allRooms=repository.getmAllRooms();
-        RecyclerView recyclerView=findViewById(R.id.chooseGameRecyclerView);
-
-        final RoomAdapter roomAdapter=new RoomAdapter(this);
+        //SET ROOM LIST AND ADD ROOM LIST TO THE ADAPTER
+        allRooms = repository.getmAllRooms();
+        final RoomAdapter roomAdapter = new RoomAdapter(this);
         roomAdapter.setRooms(allRooms);
 
+        //SET LAYOUT MANAGER AND ADAPTER ON RECYCLER VIEW
+        RecyclerView recyclerView = findViewById(R.id.chooseGameRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(roomAdapter);
 

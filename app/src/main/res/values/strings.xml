@@ -21,4 +21,14 @@
     <string name="puzzle">Puzzle </string>
     <string name="press_finish_to_continue">Press Finish to Continue</string>
     <string name="finish">Finish</string>
+    <string name="game_logs">Game Logs</string>
+    <string name="edit_rooms">Edit Rooms</string>
+    <string name="choose_room_to_edit_or_delete">Choose room to edit or delete:</string>
+    <string name="add_an_escape_room">Add an Escape Room</string>
+    <string name="edit_puzzles">Edit Puzzles</string>
+    <string name="delete_logs">Delete Logs</string>
+    <string name="add_room">Add Room</string>
+    <string name="edit_delete_room">Edit/Delete Room</string>
+    <string name="report_logs">Report Logs</string>
+    <string name="search_by_room_name">Search by Room Name:</string>
 </resources>

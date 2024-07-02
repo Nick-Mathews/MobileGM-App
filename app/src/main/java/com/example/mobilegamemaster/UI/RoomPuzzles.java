@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -29,6 +30,18 @@ import java.util.List;
 import java.util.Locale;
 
 public class RoomPuzzles extends AppCompatActivity {
+    //CREATE REPOSITORY, ROOM NAME STRING, ROOM ID STRING, PUZZLE NUMBER INT, LIST OF PUZZLES, AND CURRENT PUZZLE
+    Repository repository;
+    String roomName;
+    int roomID;
+    int puzzleNum;
+    List<Puzzle> allPuzzles;
+    Puzzle currentPuzzle;
+    TextView countDownTimerView;
+    String startTime;
+    //CREATE NUMBER AND DATE FORMATS
+    DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+    SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a", Locale.US);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,32 +53,127 @@ public class RoomPuzzles extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        Repository repository = new Repository(getApplication());
+        //POPULATE REPOSITORY, ROOM NAME, ROOM ID AND PUZZLE NUMBER
+        repository = new Repository(getApplication());
+        roomName = getIntent().getStringExtra("name");
+        roomID = getIntent().getIntExtra("id", -1);
+        puzzleNum = getIntent().getIntExtra("puzzle_num", -1);
 
-        String currentName = getIntent().getStringExtra("name");
-        int currentID = getIntent().getIntExtra("id", -1);
-        int puzzleNum = getIntent().getIntExtra("puzzle_num", -1);
-
-        List<Puzzle> allPuzzles = repository.getmRoomPuzzles(currentID);
-        Puzzle currentPuzzle = allPuzzles.get(puzzleNum);
-
-        TextView nameView = findViewById(R.id.roomNameView);
-        nameView.setText(currentName);
+        //CREATE AND ASSIGN TEXT VIEWS
         TextView puzzleTextView = findViewById(R.id.puzzleTextView);
-        String puzzleText = "Puzzle " + (currentPuzzle.getPuzzleNum() + 1);
+        TextView nameView = findViewById(R.id.roomNameView);
+        countDownTimerView = findViewById(R.id.countdownTimerView);
+        EditText solutionTextView = findViewById(R.id.solutionEditTextView);
+
+        //POPULATE PUZZLE LIST AND OBTAIN THE FIRST PUZZLE
+        allPuzzles = repository.getmRoomPuzzles(roomID);
+        currentPuzzle = allPuzzles.get(puzzleNum);
+
+        //SET ROOM NAME ON TEXT VIEW
+        nameView.setText(roomName);
+
+        //CREATE STRING FOR PUZZLE NUMBER TEXT AND SET TEXT VIEW
+        String puzzleText = "Puzzle " + (currentPuzzle.getPuzzleNum());
         puzzleTextView.setText(puzzleText);
 
+        //CREATE AND START COUNTDOWN TIMER
+        CountDownTimer countDownTimer = getCountDownTimer();
+
+        //CREATE AND SET BUTTON FOR NUDGE
         Button nudgeButton = findViewById(R.id.nudgebutton);
+        nudgeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String hint = currentPuzzle.getNudge();
+                TextView view = findViewById(R.id.hintTextView);
+                view.setText(hint);
+            }
+        });
+
+        //CREATE AND SET BUTTON FOR HINT
         Button hintButton = findViewById(R.id.hintbutton);
+        hintButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String hint = currentPuzzle.getHint();
+                TextView view = findViewById(R.id.hintTextView);
+                view.setText(hint);
+            }
+        });
+
+        //CREATE AND SET BUTTON FOR SOLUTION
         Button solutionButton = findViewById(R.id.solutionbutton);
+        solutionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String hint = currentPuzzle.getSolution();
+                TextView view = findViewById(R.id.hintTextView);
+                view.setText(hint);
+            }
+        });
 
-        TextView countDownTimerView = findViewById(R.id.countdownTimerView);
+        //CREATE AND SET BUTTON FOR SUBMITTING AN ANSWER
+        Button submitButton = findViewById(R.id.submitButton);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                //CREATE START TIME STRING
+                startTime = timeFormat.format(Calendar.getInstance().getTime());
+
+                //CREATE SOLUTION STRING
+                String solution = currentPuzzle.getSolution();
+
+                //CHECKS FOR CORRECT SOLUTION
+                if (String.valueOf(solutionTextView.getText()).equals(solution)) {
+                    //RUNS WHEN SOLUTION IS CORRECT AND YOU'VE REACHED THE LAST PUZZLE
+                    if (currentPuzzle.getPuzzleNum() == allPuzzles.size()) {
+                        countDownTimer.cancel();
+                        Intent intent = new Intent(RoomPuzzles.this, RoomWin.class);
+                        intent.putExtra("start_time", startTime);
+                        intent.putExtra("name", roomName);
+                        intent.putExtra("time_left", countDownTimerView.getText());
+                        Date end = Calendar.getInstance().getTime();
+                        intent.putExtra("end_time", timeFormat.format(end));
+                        intent.putExtra("end_date", dateFormat.format(end));
+                        intent.putExtra("id", roomID);
+                        startActivity(intent);
+                    }
+                    //RUNS WHEN SOLUTION IS CORRECT BUT YOU HAVEN'T REACHED THE LAST PUZZLE
+                    else {
+                        String msg = "Correct!";
+                        Toast toast = Toast.makeText(RoomPuzzles.this, msg, Toast.LENGTH_LONG);
+                        toast.show();
+                        TextView view = findViewById(R.id.hintTextView);
+                        view.setText("");
+
+                        currentPuzzle.setPuzzleNum(currentPuzzle.getPuzzleNum()+1);
+                        currentPuzzle.setNudge(allPuzzles.get(currentPuzzle.getPuzzleNum()-1).getNudge());
+                        currentPuzzle.setHint(allPuzzles.get(currentPuzzle.getPuzzleNum()-1).getHint());
+                        currentPuzzle.setSolution(allPuzzles.get(currentPuzzle.getPuzzleNum()-1).getSolution());
+
+                        TextView puzzleText = findViewById(R.id.puzzleTextView);
+                        String text = "Puzzle " + (currentPuzzle.getPuzzleNum());
+                        puzzleText.setText(text);
+                        solutionTextView.setText("");
+                    }
+                }
+                //RUNS WHEN THE ANSWER IS INCORRECT
+                else {
+                    String msg = "That answer is incorrect";
+                    Toast toast = Toast.makeText(RoomPuzzles.this, msg, Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            }
+        });
+    }
+
+    //FUNCTION THAT CREATES AND RUNS A COUNTDOWN TIMER OF 60 MINUTES, WHICH CALLS ROOM LOSS ACTIVITY WHEN ON FINISH RUNS
+    @NonNull
+    private CountDownTimer getCountDownTimer() {
         NumberFormat f = new DecimalFormat("00");
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm a", Locale.US);
-
-        //TODO: SET TIMER TO 60 MINUTES
-        CountDownTimer countDownTimer = new CountDownTimer(30000, 1000) {
+        CountDownTimer countDownTimer = new CountDownTimer(3600000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 long min = (millisUntilFinished / 60000) % 60;
@@ -78,87 +186,17 @@ public class RoomPuzzles extends AppCompatActivity {
             public void onFinish() {
                 String endTime = String.valueOf(countDownTimerView.getText());
                 Intent intent = new Intent(RoomPuzzles.this, RoomLoss.class);
+                intent.putExtra("start_time", startTime);
                 intent.putExtra("time_left", endTime);
-                intent.putExtra("name", currentName);
+                intent.putExtra("name", roomName);
                 Date end = Calendar.getInstance().getTime();
                 intent.putExtra("end_time", timeFormat.format(end));
                 intent.putExtra("end_date", dateFormat.format(end));
-                intent.putExtra("id", currentID);
+                intent.putExtra("id", roomID);
                 startActivity(intent);
             }
         };
         countDownTimer.start();
-
-
-        nudgeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String hint = currentPuzzle.getNudge();
-                TextView view = findViewById(R.id.hintTextView);
-                view.setText(hint);
-            }
-        });
-
-        hintButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String hint = currentPuzzle.getHint();
-                TextView view = findViewById(R.id.hintTextView);
-                view.setText(hint);
-            }
-        });
-
-        solutionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String hint = currentPuzzle.getSolution();
-                TextView view = findViewById(R.id.hintTextView);
-                view.setText(hint);
-            }
-        });
-
-        Button submitButton = findViewById(R.id.submitButton);
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText solutionTextView = findViewById(R.id.solutionEditTextView);
-                String solution = currentPuzzle.getSolution();
-                if (String.valueOf(solutionTextView.getText()).equals(solution)) {
-                    if (currentPuzzle.getPuzzleNum() == allPuzzles.size() - 1) {
-                        countDownTimer.cancel();
-                        Intent intent = new Intent(RoomPuzzles.this, RoomWin.class);
-                        intent.putExtra("name", currentName);
-                        intent.putExtra("time_left", countDownTimerView.getText());
-                        Date end = Calendar.getInstance().getTime();
-                        intent.putExtra("end_time", timeFormat.format(end));
-                        intent.putExtra("end_date", dateFormat.format(end));
-                        intent.putExtra("id", currentID);
-                        startActivity(intent);
-                    } else {
-                        String msg = "Correct!";
-                        Toast toast = Toast.makeText(RoomPuzzles.this, msg, Toast.LENGTH_LONG);
-                        toast.show();
-                        TextView view = findViewById(R.id.hintTextView);
-                        view.setText("");
-
-                        currentPuzzle.setPuzzleNum(currentPuzzle.getPuzzleNum() + 1);
-                        currentPuzzle.setNudge(allPuzzles.get(currentPuzzle.getPuzzleNum()).getNudge());
-                        currentPuzzle.setHint(allPuzzles.get(currentPuzzle.getPuzzleNum()).getHint());
-                        currentPuzzle.setSolution(allPuzzles.get(currentPuzzle.getPuzzleNum()).getSolution());
-
-                        TextView puzzleText = findViewById(R.id.puzzleTextView);
-                        String text = "Puzzle " + (currentPuzzle.getPuzzleNum() + 1);
-                        puzzleText.setText(text);
-                        solutionTextView.setText("");
-                    }
-                } else {
-                    String msg = "That answer is incorrect";
-                    Toast toast = Toast.makeText(RoomPuzzles.this, msg, Toast.LENGTH_LONG);
-                    toast.show();
-                }
-
-
-            }
-        });
+        return countDownTimer;
     }
 }

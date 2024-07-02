@@ -27,4 +27,7 @@ public interface PuzzleDAO {
 
     @Query("SELECT * FROM puzzles WHERE roomID == :roomID ORDER BY puzzleNum ASC")
     List<Puzzle> getRoomPuzzles(int roomID);
+
+    @Query("SELECT * FROM puzzles WHERE puzzleID == :puzzleID ORDER BY puzzleNum ASC")
+    Puzzle getPuzzle(int puzzleID);
 }

@@ -21,4 +21,6 @@ public interface TimerDAO {
     void delete(Timer timer);
     @Query("SELECT * FROM timers ORDER BY timerID ASC")
     List<Timer> getAllTimers();
+    @Query("SELECT * FROM timers WHERE :roomID = roomID ORDER BY timerID ASC")
+    List<Timer> getTimers(int roomID);
 }

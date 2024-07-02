@@ -37,6 +37,7 @@ public class RoomWin extends AppCompatActivity {
         //GET INTENT EXTRAS AND SETUP VARIABLES TO CREATE A TIMER
         String timeLeft = getIntent().getStringExtra("time_left");
         String endDate = getIntent().getStringExtra("end_date");
+        String startTime = getIntent().getStringExtra("start_time");
         String endTime = getIntent().getStringExtra("end_time");
         int roomID = getIntent().getIntExtra("id", -1);
         int timerID;
@@ -58,7 +59,7 @@ public class RoomWin extends AppCompatActivity {
         else {
             timerID = allTimers.get(allTimers.size()-1).getTimerID() + 1;
         }
-        Timer timer = new Timer(timerID, roomID, endTime, endDate, timeLeft);
+        Timer timer = new Timer(timerID, roomID, name, startTime, endTime, endDate, timeLeft);
         try{
             repository.insert(timer);
         } catch(Exception e) {

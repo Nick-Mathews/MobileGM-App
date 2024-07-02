@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/logName"
+            android:layout_width="110sp"
+            android:layout_height="wrap_content"
+            android:text="Room Name"
+            android:textSize="18sp"
+            android:layout_marginTop="6sp"
+            android:layout_marginStart="4sp"/>
+
+        <TextView
+            android:id="@+id/logTimeLeft"
+            android:layout_width="85sp"
+            android:layout_height="wrap_content"
+            android:text="Time Left"
+            android:textSize="18sp"
+            android:layout_marginTop="6sp"/>
+
+        <TextView
+            android:id="@+id/logGameDate"
+            android:layout_width="110sp"
+            android:layout_height="wrap_content"
+            android:text="Date Played"
+            android:textSize="18sp"
+            android:layout_marginTop="6sp"/>
+
+        <TextView
+            android:id="@+id/logStartTime"
+            android:layout_width="100sp"
+            android:layout_height="wrap_content"
+            android:text="Start Time"
+            android:textSize="18sp"
+            android:layout_marginTop="6sp"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</HorizontalScrollView>

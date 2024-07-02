@@ -5,7 +5,9 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.RoomLoss">
+    tools:context=".UI.RoomLoss"
+    android:background="@drawable/ann_h_background">
+    <!--Photo by Ann H: https://www.pexels.com/photo/a-close-up-shot-of-letter-cutouts-11183370/-->
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/titleLayout"
@@ -24,7 +26,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/timer"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            android:textColor="#081fb1"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -47,9 +50,10 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/lossTextLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/finishButtonLayout"
+        app:layout_constraintBottom_toTopOf="@id/finishTextLayout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timerLayout">
 
@@ -64,33 +68,18 @@
             android:textStyle="bold" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/finishButtonLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/finishTextLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timerLayout"
-        android:gravity="center"
-        >
-        <Button
-            android:id="@+id/finishButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/finish"
 
-            />
-    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/finishTextLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/finishButtonLayout">
+        app:layout_constraintTop_toBottomOf="@+id/lossTextLayout">
 
         <TextView
             android:layout_width="match_parent"
@@ -98,7 +87,16 @@
             android:text="@string/press_finish_to_continue"
             android:textAlignment="center"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="#ffffff"
+            android:background="#000000"/>
+
+        <Button
+            android:id="@+id/finishButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/finish"
+            />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.constraintlayout.widget.ConstraintLayout>

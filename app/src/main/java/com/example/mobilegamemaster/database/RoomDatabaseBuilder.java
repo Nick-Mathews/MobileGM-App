@@ -12,14 +12,16 @@ import com.example.mobilegamemaster.Entities.Puzzle;
 import com.example.mobilegamemaster.Entities.Room;
 import com.example.mobilegamemaster.Entities.Timer;
 
-@Database(entities = {Room.class, Puzzle.class, Timer.class}, version = 4, exportSchema = false)
+@Database(entities = {Room.class, Puzzle.class, Timer.class}, version = 10, exportSchema = false)
 public abstract class RoomDatabaseBuilder extends RoomDatabase{
 
+    //CREATE DAOS AND RDBB INSTANCE
     public abstract RoomDAO roomDAO();
     public abstract PuzzleDAO puzzleDAO();
     public abstract TimerDAO timerDAO();
     private static volatile RoomDatabaseBuilder Instance;
 
+    //FUNCTION THAT GETS OR CREATES DB INSTANCE
     static RoomDatabaseBuilder getDatabase(final Context context) {
         if (Instance == null){
             synchronized (RoomDatabaseBuilder.class){

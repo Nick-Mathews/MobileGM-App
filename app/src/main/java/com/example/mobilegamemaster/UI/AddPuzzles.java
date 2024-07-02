@@ -19,9 +19,11 @@ import com.example.mobilegamemaster.Entities.Room;
 import com.example.mobilegamemaster.R;
 import com.example.mobilegamemaster.database.Repository;
 
+import java.util.List;
+
 public class AddPuzzles extends AppCompatActivity {
-    //CREATE REPOSITORY
-    Repository repository = new Repository(getApplication());
+    //CREATE REPOSITORY, ROOMID AND PUZZLEID VARIABLES
+    Repository repository;
     Room currentRoom;
     int puzzleID;
 
@@ -35,9 +37,8 @@ public class AddPuzzles extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        //CREATE CURRENT ROOM
-
+        //POPULATE REPOSITORY
+        repository  = new Repository(getApplication());
 
         //RETRIEVE INTENT EXTRAS FOR USE
         String roomName = getIntent().getStringExtra("name");
@@ -55,13 +56,13 @@ public class AddPuzzles extends AppCompatActivity {
 
         //SET TEXTVIEWS FOR HINT ENTRY FIELDS
         TextView nudgeLabel = findViewById(R.id.nudgeNum);
-        nudgeLabel.setText("Puzzle " + (puzzleNum + 1) + " Nudge:");
+        nudgeLabel.setText("Puzzle " + puzzleNum + " Nudge:");
 
         TextView hintLabel = findViewById(R.id.hintNum);
-        hintLabel.setText("Puzzle " + (puzzleNum + 1) + " Hint:");
+        hintLabel.setText("Puzzle " + puzzleNum + " Hint:");
 
         TextView solutionLabel = findViewById(R.id.solutionNum);
-        solutionLabel.setText("Puzzle " + (puzzleNum + 1) + " Solution:");
+        solutionLabel.setText("Puzzle " + puzzleNum + " Solution:");
 
         //CREATE BUTTON AND LISTENER FOR 'ABANDON ROOM' BUTTON
         Button abandonButton = findViewById(R.id.abandonButton);
@@ -76,6 +77,17 @@ public class AddPuzzles extends AppCompatActivity {
                     for (Room room: repository.getmAllRooms()) {
                         if (room.getRoomID() == roomID) {
                             currentRoom = room;
+                        }
+                        List<Puzzle> roomPuzzles = repository.getmRoomPuzzles(roomID);
+                        if (roomPuzzles != null) {
+                            for(int i=0; i < roomPuzzles.size(); ++i) {
+                                Puzzle puzz = roomPuzzles.get(i);
+                                try {
+                                    repository.delete(puzz);
+                                } catch (Exception e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
                         }
                     }
                     try {
@@ -110,7 +122,7 @@ public class AddPuzzles extends AppCompatActivity {
                             puzzleID = 1;
                         }
                         else {
-                            puzzleID = repository.getmAllPuzzles().get(repository.getmAllPuzzles().size() - 1).getRoomID() + 1;
+                            puzzleID = repository.getmAllPuzzles().get(repository.getmAllPuzzles().size()-1).getPuzzleID() + 1;
                         }
                         Puzzle newPuzzle = new Puzzle(puzzleID, puzzleNum, roomID, nudgeText, hintText, solutionText);
                         try {
@@ -146,7 +158,7 @@ public class AddPuzzles extends AppCompatActivity {
                         puzzleID = 1;
                     }
                     else {
-                        puzzleID = repository.getmAllPuzzles().get(repository.getmAllPuzzles().size() - 1).getRoomID() + 1;
+                        puzzleID = repository.getmAllPuzzles().get(repository.getmAllPuzzles().size()-1).getPuzzleID() + 1;
                     }
                     Puzzle newPuzzle = new Puzzle(puzzleID, puzzleNum, roomID, nudgeText, hintText, solutionText);
                     try {
@@ -162,8 +174,8 @@ public class AddPuzzles extends AppCompatActivity {
                     Intent intent = new Intent(AddPuzzles.this, AddPuzzles.class);
                     intent.putExtra("name", currentRoom.getRoomName());
                     intent.putExtra("id", currentRoom.getRoomID());
-                    int puzzleNum = newPuzzle.getPuzzleNum() + 1;
-                    intent.putExtra("puzzle_num", puzzleNum);
+                    int nextPuzzleNum = newPuzzle.getPuzzleNum() + 1;
+                    intent.putExtra("puzzle_num", nextPuzzleNum);
                     startActivity(intent);
                 }
             }

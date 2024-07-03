@@ -59,7 +59,7 @@ public class RoomLogs extends AppCompatActivity {
                 EditText searchEditText = findViewById(R.id.searchEditText);
                 String searchTerm = searchEditText.getText().toString();
                 for (Room current: repository.getmAllRooms()) {
-                    if (current.getRoomName().toLowerCase().contains(searchTerm.toLowerCase())){
+                    if (current.getRoomName().toLowerCase().contains(searchTerm.toLowerCase()) && !searchTerm.isEmpty()){
                         roomID = current.getRoomID();
                     }
                 }
@@ -111,5 +111,5 @@ public class RoomLogs extends AppCompatActivity {
         }
         return true;
     }
-
+    //TODO: ADD FLOATING ACTION BUTTON TO GO BACK
 }

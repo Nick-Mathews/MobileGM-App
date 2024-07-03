@@ -130,9 +130,17 @@ public class EditPuzzles extends AppCompatActivity {
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
+                int i = 1;
+                for (Puzzle puzzle: repository.getmRoomPuzzles(roomID)){
+                    puzzle.setPuzzleNum(i);
+                    try {repository.update(puzzle);}
+                    catch(Exception e) {throw new RuntimeException(e);}
+                    ++i;
+                }
+
                 Intent intent = new Intent(EditPuzzles.this, PuzzleList.class);
                 intent.putExtra("name", currentRoom.getRoomName());
-                intent.putExtra("id", roomID);
+                intent.putExtra("id", currentRoom.getRoomID());
                 startActivity(intent);
             }
         });

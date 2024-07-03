@@ -199,4 +199,11 @@ public class RoomPuzzles extends AppCompatActivity {
         countDownTimer.start();
         return countDownTimer;
     }
+    //INTENDED TO STOP USERS FROM LEAVING THE ROOM PUZZLES ACTIVITY WITHOUT COMPLETING THE GAME
+    //METHOD IS DEPRECATED AND WILL NOT WORK AT HIGHER API LEVELS
+    //TODO:REPLACE ON BACK PRESSED FUNCTIONALITY
+    @Override
+    public void onBackPressed() {
+
+    }
 }

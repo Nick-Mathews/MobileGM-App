@@ -55,14 +55,17 @@ public class AddPuzzles extends AppCompatActivity {
         EditText solutionEntry = findViewById(R.id.editSolutionText);
 
         //SET TEXTVIEWS FOR HINT ENTRY FIELDS
-        TextView nudgeLabel = findViewById(R.id.nudgeNum);
-        nudgeLabel.setText("Puzzle " + puzzleNum + " Nudge:");
+        TextView nudgeView = findViewById(R.id.nudgeNum);
+        String nudgeLabel = "Puzzle " + puzzleNum + " Nudge:";
+        nudgeView.setText(nudgeLabel);
 
-        TextView hintLabel = findViewById(R.id.hintNum);
-        hintLabel.setText("Puzzle " + puzzleNum + " Hint:");
+        TextView hintView = findViewById(R.id.hintNum);
+        String hintLabel = "Puzzle " + puzzleNum + " Hint:";
+        hintView.setText(hintLabel);
 
-        TextView solutionLabel = findViewById(R.id.solutionNum);
-        solutionLabel.setText("Puzzle " + puzzleNum + " Solution:");
+        TextView solutionView = findViewById(R.id.solutionNum);
+        String solutionLabel = "Puzzle " + puzzleNum + " Solution:";
+        solutionView.setText(solutionLabel);
 
         //CREATE BUTTON AND LISTENER FOR 'ABANDON ROOM' BUTTON
         Button abandonButton = findViewById(R.id.abandonButton);
@@ -130,7 +133,9 @@ public class AddPuzzles extends AppCompatActivity {
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
-                        Intent intent = new Intent(AddPuzzles.this, MainActivity.class);
+                        Intent intent = new Intent(AddPuzzles.this, PuzzleList.class);
+                        intent.putExtra("id", roomID);
+                        intent.putExtra("name", roomName);
                         startActivity(intent);
                     }
                 }

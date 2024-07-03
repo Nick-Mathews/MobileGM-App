@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -57,10 +56,6 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
             String timeLeft = currentTimer.getTimeLeft();
             String gameDate = currentTimer.getGameDate();
             String startTime = currentTimer.getStartTime();
-
-            /*name = name + " | ";
-            timeLeft = timeLeft + " | ";
-            gameDate = gameDate + " | ";*/
 
             holder.logNameView.setText(name);
             holder.logTimeLeft.setText(timeLeft);

@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/_00_60_00"
+            android:text="@string/_60_00"
             android:textColor="#081FB1"
             android:textSize="60sp" />
     </androidx.appcompat.widget.LinearLayoutCompat>

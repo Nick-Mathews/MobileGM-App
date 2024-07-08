@@ -13,58 +13,68 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mobilegamemaster.Entities.Room;
+import com.example.mobilegamemaster.Entities.Password;
 import com.example.mobilegamemaster.R;
 import com.example.mobilegamemaster.database.Repository;
 
 import java.util.List;
 
-public class RoomList extends AppCompatActivity {
-    //CREATE REPOSITORY AND ROOM LIST
+public class PasswordsList extends AppCompatActivity {
+    //CREATE REPOSITORY AND PASSWORD LIST
     Repository repository;
-    List<Room> allRooms;
+    List<Password> allPasswords;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_room_list);
+        setContentView(R.layout.activity_passwords_list);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        //POPULATE REPOSITORY, AND POPULATE ROOMS LIST
+        //POPULATE REPOSITORY AND PASSWORDS LIST
         repository = new Repository(getApplication());
-        allRooms = repository.getmAllRooms();
+        allPasswords = repository.getmAllPasswords();
 
-        //SET ROOM LIST ON ADAPTER; SET LAYOUT MANAGER AND ADAPTER ON RECYCLERVIEW
-        RecyclerView recyclerView = findViewById(R.id.roomListRecyclerView);
-        final EditRoomAdapter editRoomAdapter = new EditRoomAdapter(this);
-        editRoomAdapter.setRooms(allRooms);
+        //SET PASSWORD LIST ON ADAPTER; SET LAYOUT MANGER AND ADAPTER ON RECYCLERVIEW
+        RecyclerView recyclerView = findViewById(R.id.passwordListRecyclerView);
+        PasswordListAdapter passwordListAdapter = new PasswordListAdapter(this);
+        passwordListAdapter.setPasswords(allPasswords);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(editRoomAdapter);
+        recyclerView.setAdapter(passwordListAdapter);
 
         //CREATE AND SET CLICK LISTENER FOR FINISH BUTTON
         Button finishButton = findViewById(R.id.finishButton);
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RoomList.this, MainActivity.class);
+                Intent intent = new Intent(PasswordsList.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //CREATE AND SET CLICK LISTENER FOR ADD USER BUTTON
+        Button addUserButton = findViewById(R.id.addUserButton);
+        addUserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PasswordsList.this, EditPasswords.class);
+                intent.putExtra("id", allPasswords.get(allPasswords.size() -1 ).getPasswordID() + 1);
                 startActivity(intent);
             }
         });
     }
-
     //ON RESUME FUNCTION THAT REPOPULATES AND REFRESHES THE ADAPTER
     @Override
-    protected void onResume(){
+    public void onResume() {
         super.onResume();
-        List<Room> allRooms=repository.getmAllRooms();
-        RecyclerView recyclerView=findViewById(R.id.roomListRecyclerView);
-        final EditRoomAdapter editRoomAdapter = new EditRoomAdapter(this);
-        editRoomAdapter.setRooms(allRooms);
+        List<Password> allPasswords = repository.getmAllPasswords();
+        RecyclerView recyclerView = findViewById(R.id.passwordListRecyclerView);
+        PasswordListAdapter passwordListAdapter = new PasswordListAdapter(this);
+        passwordListAdapter.setPasswords(allPasswords);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(editRoomAdapter);
-
+        recyclerView.setAdapter(passwordListAdapter);
     }
 }

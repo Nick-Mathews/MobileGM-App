@@ -1,9 +1,13 @@
 package com.example.mobilegamemaster.UI;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mobilegamemaster.Entities.Password;
 import com.example.mobilegamemaster.R;
 import com.example.mobilegamemaster.database.Repository;
 import com.example.mobilegamemaster.Entities.Room;
@@ -23,7 +28,9 @@ public class MainActivity extends AppCompatActivity {
     //CREATE REPOSITORY, ROOM LIST
     Repository repository;
     List<Room> allRooms;
-
+    TextView signInText, cancelText;
+    EditText password;
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +49,11 @@ public class MainActivity extends AppCompatActivity {
         final RoomAdapter roomAdapter = new RoomAdapter(this);
         roomAdapter.setRooms(allRooms);
 
+        //SETUP SIGN-IN DIALOG FOR ADMIN MENU
+        dialog = new Dialog(MainActivity.this);
+        dialog.setContentView(R.layout.dialog_login);
+        signInText = dialog.findViewById(R.id.signInText);
+        cancelText = dialog.findViewById(R.id.cancelText);
 
         //SET LAYOUT MANAGER AND ADAPTER ON RECYCLER VIEW
         RecyclerView recyclerView = findViewById(R.id.chooseGameRecyclerView);
@@ -58,25 +70,56 @@ public class MainActivity extends AppCompatActivity {
     //ADMIN MENU OPTIONS FOR ADDING, EDITING OR DELETING ROOMS AND PUZZLES AND ACCESS TO THE LOG TABLES
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.add_room) {
-            Intent intent = new Intent(MainActivity.this, AddRoom.class);
-            startActivity(intent);
-        }
-
-        if (item.getItemId() == R.id.edit_delete_room) {
-            Intent intent = new Intent(MainActivity.this, RoomList.class);
-            startActivity(intent);
-        }
-
-        if (item.getItemId() == R.id.report_logs) {
-            Intent intent = new Intent(MainActivity.this, RoomLogs.class);
-            startActivity(intent);
-        }
-
+        dialog.show();
         if(item.getItemId()==android.R.id.home){
             this.finish();
             return true;
         }
+        signInText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                password = dialog.findViewById(R.id.password);
+                //CHECK IF REPOSITORY IS EMPTY
+                if (repository.getmAllPasswords().isEmpty()) {
+                    Password first = new Password(1, "Admin", "8675");
+                    try {
+                        repository.insert(first);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                    //CHECK REPOSITORY FOR MATCHING PASSWORD
+                    for (Password pass : repository.getmAllPasswords()) {
+                        if (pass.getPassword().equals(String.valueOf(password.getText()))) {
+                            if (item.getItemId() == R.id.add_room) {
+                                Intent intent = new Intent(MainActivity.this, AddRoom.class);
+                                startActivity(intent);
+                            }
+
+                            if (item.getItemId() == R.id.edit_delete_room) {
+                                Intent intent = new Intent(MainActivity.this, RoomList.class);
+                                startActivity(intent);
+                            }
+
+                            if (item.getItemId() == R.id.edit_delete_passwords) {
+                                Intent intent = new Intent(MainActivity.this, PasswordsList.class);
+                                startActivity(intent);
+                            }
+                            if (item.getItemId() == R.id.report_logs) {
+                                Intent intent = new Intent(MainActivity.this, RoomLogs.class);
+                                startActivity(intent);
+                            }
+                        }
+                    }
+                }
+        });
+
+        cancelText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
 
         return true;
     }

@@ -104,4 +104,16 @@
                 android:scrollbars="vertical"/>
         </HorizontalScrollView>
     </TableLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floating_back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20sp"
+        android:clickable="true"
+        android:contentDescription="@string/back_button"
+        android:src="@android:drawable/ic_menu_revert"
+        app:fabSize="auto"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

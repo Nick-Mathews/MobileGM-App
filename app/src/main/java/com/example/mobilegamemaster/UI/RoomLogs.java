@@ -1,5 +1,6 @@
 package com.example.mobilegamemaster.UI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +20,7 @@ import com.example.mobilegamemaster.Entities.Room;
 import com.example.mobilegamemaster.Entities.Timer;
 import com.example.mobilegamemaster.R;
 import com.example.mobilegamemaster.database.Repository;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -74,6 +76,15 @@ public class RoomLogs extends AppCompatActivity {
                 }
             }
         });
+
+        FloatingActionButton backButton = findViewById(R.id.floating_back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RoomLogs.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -111,5 +122,4 @@ public class RoomLogs extends AppCompatActivity {
         }
         return true;
     }
-    //TODO: ADD FLOATING ACTION BUTTON TO GO BACK
 }

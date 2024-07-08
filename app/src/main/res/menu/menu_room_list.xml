@@ -4,6 +4,8 @@
         android:id="@+id/add_room"/>
     <item android:title="@string/edit_delete_room"
         android:id="@+id/edit_delete_room"/>
+    <item android:title="@string/edit_delete_users"
+        android:id="@+id/edit_delete_passwords" />
     <item android:title="@string/report_logs"
         android:id="@+id/report_logs"/>
 </menu>

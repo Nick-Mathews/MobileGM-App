@@ -2,9 +2,11 @@ package com.example.mobilegamemaster.database;
 
 import android.app.Application;
 
+import com.example.mobilegamemaster.DAO.PasswordDAO;
 import com.example.mobilegamemaster.DAO.PuzzleDAO;
 import com.example.mobilegamemaster.DAO.RoomDAO;
 import com.example.mobilegamemaster.DAO.TimerDAO;
+import com.example.mobilegamemaster.Entities.Password;
 import com.example.mobilegamemaster.Entities.Puzzle;
 import com.example.mobilegamemaster.Entities.Room;
 import com.example.mobilegamemaster.Entities.Timer;
@@ -15,15 +17,18 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Repository {
-    //DAO AND ROOM/PUZZLE OBJECTS FOR FUNCTION RETURNS
+    //DAOs AND OBJECTS FOR FUNCTION RETURNS
     private final RoomDAO mRoomDAO;
     private final PuzzleDAO mPuzzleDAO;
     private final TimerDAO mTimerDAO;
+    private final PasswordDAO mPasswordDAO;
     private List<Room> mAllRooms;
     private List<Puzzle> mAllPuzzles;
     private List<Puzzle> mRoomPuzzles;
     private List<Timer> mAllTimers;
     private List<Timer> mRoomTimers;
+    private List<Password> mAllPasswords;
+    private Password mPassword;
     private Room mRoom;
     private Puzzle mPuzzle;
 
@@ -36,6 +41,7 @@ public class Repository {
         mRoomDAO = db.roomDAO();
         mPuzzleDAO = db.puzzleDAO();
         mTimerDAO = db.timerDAO();
+        mPasswordDAO = db.passwordDAO();
     }
     //ALL ROOM ACCESS FUNCTIONS
     public List<Room> getmAllRooms()  {
@@ -228,6 +234,69 @@ public class Repository {
     public void update (Timer timer) throws InterruptedException {
         databaseExecutor.execute(()->{
             mTimerDAO.update(timer);
+        });
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new InterruptedException(e.getMessage());
+        }
+    }
+
+    //ALL PASSWORD ACCESS FUNCTIONS
+    public List<Password> getmAllPasswords()  {
+        databaseExecutor.execute(()->{
+            mAllPasswords=mPasswordDAO.getAllPasswords();
+        });
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return mAllPasswords;
+    }
+
+    public Password getmPassword(int passwordID){
+        databaseExecutor.execute(()->{
+            mPassword = mPasswordDAO.getPassword(passwordID);
+        });
+        try {
+            Thread.sleep(1000);
+        } catch(Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return mPassword;
+    }
+
+    public void delete (Password password) throws InterruptedException {
+        databaseExecutor.execute(()->{
+            mPasswordDAO.delete(password);
+        });
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new InterruptedException(e.getMessage());
+        }
+    }
+
+    public void insert (Password password) throws InterruptedException {
+        databaseExecutor.execute(()->{
+            mPasswordDAO.insert(password);
+        });
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new InterruptedException(e.getMessage());
+        }
+    }
+
+    public void update (Password password) throws InterruptedException {
+        databaseExecutor.execute(()->{
+            mPasswordDAO.update(password);
         });
 
         try {

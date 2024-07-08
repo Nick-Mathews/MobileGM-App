@@ -3,7 +3,7 @@
     <string name="mobile_game_master">Mobile Game Master</string>
     <string name="choose_your_game">Choose your game:</string>
     <string name="timer">Timer</string>
-    <string name="_00_60_00">60:00</string>
+    <string name="_60_00">60:00</string>
     <string name="room_name">Room Name</string>
     <string name="start">Start</string>
     <string name="nudge">Nudge</string>
@@ -12,7 +12,7 @@
     <string name="hint_box_text">Press button above for a Nudge, a Hint, or the Solution.</string>
     <string name="enter_answer">Enter Answer to Continue:</string>
     <string name="enter_puzzle_answer_here">Enter answer here</string>
-    <string name="continuetext">Continue</string>
+    <string name="continue_text">Continue</string>
     <string name="cancel">Cancel</string>
     <string name="room">Room:</string>
     <string name="abandon_room">Abandon Room</string>
@@ -31,4 +31,18 @@
     <string name="edit_delete_room">Edit/Delete Room</string>
     <string name="report_logs">Report Logs</string>
     <string name="search_by_room_name">Search by Room Name:</string>
+    <string name="back_button">Back Button</string>
+    <string name="username">Username</string>
+    <string name="passcode">Passcode</string>
+    <string name="login">Login</string>
+    <string name="sign_in">Sign-in</string>
+    <string name="enter_passcode">Enter passcode:</string>
+    <string name="edit_delete_users">Edit/Delete Users</string>
+    <string name="choose_user_to_edit_delete">Choose user to edit/delete:</string>
+    <string name="edit_passwords">Edit Passwords</string>
+    <string name="edit_username_password">Edit Username/Password</string>
+    <string name="current_password">Current Password:</string>
+    <string name="user_name">User Name:</string>
+    <string name="new_password">New Password:</string>
+    <string name="add_user">Add User</string>
 </resources>

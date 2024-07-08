@@ -59,7 +59,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/continuetext"
+                android:text="@string/continue_text"
                 android:id="@+id/addroom_continuebutton"
                 android:layout_marginEnd="30sp"/>
 

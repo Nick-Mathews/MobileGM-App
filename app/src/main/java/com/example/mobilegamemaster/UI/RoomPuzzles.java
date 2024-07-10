@@ -32,13 +32,12 @@ import java.util.Locale;
 public class RoomPuzzles extends AppCompatActivity {
     //CREATE REPOSITORY, ROOM NAME STRING, ROOM ID STRING, PUZZLE NUMBER INT, LIST OF PUZZLES, AND CURRENT PUZZLE
     Repository repository;
-    String roomName;
-    int roomID;
-    int puzzleNum;
+    String roomName, startTime;
+    int roomID, puzzleNum;
     List<Puzzle> allPuzzles;
     Puzzle currentPuzzle;
     TextView countDownTimerView;
-    String startTime;
+
     //CREATE NUMBER AND DATE FORMATS
     DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
     SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a", Locale.US);
@@ -58,6 +57,9 @@ public class RoomPuzzles extends AppCompatActivity {
         roomName = getIntent().getStringExtra("name");
         roomID = getIntent().getIntExtra("id", -1);
         puzzleNum = getIntent().getIntExtra("puzzle_num", -1);
+
+        //CREATE START TIME STRING
+        startTime = timeFormat.format(Calendar.getInstance().getTime());
 
         //CREATE AND ASSIGN TEXT VIEWS
         TextView puzzleTextView = findViewById(R.id.puzzleTextView);
@@ -117,11 +119,6 @@ public class RoomPuzzles extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                //CREATE START TIME STRING
-                startTime = timeFormat.format(Calendar.getInstance().getTime());
-
                 //CREATE SOLUTION STRING
                 String solution = currentPuzzle.getSolution();
 

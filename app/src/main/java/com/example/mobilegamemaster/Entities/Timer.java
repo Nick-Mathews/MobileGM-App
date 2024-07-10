@@ -7,13 +7,13 @@ import androidx.room.PrimaryKey;
 @Entity(tableName="timers")
 public class Timer {
     @PrimaryKey(autoGenerate = true)
-    int timerID;
-    int roomID;
-    String roomName;
-    String startTime;
-    String endTime;
-    String gameDate;
-    String timeLeft;
+    private int timerID;
+    private int roomID;
+    private String roomName;
+    private String startTime;
+    private String endTime;
+    private String gameDate;
+    private String timeLeft;
 
     public Timer(int timerID, int roomID, String roomName, String startTime, String endTime, String gameDate, String timeLeft) {
         this.timerID = timerID;

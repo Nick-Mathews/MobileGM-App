@@ -27,8 +27,7 @@ public class PuzzleList extends AppCompatActivity {
     List<Puzzle> roomPuzzles;
     Room currentRoom;
     String roomName;
-    int roomID;
-    int lastIndex;
+    int roomID, lastIndex;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

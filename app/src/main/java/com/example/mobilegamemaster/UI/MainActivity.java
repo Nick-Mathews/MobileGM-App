@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    //ADMIN MENU OPTIONS FOR ADDING, EDITING OR DELETING ROOMS AND PUZZLES AND ACCESS TO THE LOG TABLES
+    //ADMIN MENU OPTIONS FOR ADDING, EDITING OR DELETING ROOMS, PUZZLES, AND USERS AND ACCESS TO THE LOG TABLES
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         dialog.show();

@@ -27,8 +27,7 @@ import java.util.List;
 public class RoomLogs extends AppCompatActivity {
     //CREATE REPOSITORY AND LIST OF TIMERS
     Repository repository;
-    List<Timer> allTimers;
-    List<Timer> roomTimers;
+    List<Timer> allTimers, roomTimers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

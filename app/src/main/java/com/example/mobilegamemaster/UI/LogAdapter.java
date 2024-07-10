@@ -25,7 +25,7 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
     }
 
     //VIEW HOLDER CLASS FOR ADAPTER
-    public class LogViewHolder extends RecyclerView.ViewHolder {
+    public static class LogViewHolder extends RecyclerView.ViewHolder {
         private final TextView logNameView;
         private final TextView logTimeLeft;
         private final TextView logGameDate;

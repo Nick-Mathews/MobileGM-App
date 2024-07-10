@@ -15,7 +15,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mobilegamemaster.Entities.Password;
-import com.example.mobilegamemaster.Entities.Puzzle;
 import com.example.mobilegamemaster.R;
 import com.example.mobilegamemaster.database.Repository;
 
@@ -26,8 +25,7 @@ public class EditPasswords extends AppCompatActivity {
     Repository repository;
     List<Password> allPasswords;
     Password currentPassword;
-    String userName;
-    String password;
+    String userName, password;
     int passwordID;
 
     @Override

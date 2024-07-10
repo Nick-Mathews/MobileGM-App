@@ -24,9 +24,7 @@ public class EditPuzzles extends AppCompatActivity {
     Repository repository;
     Room currentRoom;
     Puzzle currentPuzzle;
-    int roomID;
-    int puzzleID;
-    int puzzleNum;
+    int roomID, puzzleID, puzzleNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -20,8 +20,7 @@ import com.example.mobilegamemaster.database.Repository;
 public class AddRoom extends AppCompatActivity {
     //CREATE REPOSITORY, PUZZLENUM, ROOMID AND NEWROOM VARIABLES
     Repository repository;
-    int puzzleNum;
-    int roomID;
+    int puzzleNum, roomID;
     Room newRoom;
 
     @Override

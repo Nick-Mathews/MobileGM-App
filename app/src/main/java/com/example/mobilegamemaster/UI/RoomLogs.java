@@ -27,6 +27,9 @@ public class RoomLogs extends AppCompatActivity {
     //CREATE REPOSITORY AND LIST OF TIMERS
     Repository repository;
     List<Timer> allTimers, roomTimers;
+    String searchTerm;
+    EditText searchEditText;
+    int roomID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,18 +56,23 @@ public class RoomLogs extends AppCompatActivity {
         //CREATE SEARCH BUTTON AND SET ONCLICK LISTENER
         Button searchButton = findViewById(R.id.searchButton);
         searchButton.setOnClickListener(v -> {
-            int roomID = -1;
-            EditText searchEditText = findViewById(R.id.searchEditText);
-            String searchTerm = searchEditText.getText().toString();
+            roomID = -1;
+            searchEditText = findViewById(R.id.searchEditText);
+            searchTerm = searchEditText.getText().toString();
             for (Room current: repository.getmAllRooms()) {
                 if (current.getRoomName().toLowerCase().contains(searchTerm.toLowerCase()) && !searchTerm.isEmpty()){
                     roomID = current.getRoomID();
                 }
             }
-            if (roomID != -1) {
-                roomTimers = repository.getmTimers(roomID);
-                logAdapter.setmTimers(roomTimers);
-                recyclerView.setAdapter(logAdapter);
+            if (!searchTerm.isEmpty()) {
+                if (roomID == -1) {
+                    logAdapter.setmTimers(null);
+                    recyclerView.setAdapter(logAdapter);
+                } else {
+                    roomTimers = repository.getmTimers(roomID);
+                    logAdapter.setmTimers(roomTimers);
+                    recyclerView.setAdapter(logAdapter);
+                }
             }
             else {
                 logAdapter.setmTimers(allTimers);

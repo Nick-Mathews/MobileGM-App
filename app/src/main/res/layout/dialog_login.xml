@@ -16,6 +16,17 @@
         />
 
     <EditText
+        android:id="@+id/username"
+        android:autofillHints="Username"
+        android:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4sp"
+        android:fontFamily="sans-serif"
+        android:hint="@string/username"
+        />
+
+    <EditText
         android:id="@+id/password"
         android:autofillHints="Password"
         android:inputType="textPassword"
@@ -26,7 +37,7 @@
         android:layout_marginRight="4dp"
         android:layout_marginBottom="16dp"
         android:fontFamily="sans-serif"
-        android:hint="@string/passcode"/>
+        android:hint="@string/password"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"

@@ -2,9 +2,11 @@ package com.example.mobilegamemaster.UI;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,8 +31,11 @@ public class MainActivity extends AppCompatActivity {
     Repository repository;
     List<Room> allRooms;
     TextView signInText, cancelText;
-    EditText password;
-    Dialog dialog;
+    EditText username, password;
+    Dialog loginDialog, startupDialog;
+    Button okButton;
+    boolean found;
+    public static final String PREFS_NAME = "MyPrefsFile";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +55,25 @@ public class MainActivity extends AppCompatActivity {
         roomAdapter.setRooms(allRooms);
 
         //SETUP SIGN-IN DIALOG FOR ADMIN MENU
-        dialog = new Dialog(MainActivity.this);
-        dialog.setContentView(R.layout.dialog_login);
-        signInText = dialog.findViewById(R.id.signInText);
-        cancelText = dialog.findViewById(R.id.cancelText);
+        loginDialog = new Dialog(MainActivity.this);
+        loginDialog.setContentView(R.layout.dialog_login);
+        signInText = loginDialog.findViewById(R.id.signInText);
+        cancelText = loginDialog.findViewById(R.id.cancelText);
+
+        //SETUP FIRST TIME STARTUP DIALOG AND SHARED PREFS SETTINGS
+        startupDialog = new Dialog(MainActivity.this);
+        startupDialog.setContentView(R.layout.dialog_startup);
+        okButton = startupDialog.findViewById(R.id.okButton);
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        boolean dialogShown = settings.getBoolean("dialogShown", false);
+
+        if (!dialogShown) {
+            startupDialog.show();
+            okButton.setOnClickListener(v -> startupDialog.dismiss());
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putBoolean("dialogShown", true);
+            editor.apply();
+        }
 
         //SET LAYOUT MANAGER AND ADAPTER ON RECYCLER VIEW
         RecyclerView recyclerView = findViewById(R.id.chooseGameRecyclerView);
@@ -70,13 +90,16 @@ public class MainActivity extends AppCompatActivity {
     //ADMIN MENU OPTIONS FOR ADDING, EDITING OR DELETING ROOMS, PUZZLES, AND USERS AND ACCESS TO THE LOG TABLES
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        dialog.show();
+        loginDialog.show();
         if(item.getItemId()==android.R.id.home){
             this.finish();
             return true;
         }
         signInText.setOnClickListener(v -> {
-            password = dialog.findViewById(R.id.password);
+            //ASSIGN EDIT TEXT VIEW AND SET FOUND TO FALSE
+            username = loginDialog.findViewById(R.id.username);
+            password = loginDialog.findViewById(R.id.password);
+            found = false;
             //CHECK IF REPOSITORY IS EMPTY
             if (repository.getmAllPasswords().isEmpty()) {
                 Password first = new Password(1, "Admin", "8675");
@@ -88,7 +111,8 @@ public class MainActivity extends AppCompatActivity {
             }
                 //CHECK REPOSITORY FOR MATCHING PASSWORD
                 for (Password pass : repository.getmAllPasswords()) {
-                    if (pass.getPassword().equals(String.valueOf(password.getText()))) {
+                    if ((pass.getPassword().equals(String.valueOf(password.getText()))) && (pass.getUserName().equals(String.valueOf(username.getText())))) {
+                        found = true;
                         if (item.getItemId() == R.id.add_room) {
                             Intent intent = new Intent(MainActivity.this, AddRoom.class);
                             startActivity(intent);
@@ -108,18 +132,21 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(intent);
                         }
                     }
-                    else {
-                        Toast msg = Toast.makeText(MainActivity.this, "Passcode not found", Toast.LENGTH_LONG);
-                        msg.show();
-                    }
                 }
+                //DISPLAY TOAST DIALOG IF PASSWORD IS NOT FOUND
+                if (!found) {
+                    Toast msg = Toast.makeText(MainActivity.this, "User or password incorrect", Toast.LENGTH_LONG);
+                    msg.show();
+                }
+                username.setText("");
                 password.setText("");
         });
 
         cancelText.setOnClickListener(v -> {
-            password = dialog.findViewById(R.id.password);
+            password = loginDialog.findViewById(R.id.password);
+            username.setText("");
             password.setText("");
-            dialog.dismiss();
+            loginDialog.dismiss();
         });
 
         return true;

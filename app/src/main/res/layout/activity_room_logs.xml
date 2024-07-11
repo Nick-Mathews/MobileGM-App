@@ -47,13 +47,13 @@
             android:layout_width="240sp"
             android:layout_height="wrap_content"
             android:autofillHints="room name"
-            android:inputType="text"/>
+            android:inputType="text" />
 
         <Button
             android:id="@+id/searchButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Search"/>
+            android:text="@string/search"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <TableLayout
@@ -72,14 +72,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Time Left"
+                android:text="@string/time_left"
                 android:textStyle="bold"
                 android:layout_marginStart="20sp"
                 android:layout_marginTop="6sp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date Played"
+                android:text="@string/date_played"
                 android:textStyle="bold"
                 android:layout_marginStart="38sp"
                 android:layout_marginTop="6sp"/>
@@ -87,7 +87,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Start Time"
+                android:text="@string/start_time"
                 android:textStyle="bold"
                 android:layout_marginStart="38sp"
                 android:layout_marginTop="6sp"/>
@@ -115,5 +115,5 @@
         android:src="@android:drawable/ic_menu_revert"
         app:fabSize="auto"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

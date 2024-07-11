@@ -34,15 +34,12 @@ public class PasswordListAdapter extends RecyclerView.Adapter<PasswordListAdapte
         public PasswordViewHolder(@NonNull View itemView) {
             super(itemView);
             passwordView = itemView.findViewById(R.id.passwordTextView);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    final Password currentPassword = mPasswords.get(position);
-                    Intent intent = new Intent(context, EditPasswords.class);
-                    intent.putExtra("id", currentPassword.getPasswordID());
-                    context.startActivity(intent);
-                }
+            itemView.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                final Password currentPassword = mPasswords.get(position);
+                Intent intent = new Intent(context, EditPasswords.class);
+                intent.putExtra("id", currentPassword.getPasswordID());
+                context.startActivity(intent);
             });
         }
     }

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -53,36 +52,30 @@ public class RoomLogs extends AppCompatActivity {
 
         //CREATE SEARCH BUTTON AND SET ONCLICK LISTENER
         Button searchButton = findViewById(R.id.searchButton);
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int roomID = -1;
-                EditText searchEditText = findViewById(R.id.searchEditText);
-                String searchTerm = searchEditText.getText().toString();
-                for (Room current: repository.getmAllRooms()) {
-                    if (current.getRoomName().toLowerCase().contains(searchTerm.toLowerCase()) && !searchTerm.isEmpty()){
-                        roomID = current.getRoomID();
-                    }
+        searchButton.setOnClickListener(v -> {
+            int roomID = -1;
+            EditText searchEditText = findViewById(R.id.searchEditText);
+            String searchTerm = searchEditText.getText().toString();
+            for (Room current: repository.getmAllRooms()) {
+                if (current.getRoomName().toLowerCase().contains(searchTerm.toLowerCase()) && !searchTerm.isEmpty()){
+                    roomID = current.getRoomID();
                 }
-                if (roomID != -1) {
-                    roomTimers = repository.getmTimers(roomID);
-                    logAdapter.setmTimers(roomTimers);
-                    recyclerView.setAdapter(logAdapter);
-                }
-                else {
-                    logAdapter.setmTimers(allTimers);
-                    recyclerView.setAdapter(logAdapter);
-                }
+            }
+            if (roomID != -1) {
+                roomTimers = repository.getmTimers(roomID);
+                logAdapter.setmTimers(roomTimers);
+                recyclerView.setAdapter(logAdapter);
+            }
+            else {
+                logAdapter.setmTimers(allTimers);
+                recyclerView.setAdapter(logAdapter);
             }
         });
 
         FloatingActionButton backButton = findViewById(R.id.floating_back_button);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RoomLogs.this, MainActivity.class);
-                startActivity(intent);
-            }
+        backButton.setOnClickListener(v -> {
+            Intent intent = new Intent(RoomLogs.this, MainActivity.class);
+            startActivity(intent);
         });
     }
 

@@ -3,7 +3,6 @@ package com.example.mobilegamemaster.UI;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -83,85 +82,72 @@ public class RoomPuzzles extends AppCompatActivity {
 
         //CREATE AND SET BUTTON FOR NUDGE
         Button nudgeButton = findViewById(R.id.nudgebutton);
-        nudgeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String hint = currentPuzzle.getNudge();
-                TextView view = findViewById(R.id.hintTextView);
-                view.setText(hint);
-            }
+        nudgeButton.setOnClickListener(v -> {
+            String hint = currentPuzzle.getNudge();
+            TextView view = findViewById(R.id.hintTextView);
+            view.setText(hint);
         });
 
         //CREATE AND SET BUTTON FOR HINT
         Button hintButton = findViewById(R.id.hintbutton);
-        hintButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String hint = currentPuzzle.getHint();
-                TextView view = findViewById(R.id.hintTextView);
-                view.setText(hint);
-            }
+        hintButton.setOnClickListener(v -> {
+            String hint = currentPuzzle.getHint();
+            TextView view = findViewById(R.id.hintTextView);
+            view.setText(hint);
         });
 
         //CREATE AND SET BUTTON FOR SOLUTION
         Button solutionButton = findViewById(R.id.solutionbutton);
-        solutionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String hint = currentPuzzle.getSolution();
-                TextView view = findViewById(R.id.hintTextView);
-                view.setText(hint);
-            }
+        solutionButton.setOnClickListener(v -> {
+            String hint = currentPuzzle.getSolution();
+            TextView view = findViewById(R.id.hintTextView);
+            view.setText(hint);
         });
 
         //CREATE AND SET BUTTON FOR SUBMITTING AN ANSWER
         Button submitButton = findViewById(R.id.submitButton);
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //CREATE SOLUTION STRING
-                String solution = currentPuzzle.getSolution();
+        submitButton.setOnClickListener(v -> {
+            //CREATE SOLUTION STRING
+            String solution = currentPuzzle.getSolution();
 
-                //CHECKS FOR CORRECT SOLUTION
-                if (String.valueOf(solutionTextView.getText()).equals(solution)) {
-                    //RUNS WHEN SOLUTION IS CORRECT AND YOU'VE REACHED THE LAST PUZZLE
-                    if (currentPuzzle.getPuzzleNum() == allPuzzles.size()) {
-                        countDownTimer.cancel();
-                        Intent intent = new Intent(RoomPuzzles.this, RoomWin.class);
-                        intent.putExtra("start_time", startTime);
-                        intent.putExtra("name", roomName);
-                        intent.putExtra("time_left", countDownTimerView.getText());
-                        Date end = Calendar.getInstance().getTime();
-                        intent.putExtra("end_time", timeFormat.format(end));
-                        intent.putExtra("end_date", dateFormat.format(end));
-                        intent.putExtra("id", roomID);
-                        startActivity(intent);
-                    }
-                    //RUNS WHEN SOLUTION IS CORRECT BUT YOU HAVEN'T REACHED THE LAST PUZZLE
-                    else {
-                        String msg = "Correct!";
-                        Toast toast = Toast.makeText(RoomPuzzles.this, msg, Toast.LENGTH_LONG);
-                        toast.show();
-                        TextView view = findViewById(R.id.hintTextView);
-                        view.setText("");
-
-                        currentPuzzle.setPuzzleNum(currentPuzzle.getPuzzleNum()+1);
-                        currentPuzzle.setNudge(allPuzzles.get(currentPuzzle.getPuzzleNum()-1).getNudge());
-                        currentPuzzle.setHint(allPuzzles.get(currentPuzzle.getPuzzleNum()-1).getHint());
-                        currentPuzzle.setSolution(allPuzzles.get(currentPuzzle.getPuzzleNum()-1).getSolution());
-
-                        TextView puzzleText = findViewById(R.id.puzzleTextView);
-                        String text = "Puzzle " + (currentPuzzle.getPuzzleNum());
-                        puzzleText.setText(text);
-                        solutionTextView.setText("");
-                    }
+            //CHECKS FOR CORRECT SOLUTION
+            if (String.valueOf(solutionTextView.getText()).equals(solution)) {
+                //RUNS WHEN SOLUTION IS CORRECT AND YOU'VE REACHED THE LAST PUZZLE
+                if (currentPuzzle.getPuzzleNum() == allPuzzles.size()) {
+                    countDownTimer.cancel();
+                    Intent intent = new Intent(RoomPuzzles.this, RoomWin.class);
+                    intent.putExtra("start_time", startTime);
+                    intent.putExtra("name", roomName);
+                    intent.putExtra("time_left", countDownTimerView.getText());
+                    Date end = Calendar.getInstance().getTime();
+                    intent.putExtra("end_time", timeFormat.format(end));
+                    intent.putExtra("end_date", dateFormat.format(end));
+                    intent.putExtra("id", roomID);
+                    startActivity(intent);
                 }
-                //RUNS WHEN THE ANSWER IS INCORRECT
+                //RUNS WHEN SOLUTION IS CORRECT BUT YOU HAVEN'T REACHED THE LAST PUZZLE
                 else {
-                    String msg = "That answer is incorrect";
+                    String msg = "Correct!";
                     Toast toast = Toast.makeText(RoomPuzzles.this, msg, Toast.LENGTH_LONG);
                     toast.show();
+                    TextView view = findViewById(R.id.hintTextView);
+                    view.setText("");
+
+                    currentPuzzle.setPuzzleNum(currentPuzzle.getPuzzleNum()+1);
+                    currentPuzzle.setNudge(allPuzzles.get(currentPuzzle.getPuzzleNum()-1).getNudge());
+                    currentPuzzle.setHint(allPuzzles.get(currentPuzzle.getPuzzleNum()-1).getHint());
+                    currentPuzzle.setSolution(allPuzzles.get(currentPuzzle.getPuzzleNum()-1).getSolution());
+
+                    String text = "Puzzle " + (currentPuzzle.getPuzzleNum());
+                    puzzleTextView.setText(text);
+                    solutionTextView.setText("");
                 }
+            }
+            //RUNS WHEN THE ANSWER IS INCORRECT
+            else {
+                String msg = "That answer is incorrect";
+                Toast toast = Toast.makeText(RoomPuzzles.this, msg, Toast.LENGTH_LONG);
+                toast.show();
             }
         });
     }
@@ -196,9 +182,9 @@ public class RoomPuzzles extends AppCompatActivity {
         countDownTimer.start();
         return countDownTimer;
     }
-    //INTENDED TO STOP USERS FROM LEAVING THE ROOM PUZZLES ACTIVITY WITHOUT COMPLETING THE GAME
+    //INTENDED TO STOP USERS FROM LEAVING THE ROOM PUZZLES ACTIVITY WITHOUT COMPLETING THE GAME BY PRESSING THE BACK BUTTON
     //METHOD IS DEPRECATED AND WILL NOT WORK AT HIGHER API LEVELS
-    //TODO:REPLACE ON BACK PRESSED FUNCTIONALITY
+
     @Override
     public void onBackPressed() {
 

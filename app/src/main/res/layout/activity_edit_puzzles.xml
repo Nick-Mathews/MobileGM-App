@@ -16,6 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/addHintLayout"
+        android:gravity="center"
         >
 
         <TextView
@@ -40,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Placeholder"
+            android:text="@string/placeholder"
             android:textSize="28sp"
             android:textStyle="bold" />
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -53,28 +54,22 @@
         android:layout_margin="8sp"
         app:layout_constraintBottom_toTopOf="@+id/buttonLayout"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/listTitleLayout">
+        app:layout_constraintTop_toBottomOf="@id/listTitleLayout"
+        android:gravity="center">
 
-    <TextView
-        android:id="@+id/puzzleNumTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Puzzle Number"
-        android:gravity="center"
-        android:textSize="20sp"
 
-    />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/nudgeNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nudge Num"
+                android:text="@string/nudge_num"
                 android:textSize="18sp"
                 android:labelFor="@+id/editNudgeText"/>
 
@@ -98,7 +93,7 @@
                     android:id="@+id/hintNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Hint Num"
+                    android:text="@string/hint_num"
                     android:textSize="18sp"
                     android:labelFor="@+id/editHintText"
                     />
@@ -123,7 +118,7 @@
                     android:id="@+id/solutionNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Solution Num"
+                    android:text="@string/solution_num"
                     android:textSize="18sp"
                     android:labelFor="@+id/editSolutionText"/>
 
@@ -154,7 +149,7 @@
             android:layout_height="55sp"
             android:layout_marginHorizontal="12sp"
             android:id="@+id/savePuzzleButton"
-            android:text="Save Puzzle"
+            android:text="@string/save_puzzle"
             />
 
         <Button
@@ -162,14 +157,14 @@
             android:layout_height="55sp"
             android:layout_marginHorizontal="12sp"
             android:id="@+id/cancelChangesButton"
-            android:text="Cancel Changes"/>
+            android:text="@string/cancel_changes"/>
 
         <Button
             android:layout_width="100sp"
             android:layout_height="55sp"
             android:layout_marginHorizontal="12sp"
             android:id="@+id/deletePuzzleButton"
-            android:text="Delete Puzzle"/>
+            android:text="@string/delete_puzzle"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.constraintlayout.widget.ConstraintLayout>

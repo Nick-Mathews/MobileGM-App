@@ -2,7 +2,6 @@ package com.example.mobilegamemaster.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -38,15 +37,12 @@ public class RoomStart extends AppCompatActivity {
 
         //CREATE START BUTTON AND SET ONCLICK LISTENER
         Button startButton = findViewById(R.id.startButton);
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RoomStart.this, RoomPuzzles.class);
-                intent.putExtra("name", roomName);
-                intent.putExtra("id", roomID);
-                intent.putExtra("puzzle_num", 0);
-                startActivity(intent);
-            }
+        startButton.setOnClickListener(v -> {
+            Intent intent = new Intent(RoomStart.this, RoomPuzzles.class);
+            intent.putExtra("name", roomName);
+            intent.putExtra("id", roomID);
+            intent.putExtra("puzzle_num", 0);
+            startActivity(intent);
         });
     }
 }

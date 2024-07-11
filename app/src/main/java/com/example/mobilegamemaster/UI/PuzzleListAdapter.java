@@ -33,20 +33,17 @@ public class PuzzleListAdapter extends RecyclerView.Adapter<PuzzleListAdapter.Pu
             super(itemView);
 
             textView = itemView.findViewById(R.id.editTextView);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    final Puzzle currentPuzzle = mPuzzles.get(position);
+            itemView.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                final Puzzle currentPuzzle = mPuzzles.get(position);
 
-                    int roomID = currentPuzzle.getRoomID();
-                    int puzzleID = currentPuzzle.getPuzzleID();
+                int roomID = currentPuzzle.getRoomID();
+                int puzzleID = currentPuzzle.getPuzzleID();
 
-                    Intent intent = new Intent(context, EditPuzzles.class);
-                    intent.putExtra("room_id", roomID);
-                    intent.putExtra("puzzle_id", puzzleID);
-                    context.startActivity(intent);
-                }
+                Intent intent = new Intent(context, EditPuzzles.class);
+                intent.putExtra("room_id", roomID);
+                intent.putExtra("puzzle_id", puzzleID);
+                context.startActivity(intent);
             });
         }
     }

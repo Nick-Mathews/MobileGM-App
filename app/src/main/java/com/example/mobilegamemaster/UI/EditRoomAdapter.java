@@ -34,16 +34,13 @@ public class EditRoomAdapter extends RecyclerView.Adapter<EditRoomAdapter.EditVi
         public EditViewHolder(@NonNull View itemView) {
             super(itemView);
             editView = itemView.findViewById(R.id.editTextView);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    final Room currentRoom = mRooms.get(position);
-                    Intent intent = new Intent(context, PuzzleList.class);
-                    intent.putExtra("name", currentRoom.getRoomName());
-                    intent.putExtra("id", currentRoom.getRoomID());
-                    context.startActivity(intent);
-                }
+            itemView.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                final Room currentRoom = mRooms.get(position);
+                Intent intent = new Intent(context, PuzzleList.class);
+                intent.putExtra("name", currentRoom.getRoomName());
+                intent.putExtra("id", currentRoom.getRoomID());
+                context.startActivity(intent);
             });
 
         }

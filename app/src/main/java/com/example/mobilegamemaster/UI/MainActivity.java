@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -75,50 +75,51 @@ public class MainActivity extends AppCompatActivity {
             this.finish();
             return true;
         }
-        signInText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                password = dialog.findViewById(R.id.password);
-                //CHECK IF REPOSITORY IS EMPTY
-                if (repository.getmAllPasswords().isEmpty()) {
-                    Password first = new Password(1, "Admin", "8675");
-                    try {
-                        repository.insert(first);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
+        signInText.setOnClickListener(v -> {
+            password = dialog.findViewById(R.id.password);
+            //CHECK IF REPOSITORY IS EMPTY
+            if (repository.getmAllPasswords().isEmpty()) {
+                Password first = new Password(1, "Admin", "8675");
+                try {
+                    repository.insert(first);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
                 }
-                    //CHECK REPOSITORY FOR MATCHING PASSWORD
-                    for (Password pass : repository.getmAllPasswords()) {
-                        if (pass.getPassword().equals(String.valueOf(password.getText()))) {
-                            if (item.getItemId() == R.id.add_room) {
-                                Intent intent = new Intent(MainActivity.this, AddRoom.class);
-                                startActivity(intent);
-                            }
+            }
+                //CHECK REPOSITORY FOR MATCHING PASSWORD
+                for (Password pass : repository.getmAllPasswords()) {
+                    if (pass.getPassword().equals(String.valueOf(password.getText()))) {
+                        if (item.getItemId() == R.id.add_room) {
+                            Intent intent = new Intent(MainActivity.this, AddRoom.class);
+                            startActivity(intent);
+                        }
 
-                            if (item.getItemId() == R.id.edit_delete_room) {
-                                Intent intent = new Intent(MainActivity.this, RoomList.class);
-                                startActivity(intent);
-                            }
+                        if (item.getItemId() == R.id.edit_delete_room) {
+                            Intent intent = new Intent(MainActivity.this, RoomList.class);
+                            startActivity(intent);
+                        }
 
-                            if (item.getItemId() == R.id.edit_delete_passwords) {
-                                Intent intent = new Intent(MainActivity.this, PasswordsList.class);
-                                startActivity(intent);
-                            }
-                            if (item.getItemId() == R.id.report_logs) {
-                                Intent intent = new Intent(MainActivity.this, RoomLogs.class);
-                                startActivity(intent);
-                            }
+                        if (item.getItemId() == R.id.edit_delete_passwords) {
+                            Intent intent = new Intent(MainActivity.this, PasswordsList.class);
+                            startActivity(intent);
+                        }
+                        if (item.getItemId() == R.id.report_logs) {
+                            Intent intent = new Intent(MainActivity.this, RoomLogs.class);
+                            startActivity(intent);
                         }
                     }
+                    else {
+                        Toast msg = Toast.makeText(MainActivity.this, "Passcode not found", Toast.LENGTH_LONG);
+                        msg.show();
+                    }
                 }
+                password.setText("");
         });
 
-        cancelText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
+        cancelText.setOnClickListener(v -> {
+            password = dialog.findViewById(R.id.password);
+            password.setText("");
+            dialog.dismiss();
         });
 
         return true;

@@ -15,7 +15,7 @@
     <string name="continue_text">Continue</string>
     <string name="cancel">Cancel</string>
     <string name="room">Room:</string>
-    <string name="abandon_room">Abandon Room</string>
+    <string name="abandon_puzzle">Abandon Puzzle</string>
     <string name="save_and_finish">Save and Finish</string>
     <string name="next_puzzle">Next Puzzle</string>
     <string name="puzzle">Puzzle </string>
@@ -45,4 +45,11 @@
     <string name="user_name">User Name:</string>
     <string name="new_password">New Password:</string>
     <string name="add_user">Add User</string>
+    <string name="save_puzzle">Save Puzzle</string>
+    <string name="cancel_changes">Cancel Changes</string>
+    <string name="delete_puzzle">Delete Puzzle</string>
+    <string name="placeholder">Placeholder</string>
+    <string name="nudge_num">Nudge Num</string>
+    <string name="hint_num">Hint Num</string>
+    <string name="solution_num">Solution Num</string>
 </resources>

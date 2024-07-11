@@ -32,16 +32,13 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         public RoomViewHolder(@NonNull View itemView) {
             super(itemView);
             roomView = itemView.findViewById(R.id.roomTextView);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    final Room currentRoom = mRooms.get(position);
-                    Intent intent = new Intent(context, RoomStart.class);
-                    intent.putExtra("id", currentRoom.getRoomID());
-                    intent.putExtra("name", currentRoom.getRoomName());
-                    context.startActivity(intent);
-                }
+            itemView.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                final Room currentRoom = mRooms.get(position);
+                Intent intent = new Intent(context, RoomStart.class);
+                intent.putExtra("id", currentRoom.getRoomID());
+                intent.putExtra("name", currentRoom.getRoomName());
+                context.startActivity(intent);
             });
         }
     }

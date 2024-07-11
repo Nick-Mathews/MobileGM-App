@@ -2,7 +2,6 @@ package com.example.mobilegamemaster.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
@@ -46,12 +45,9 @@ public class RoomList extends AppCompatActivity {
 
         //CREATE AND SET CLICK LISTENER FOR FINISH BUTTON
         Button finishButton = findViewById(R.id.finishButton);
-        finishButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RoomList.this, MainActivity.class);
-                startActivity(intent);
-            }
+        finishButton.setOnClickListener(v -> {
+            Intent intent = new Intent(RoomList.this, MainActivity.class);
+            startActivity(intent);
         });
     }
 

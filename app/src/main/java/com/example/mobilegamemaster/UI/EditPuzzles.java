@@ -2,7 +2,6 @@ package com.example.mobilegamemaster.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -74,73 +73,65 @@ public class EditPuzzles extends AppCompatActivity {
 
         //CREATE BUTTON AND LISTENER FOR SAVE PUZZLE BUTTON
         Button saveButton = findViewById(R.id.savePuzzleButton);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (roomID == -1) {
-                    Toast msg = Toast.makeText(EditPuzzles.this, "Your room ID is invalid", Toast.LENGTH_LONG);
+        saveButton.setOnClickListener(v -> {
+            if (roomID == -1) {
+                Toast msg = Toast.makeText(EditPuzzles.this, "Your room ID is invalid", Toast.LENGTH_LONG);
+                msg.show();
+            }
+            else {
+                String nudgeText1 = String.valueOf(nudgeEntry.getText());
+                String hintText1 = String.valueOf(hintEntry.getText());
+                String solutionText1 = String.valueOf(solutionEntry.getText());
+                if ((nudgeText1.isEmpty()) || (hintText1.isEmpty()) || (solutionText1.isEmpty())) {
+                    Toast msg = Toast.makeText(EditPuzzles.this, "You must complete all fields before saving", Toast.LENGTH_LONG);
                     msg.show();
-                }
-                else {
-                    String nudgeText = String.valueOf(nudgeEntry.getText());
-                    String hintText = String.valueOf(hintEntry.getText());
-                    String solutionText = String.valueOf(solutionEntry.getText());
-                    if ((nudgeText.isEmpty()) || (hintText.isEmpty()) || (solutionText.isEmpty())) {
-                        Toast msg = Toast.makeText(EditPuzzles.this, "You must complete all fields before saving", Toast.LENGTH_LONG);
-                        msg.show();
-                    } else {
-                            currentPuzzle.setNudge(nudgeText);
-                            currentPuzzle.setHint(hintText);
-                            currentPuzzle.setSolution(solutionText);
-                        try {
-                            repository.update(currentPuzzle);
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
-                        Intent intent = new Intent(EditPuzzles.this, PuzzleList.class);
-                        intent.putExtra("name", currentRoom.getRoomName());
-                        intent.putExtra("id", roomID);
-                        startActivity(intent);
+                } else {
+                        currentPuzzle.setNudge(nudgeText1);
+                        currentPuzzle.setHint(hintText1);
+                        currentPuzzle.setSolution(solutionText1);
+                    try {
+                        repository.update(currentPuzzle);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
                     }
+                    Intent intent = new Intent(EditPuzzles.this, PuzzleList.class);
+                    intent.putExtra("name", currentRoom.getRoomName());
+                    intent.putExtra("id", roomID);
+                    startActivity(intent);
                 }
             }
         });
 
         //CREATE BUTTON AND LISTENER FOR CANCEL CHANGES BUTTON
         Button cancelChangesButton = findViewById(R.id.cancelChangesButton);
-        cancelChangesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(EditPuzzles.this, PuzzleList.class);
-                intent.putExtra("name", currentRoom.getRoomName());
-                intent.putExtra("id", roomID);
-                startActivity(intent);
-            }
+        cancelChangesButton.setOnClickListener(v -> {
+            Intent intent = new Intent(EditPuzzles.this, PuzzleList.class);
+            intent.putExtra("name", currentRoom.getRoomName());
+            intent.putExtra("id", roomID);
+            startActivity(intent);
+
         });
 
         //CREATE BUTTON AND LISTENER FOR DELETE PUZZLE BUTTON
         Button deletePuzzleButton = findViewById(R.id.deletePuzzleButton);
-        deletePuzzleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    repository.delete(currentPuzzle);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-                int i = 1;
-                for (Puzzle puzzle: repository.getmRoomPuzzles(roomID)){
-                    puzzle.setPuzzleNum(i);
-                    try {repository.update(puzzle);}
-                    catch(Exception e) {throw new RuntimeException(e);}
-                    ++i;
-                }
-
-                Intent intent = new Intent(EditPuzzles.this, PuzzleList.class);
-                intent.putExtra("name", currentRoom.getRoomName());
-                intent.putExtra("id", currentRoom.getRoomID());
-                startActivity(intent);
+        deletePuzzleButton.setOnClickListener(v -> {
+            try {
+                repository.delete(currentPuzzle);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
+            int i = 1;
+            for (Puzzle puzzle: repository.getmRoomPuzzles(roomID)){
+                puzzle.setPuzzleNum(i);
+                try {repository.update(puzzle);}
+                catch(Exception e) {throw new RuntimeException(e);}
+                ++i;
+            }
+
+            Intent intent = new Intent(EditPuzzles.this, PuzzleList.class);
+            intent.putExtra("name", currentRoom.getRoomName());
+            intent.putExtra("id", currentRoom.getRoomID());
+            startActivity(intent);
         });
     }
 }

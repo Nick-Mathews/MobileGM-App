@@ -2,7 +2,6 @@ package com.example.mobilegamemaster.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,7 +18,6 @@ import com.example.mobilegamemaster.Entities.Room;
 import com.example.mobilegamemaster.R;
 import com.example.mobilegamemaster.database.Repository;
 
-import java.util.List;
 
 public class AddPuzzles extends AppCompatActivity {
     //CREATE REPOSITORY, ROOMID AND PUZZLEID VARIABLES
@@ -67,86 +65,24 @@ public class AddPuzzles extends AppCompatActivity {
         String solutionLabel = "Puzzle " + puzzleNum + " Solution:";
         solutionView.setText(solutionLabel);
 
-        //CREATE BUTTON AND LISTENER FOR 'ABANDON ROOM' BUTTON
+        //CREATE BUTTON AND LISTENER FOR 'ABANDON PUZZLE' BUTTON
         Button abandonButton = findViewById(R.id.abandonButton);
-        abandonButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(roomID == -1) {
-                    Intent intent = new Intent(AddPuzzles.this, MainActivity.class);
-                    startActivity(intent);
-                }
-                else {
-                    for (Room room: repository.getmAllRooms()) {
-                        if (room.getRoomID() == roomID) {
-                            currentRoom = room;
-                        }
-                        List<Puzzle> roomPuzzles = repository.getmRoomPuzzles(roomID);
-                        if (roomPuzzles != null) {
-                            for(int i=0; i < roomPuzzles.size(); ++i) {
-                                Puzzle puzz = roomPuzzles.get(i);
-                                try {
-                                    repository.delete(puzz);
-                                } catch (Exception e) {
-                                    throw new RuntimeException(e);
-                                }
-                            }
-                        }
-                    }
-                    try {
-                        repository.delete(currentRoom);
-                    } catch(Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                    Intent intent = new Intent(AddPuzzles.this, MainActivity.class);
-                    startActivity(intent);
-                }
+        abandonButton.setOnClickListener(v -> {
+            if(roomID == -1) {
+                Intent intent = new Intent(AddPuzzles.this, MainActivity.class);
+                startActivity(intent);
+            }
+            else {
+                Intent intent = new Intent(AddPuzzles.this, PuzzleList.class);
+                intent.putExtra("id", roomID);
+                intent.putExtra("name", roomName);
+                startActivity(intent);
             }
         });
 
         //CREATE BUTTON AND LISTENER FOR 'SAVE AND FINISH' BUTTON
         Button finishButton = findViewById(R.id.finishButton);
-        finishButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (roomID == -1) {
-                    Toast msg = Toast.makeText(AddPuzzles.this, "Your room ID is invalid", Toast.LENGTH_LONG);
-                    msg.show();
-                }
-                else {
-                    String nudgeText = String.valueOf(nudgeEntry.getText());
-                    String hintText = String.valueOf(hintEntry.getText());
-                    String solutionText = String.valueOf(solutionEntry.getText());
-                    if ((nudgeText.isEmpty()) || (hintText.isEmpty()) || (solutionText.isEmpty())) {
-                        Toast msg = Toast.makeText(AddPuzzles.this, "You must complete all fields before saving", Toast.LENGTH_LONG);
-                        msg.show();
-                    } else {
-                        if (repository.getmAllPuzzles().isEmpty()){
-                            puzzleID = 1;
-                        }
-                        else {
-                            puzzleID = repository.getmAllPuzzles().get(repository.getmAllPuzzles().size()-1).getPuzzleID() + 1;
-                        }
-                        Puzzle newPuzzle = new Puzzle(puzzleID, puzzleNum, roomID, nudgeText, hintText, solutionText);
-                        try {
-                            repository.insert(newPuzzle);
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
-                        Intent intent = new Intent(AddPuzzles.this, PuzzleList.class);
-                        intent.putExtra("id", roomID);
-                        intent.putExtra("name", roomName);
-                        startActivity(intent);
-                    }
-                }
-            }
-        });
-
-        //CREATE BUTTON AND LISTENER FOR 'ADD NEXT' BUTTON
-        Button addNextButton = findViewById(R.id.nextPuzzleButton);
-        addNextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        finishButton.setOnClickListener(v -> {
             if (roomID == -1) {
                 Toast msg = Toast.makeText(AddPuzzles.this, "Your room ID is invalid", Toast.LENGTH_LONG);
                 msg.show();
@@ -171,20 +107,54 @@ public class AddPuzzles extends AppCompatActivity {
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
-                    for (Room room: repository.getmAllRooms()) {
-                        if (room.getRoomID() == roomID) {
-                            currentRoom = room;
-                        }
-                    }
-                    Intent intent = new Intent(AddPuzzles.this, AddPuzzles.class);
-                    intent.putExtra("name", currentRoom.getRoomName());
-                    intent.putExtra("id", currentRoom.getRoomID());
-                    int nextPuzzleNum = newPuzzle.getPuzzleNum() + 1;
-                    intent.putExtra("puzzle_num", nextPuzzleNum);
+                    Intent intent = new Intent(AddPuzzles.this, PuzzleList.class);
+                    intent.putExtra("id", roomID);
+                    intent.putExtra("name", roomName);
                     startActivity(intent);
                 }
             }
+        });
+
+        //CREATE BUTTON AND LISTENER FOR 'ADD NEXT' BUTTON
+        Button addNextButton = findViewById(R.id.nextPuzzleButton);
+        addNextButton.setOnClickListener(v -> {
+        if (roomID == -1) {
+            Toast msg = Toast.makeText(AddPuzzles.this, "Your room ID is invalid", Toast.LENGTH_LONG);
+            msg.show();
+        }
+        else {
+            String nudgeText = String.valueOf(nudgeEntry.getText());
+            String hintText = String.valueOf(hintEntry.getText());
+            String solutionText = String.valueOf(solutionEntry.getText());
+            if ((nudgeText.isEmpty()) || (hintText.isEmpty()) || (solutionText.isEmpty())) {
+                Toast msg = Toast.makeText(AddPuzzles.this, "You must complete all fields before saving", Toast.LENGTH_LONG);
+                msg.show();
+            } else {
+                if (repository.getmAllPuzzles().isEmpty()){
+                    puzzleID = 1;
+                }
+                else {
+                    puzzleID = repository.getmAllPuzzles().get(repository.getmAllPuzzles().size()-1).getPuzzleID() + 1;
+                }
+                Puzzle newPuzzle = new Puzzle(puzzleID, puzzleNum, roomID, nudgeText, hintText, solutionText);
+                try {
+                    repository.insert(newPuzzle);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+                for (Room room: repository.getmAllRooms()) {
+                    if (room.getRoomID() == roomID) {
+                        currentRoom = room;
+                    }
+                }
+                Intent intent = new Intent(AddPuzzles.this, AddPuzzles.class);
+                intent.putExtra("name", currentRoom.getRoomName());
+                intent.putExtra("id", currentRoom.getRoomID());
+                int nextPuzzleNum = newPuzzle.getPuzzleNum() + 1;
+                intent.putExtra("puzzle_num", nextPuzzleNum);
+                startActivity(intent);
             }
+        }
         });
     }
 }

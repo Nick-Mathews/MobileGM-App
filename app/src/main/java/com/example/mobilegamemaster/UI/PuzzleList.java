@@ -2,7 +2,6 @@ package com.example.mobilegamemaster.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -60,62 +59,53 @@ public class PuzzleList extends AppCompatActivity {
 
         //BUTTON THAT ADDS A NEW PUZZLE TO ROOM
         Button addPuzzleButton = findViewById(R.id.addPuzzleButton);
-        addPuzzleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(PuzzleList.this, AddPuzzles.class);
-                intent.putExtra("name", roomName);
-                intent.putExtra("id", roomID);
-                intent.putExtra("puzzle_num", lastIndex);
-                startActivity(intent);
-            }
+        addPuzzleButton.setOnClickListener(v -> {
+            Intent intent = new Intent(PuzzleList.this, AddPuzzles.class);
+            intent.putExtra("name", roomName);
+            intent.putExtra("id", roomID);
+            intent.putExtra("puzzle_num", lastIndex);
+            startActivity(intent);
         });
 
         //BUTTON THAT RETURNS TO THE MAIN ACTIVITY
         Button finishButton = findViewById(R.id.finishEditsButton);
-        finishButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(PuzzleList.this, MainActivity.class);
-                startActivity(intent);
-            }
+        finishButton.setOnClickListener(v -> {
+            Intent intent = new Intent(PuzzleList.this, MainActivity.class);
+            startActivity(intent);
         });
 
         //BUTTON THAT DELETES THE EXISTING ROOM AND PUZZLES
         Button deleteRoomButton = findViewById(R.id.deleteRoomButton);
-        deleteRoomButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (roomID == -1) {
-                    Intent intent = new Intent(PuzzleList.this, MainActivity.class);
-                    startActivity(intent);
-                }
-                else {
-                    for(Room room: repository.getmAllRooms()) {
-                        if (room.getRoomID() == roomID) {
-                            currentRoom = room;
-                        }
-                        List<Puzzle> roomPuzzles = repository.getmRoomPuzzles(roomID);
-                        if (roomPuzzles != null) {
-                            for(int i=0; i < roomPuzzles.size(); ++i) {
-                                Puzzle puzzle = roomPuzzles.get(i);
-                                try {
-                                    repository.delete(puzzle);
-                                } catch (Exception e) {
-                                    throw new RuntimeException(e);
-                                }
-                            }
-                        }
-                    }
-                    try {
-                        repository.delete(currentRoom);
-                    } catch(Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }
+        deleteRoomButton.setOnClickListener(v -> {
+            if (roomID == -1) {
                 Intent intent = new Intent(PuzzleList.this, MainActivity.class);
                 startActivity(intent);
             }
+            else {
+                for(Room room: repository.getmAllRooms()) {
+                    if (room.getRoomID() == roomID) {
+                        currentRoom = room;
+                    }
+                    List<Puzzle> roomPuzzles = repository.getmRoomPuzzles(roomID);
+                    if (roomPuzzles != null) {
+                        for(int i=0; i < roomPuzzles.size(); ++i) {
+                            Puzzle puzzle = roomPuzzles.get(i);
+                            try {
+                                repository.delete(puzzle);
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }
+                }
+                try {
+                    repository.delete(currentRoom);
+                } catch(Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            Intent intent = new Intent(PuzzleList.this, MainActivity.class);
+            startActivity(intent);
         });
     }
 }

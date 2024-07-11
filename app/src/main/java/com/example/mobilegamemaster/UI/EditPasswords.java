@@ -2,7 +2,6 @@ package com.example.mobilegamemaster.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -69,9 +68,7 @@ public class EditPasswords extends AppCompatActivity {
 
         //CREATE BUTTON AND LISTENER FOR SAVE USER BUTTON
         Button saveButton = findViewById(R.id.saveUserButton);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        saveButton.setOnClickListener(v -> {
                 //CHECK FOR VALID PASSWORD ID
                 if (passwordID==-1) {
                     Toast msg = Toast.makeText(EditPasswords.this, "Your username is invalid", Toast.LENGTH_LONG);
@@ -124,32 +121,26 @@ public class EditPasswords extends AppCompatActivity {
                         }
                     }
                 }
-            }
         });
 
         //CREATE BUTTON AND LISTENER FOR CANCEL CHANGES BUTTON
         Button cancelChangesButton = findViewById(R.id.cancelChangesButton);
-        cancelChangesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(EditPasswords.this, PasswordsList.class);
-                startActivity(intent);
-            }
+        cancelChangesButton.setOnClickListener(v -> {
+           Intent intent = new Intent(EditPasswords.this, PasswordsList.class);
+           startActivity(intent);
+
         });
 
         //CREATE BUTTON AND LISTENER FOR DELETE USER BUTTON
         Button deleteUserButton = findViewById(R.id.deleteUserButton);
-        deleteUserButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    repository.delete(currentPassword);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-                Intent intent = new Intent(EditPasswords.this, PasswordsList.class);
-                startActivity(intent);
+        deleteUserButton.setOnClickListener(v -> {
+            try {
+                repository.delete(currentPassword);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
-        });
+            Intent intent = new Intent(EditPasswords.this, PasswordsList.class);
+            startActivity(intent);
+    });
     }
 }

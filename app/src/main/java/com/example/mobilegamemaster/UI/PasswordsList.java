@@ -2,7 +2,6 @@ package com.example.mobilegamemaster.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
@@ -47,23 +46,18 @@ public class PasswordsList extends AppCompatActivity {
 
         //CREATE AND SET CLICK LISTENER FOR FINISH BUTTON
         Button finishButton = findViewById(R.id.finishButton);
-        finishButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(PasswordsList.this, MainActivity.class);
-                startActivity(intent);
-            }
+        finishButton.setOnClickListener(v -> {
+            Intent intent = new Intent(PasswordsList.this, MainActivity.class);
+            startActivity(intent);
         });
 
         //CREATE AND SET CLICK LISTENER FOR ADD USER BUTTON
         Button addUserButton = findViewById(R.id.addUserButton);
-        addUserButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(PasswordsList.this, EditPasswords.class);
-                intent.putExtra("id", allPasswords.get(allPasswords.size() -1 ).getPasswordID() + 1);
-                startActivity(intent);
-            }
+        addUserButton.setOnClickListener(v -> {
+            Intent intent = new Intent(PasswordsList.this, EditPasswords.class);
+            intent.putExtra("id", allPasswords.get(allPasswords.size() -1 ).getPasswordID() + 1);
+            startActivity(intent);
+
         });
     }
     //ON RESUME FUNCTION THAT REPOPULATES AND REFRESHES THE ADAPTER

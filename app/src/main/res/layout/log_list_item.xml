@@ -18,7 +18,8 @@
             android:text="Room Name"
             android:textSize="18sp"
             android:layout_marginTop="6sp"
-            android:layout_marginStart="4sp"/>
+            android:layout_marginStart="4sp"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/logTimeLeft"
@@ -26,7 +27,8 @@
             android:layout_height="wrap_content"
             android:text="Time Left"
             android:textSize="18sp"
-            android:layout_marginTop="6sp"/>
+            android:layout_marginTop="6sp"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/logGameDate"
@@ -34,7 +36,8 @@
             android:layout_height="wrap_content"
             android:text="Date Played"
             android:textSize="18sp"
-            android:layout_marginTop="6sp"/>
+            android:layout_marginTop="6sp"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/logStartTime"
@@ -42,6 +45,7 @@
             android:layout_height="wrap_content"
             android:text="Start Time"
             android:textSize="18sp"
-            android:layout_marginTop="6sp"/>
+            android:layout_marginTop="6sp"
+            android:textColor="@color/black"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </HorizontalScrollView>

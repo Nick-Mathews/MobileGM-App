@@ -25,7 +25,8 @@
             android:gravity="center"
             android:text="@string/puzzle_list"
             android:textSize="32sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -33,7 +34,8 @@
             android:layout_marginBottom="8sp"
             android:gravity="center"
             android:text="@string/room_name"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/roomNameText"
@@ -42,7 +44,8 @@
             android:gravity="center"
             android:text="Placeholder"
             android:textSize="28sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

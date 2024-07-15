@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.mobilegamemaster'
+    namespace 'com.packages.mobilegamemaster'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.mobilegamemaster"
+        applicationId "com.packages.mobilegamemaster"
         minSdk 26
         targetSdk 34
         versionCode 1

@@ -25,14 +25,16 @@
             android:layout_margin="10sp"
             android:text="@string/room"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/roomNameView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/room_name"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -57,17 +59,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/nudge_num"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:labelFor="@+id/editNudgeText"/>
 
             <EditText
                 android:id="@+id/editNudgeText"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="48sp"
                 android:autofillHints="nudge"
                 android:ems="10"
                 android:gravity="start|top"
                 android:inputType="textMultiLine"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -80,17 +85,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hint_num"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:labelFor="@+id/editHintText"/>
 
             <EditText
                 android:id="@+id/editHintText"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="48sp"
                 android:autofillHints="hint"
                 android:ems="10"
                 android:gravity="start|top"
                 android:inputType="textMultiLine"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -103,17 +111,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/solution_num"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:labelFor="@+id/editSolutionText"/>
 
             <EditText
                 android:id="@+id/editSolutionText"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="48sp"
                 android:autofillHints="solution"
                 android:ems="10"
                 android:gravity="start|top"
                 android:inputType="textMultiLine"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+            android:textColor="@color/black"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -133,21 +144,22 @@
             android:layout_height="wrap_content"
             android:id="@+id/nextPuzzleButton"
             android:text="@string/next_puzzle"
-            android:layout_margin="12sp"/>
+            android:layout_marginStart="4sp"/>
 
         <Button
             android:layout_width="110sp"
             android:layout_height="wrap_content"
             android:id="@+id/finishButton"
             android:text="@string/save_and_finish"
-            android:layout_margin="12sp"/>
+            android:layout_marginHorizontal="4sp"
+            />
 
         <Button
             android:layout_width="110sp"
             android:layout_height="wrap_content"
             android:id="@+id/abandonButton"
             android:text="@string/abandon_puzzle"
-            android:layout_margin="12sp"/>
+            android:layout_marginEnd="4sp"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 

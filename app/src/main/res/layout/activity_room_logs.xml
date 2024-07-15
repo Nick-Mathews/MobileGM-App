@@ -7,6 +7,33 @@
     android:layout_height="match_parent"
     tools:context=".UI.RoomLogs"
     android:background="@drawable/pavel_neznanov_background">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/toolbarLayout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@color/gray"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <TextView
         android:id="@+id/gameLogsView"
@@ -15,10 +42,11 @@
         android:text="@string/game_logs"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
         android:textSize="36sp"
         android:textStyle="bold"
-        android:layout_margin="12sp"/>
+        android:layout_margin="12sp"
+        android:textColor="#000000"/>
     <TextView
         android:id="@+id/searchText"
         android:layout_width="wrap_content"
@@ -30,7 +58,8 @@
         android:textStyle="italic|bold"
         android:layout_marginStart="8sp"
         android:layout_marginEnd="8sp"
-        android:labelFor="@+id/searchEditText"/>
+        android:labelFor="@+id/searchEditText"
+        android:textColor="#000000"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -47,7 +76,8 @@
             android:layout_width="240sp"
             android:layout_height="48sp"
             android:autofillHints="room name"
-            android:inputType="text" />
+            android:inputType="text"
+            android:textColor="#000000"/>
 
         <Button
             android:id="@+id/searchButton"
@@ -59,7 +89,10 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/searchBarLayout">
+        app:layout_constraintTop_toBottomOf="@+id/searchBarLayout"
+        android:shrinkColumns="*"
+        android:stretchColumns="*"
+        >
         <TableRow>
             <TextView
                 android:layout_column="1"
@@ -67,30 +100,29 @@
                 android:layout_height="wrap_content"
                 android:text="@string/room_name"
                 android:textStyle="bold"
-                android:layout_marginStart="8sp"
-                android:layout_marginTop="6sp"/>
+                android:textColor="@color/black"/>
             <TextView
+                android:layout_column="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/time_left"
                 android:textStyle="bold"
-                android:layout_marginStart="20sp"
-                android:layout_marginTop="6sp"/>
+                android:textColor="@color/black"/>
             <TextView
+                android:layout_column="3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/date_played"
                 android:textStyle="bold"
-                android:layout_marginStart="38sp"
-                android:layout_marginTop="6sp"/>
+                android:textColor="@color/black"/>
 
             <TextView
+                android:layout_column="4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/start_time"
                 android:textStyle="bold"
-                android:layout_marginStart="38sp"
-                android:layout_marginTop="6sp"/>
+                android:textColor="@color/black"/>
         </TableRow>
         <HorizontalScrollView>
 

@@ -25,7 +25,7 @@
     <string name="edit_rooms">Edit Rooms</string>
     <string name="choose_room_to_edit_or_delete">Choose room to edit or delete:</string>
     <string name="add_an_escape_room">Add an Escape Room</string>
-    <string name="edit_puzzles">Edit Puzzles</string>
+    <string name="puzzle_list">Puzzle List</string>
     <string name="delete_logs">Delete Logs</string>
     <string name="add_room">Add Room</string>
     <string name="edit_delete_room">Edit/Delete Room</string>
@@ -63,12 +63,15 @@
     or simply to edit or add to the existing puzzles.</string>
     <string name="welcome_body3"> Edit/Delete Users gives you a way to add new users with admin privileges or
     edit the name or password of existing users.</string>
-    <string name="welcome_body4">Finally the Report Logs feature gives you a record of the statistics for
-    groups whom have completed your rooms, successfully or otherwise. You can search by room name and find
+    <string name="welcome_body4">Finally the Report Logs feature gives you a record of statistics for
+    groups who have completed your rooms. You can search by room name and find
     the name of the room played, the date and time the room was started and the time remaining at the end.</string>
     <string name="ok">Okay</string>
     <string name="search">Search</string>
     <string name="time_left">Time Left</string>
     <string name="date_played">Date Played</string>
     <string name="start_time">Start Time</string>
+    <string name="back">Back</string>
+    <string name="admin">Admin</string>
+    <string name="admin_pass">8675</string>
 </resources>

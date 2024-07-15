@@ -26,6 +26,8 @@ public class EditPasswords extends AppCompatActivity {
     Password currentPassword;
     String userName, password;
     int passwordID;
+    TextView userNameView;
+    EditText userNameEntry, currentPasswordEntry, newPasswordEntry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +46,7 @@ public class EditPasswords extends AppCompatActivity {
         //RETRIEVE INTENT FOR USE, CREATE PASSWORD OBJECT, RETRIEVE USERNAME AND PASSWORD
         passwordID = getIntent().getIntExtra("id", -1);
         if (passwordID == allPasswords.get(allPasswords.size() - 1).getPasswordID() + 1) {
-            TextView userNameView = findViewById(R.id.userNameText);
+            userNameView = findViewById(R.id.userNameText);
             String newUser = "New User";
             userNameView.setText(newUser);
         }
@@ -54,14 +56,14 @@ public class EditPasswords extends AppCompatActivity {
             password = currentPassword.getPassword();
 
             //FIND AND SET USERNAME TEXTVIEW
-            TextView userNameView = findViewById(R.id.userNameText);
+            userNameView = findViewById(R.id.userNameText);
             userNameView.setText(userName);
             }
 
             //CREATE CONTAINERS FOR THE EDITTEXT ENTRIES, POPULATE WITH CURRENT NAME
-            EditText userNameEntry = findViewById(R.id.editUsernameText);
-            EditText currentPasswordEntry = findViewById(R.id.currentPasswordText);
-            EditText newPasswordEntry = findViewById(R.id.newPasswordText);
+            userNameEntry = findViewById(R.id.editUsernameText);
+            currentPasswordEntry = findViewById(R.id.currentPasswordText);
+            newPasswordEntry = findViewById(R.id.newPasswordText);
 
             userNameEntry.setText(userName);
 
@@ -134,13 +136,19 @@ public class EditPasswords extends AppCompatActivity {
         //CREATE BUTTON AND LISTENER FOR DELETE USER BUTTON
         Button deleteUserButton = findViewById(R.id.deleteUserButton);
         deleteUserButton.setOnClickListener(v -> {
-            try {
-                repository.delete(currentPassword);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+            if (String.valueOf(userNameView.getText()).equals("New User")) {
+                Intent intent = new Intent(EditPasswords.this, PasswordsList.class);
+                startActivity(intent);
             }
-            Intent intent = new Intent(EditPasswords.this, PasswordsList.class);
-            startActivity(intent);
+            else {
+                try {
+                    repository.delete(currentPassword);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+                Intent intent = new Intent(EditPasswords.this, PasswordsList.class);
+                startActivity(intent);
+            }
     });
     }
 }

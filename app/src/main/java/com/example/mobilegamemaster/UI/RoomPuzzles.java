@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -150,6 +151,14 @@ public class RoomPuzzles extends AppCompatActivity {
                 toast.show();
             }
         });
+
+        //CANCEL BACK GESTURE FOR ANDROID 13 AND ABOVE
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+
+            }
+        });
     }
 
     //FUNCTION THAT CREATES AND RUNS A COUNTDOWN TIMER OF 60 MINUTES, WHICH CALLS ROOM LOSS ACTIVITY WHEN ON FINISH RUNS
@@ -182,11 +191,12 @@ public class RoomPuzzles extends AppCompatActivity {
         countDownTimer.start();
         return countDownTimer;
     }
-    //INTENDED TO STOP USERS FROM LEAVING THE ROOM PUZZLES ACTIVITY WITHOUT COMPLETING THE GAME BY PRESSING THE BACK BUTTON
-    //METHOD IS DEPRECATED AND WILL NOT WORK AT HIGHER API LEVELS
+    //INTENDED TO STOP USERS FROM LEAVING THE ROOM PUZZLES ACTIVITY WITHOUT COMPLETING THE GAME
+    //BY PRESSING THE BACK BUTTON
+    //ONLY FOR ANDROID API LEVEL 12 AND BELOW
 
     @Override
     public void onBackPressed() {
-
+        super.onBackPressed();
     }
 }

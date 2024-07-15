@@ -143,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         cancelText.setOnClickListener(v -> {
+            username = loginDialog.findViewById(R.id.username);
             password = loginDialog.findViewById(R.id.password);
             username.setText("");
             password.setText("");
@@ -165,6 +166,5 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.chooseGameRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(roomAdapter);
-
     }
 }

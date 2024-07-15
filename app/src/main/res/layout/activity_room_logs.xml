@@ -45,7 +45,7 @@
         <EditText
             android:id="@+id/searchEditText"
             android:layout_width="240sp"
-            android:layout_height="wrap_content"
+            android:layout_height="48sp"
             android:autofillHints="room name"
             android:inputType="text" />
 
@@ -111,7 +111,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="20sp"
         android:clickable="true"
-        android:contentDescription="@string/back_button"
+        android:contentDescription="@string/back"
         android:src="@android:drawable/ic_menu_revert"
         app:fabSize="auto"
         app:layout_constraintBottom_toBottomOf="parent"

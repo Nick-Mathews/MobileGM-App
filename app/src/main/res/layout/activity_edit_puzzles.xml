@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="12sp"
             android:gravity="center"
-            android:text="@string/edit_puzzles"
+            android:text="@string/puzzle_list"
             android:textSize="32sp"
             android:textStyle="bold" />
 

@@ -11,7 +11,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.mobilegamemaster.Entities.Room;
 import com.example.mobilegamemaster.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class RoomStart extends AppCompatActivity {
     //CREATE ROOM ID AND ROOM NAME VARIABLES, AND ROOM NAME TEXT VIEWS
@@ -42,6 +44,12 @@ public class RoomStart extends AppCompatActivity {
             intent.putExtra("name", roomName);
             intent.putExtra("id", roomID);
             intent.putExtra("puzzle_num", 0);
+            startActivity(intent);
+        });
+
+        FloatingActionButton backButton = findViewById(R.id.floating_back_button);
+        backButton.setOnClickListener(v -> {
+            Intent intent = new Intent(RoomStart.this, MainActivity.class);
             startActivity(intent);
         });
     }

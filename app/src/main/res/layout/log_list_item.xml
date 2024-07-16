@@ -9,43 +9,47 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_gravity="center">
-
+        android:shrinkColumns="*"
+        android:stretchColumns="*"
+        >
         <TextView
+            android:layout_column="1"
             android:id="@+id/logName"
-            android:layout_width="110sp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Room Name"
+            android:text="@string/room_name"
             android:textSize="18sp"
-            android:layout_marginTop="6sp"
-            android:layout_marginStart="4sp"
-            android:textColor="@color/black"/>
+            android:textColor="?android:attr/textColorPrimary"
+            android:layout_margin="4sp"/>
 
         <TextView
+            android:layout_column="2"
             android:id="@+id/logTimeLeft"
-            android:layout_width="85sp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Time Left"
+            android:text="@string/time_left"
             android:textSize="18sp"
-            android:layout_marginTop="6sp"
-            android:textColor="@color/black"/>
+            android:textColor="?android:attr/textColorPrimary"
+            android:layout_margin="4sp"/>
 
         <TextView
+            android:layout_column="3"
             android:id="@+id/logGameDate"
-            android:layout_width="110sp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date Played"
+            android:text="@string/date_played"
             android:textSize="18sp"
-            android:layout_marginTop="6sp"
-            android:textColor="@color/black"/>
+            android:textColor="?android:attr/textColorPrimary"
+            android:layout_margin="4sp"/>
 
         <TextView
+            android:layout_column="4"
             android:id="@+id/logStartTime"
-            android:layout_width="100sp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start Time"
+            android:text="@string/start_time"
             android:textSize="18sp"
-            android:layout_marginTop="6sp"
-            android:textColor="@color/black"/>
+            android:textColor="?android:attr/textColorPrimary"
+            android:layout_margin="4sp"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </HorizontalScrollView>

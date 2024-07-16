@@ -8,11 +8,11 @@
         android:id="@+id/editTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Room Names"
+        android:text="@string/placeholder"
         android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />

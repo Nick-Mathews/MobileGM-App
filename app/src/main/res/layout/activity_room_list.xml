@@ -27,8 +27,7 @@
             android:gravity="center"
             android:textStyle="bold"
             android:layout_margin="18sp"
-            android:textColor="@color/black"
-            />
+            android:textColor="?android:attr/textColorPrimary" />
 
         <TextView
             android:layout_width="match_parent"
@@ -37,8 +36,7 @@
             android:gravity="center"
             android:layout_margin="18sp"
             android:textSize="20sp"
-            android:textColor="@color/black"
-            />
+            android:textColor="?android:attr/textColorPrimary" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
     <androidx.recyclerview.widget.RecyclerView

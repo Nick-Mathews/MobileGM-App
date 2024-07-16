@@ -29,7 +29,8 @@
             android:exported="false" />
         <activity
             android:name=".UI.RoomLogs"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".UI.RoomLoss"
             android:exported="false" />

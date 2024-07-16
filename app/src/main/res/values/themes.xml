@@ -3,6 +3,7 @@
     <style name="Base.Theme.MobileGameMaster" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/gray</item>
+
     </style>
 
     <style name="Theme.MobileGameMaster" parent="Base.Theme.MobileGameMaster" />

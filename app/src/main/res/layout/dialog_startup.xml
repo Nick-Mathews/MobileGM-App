@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="375sp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:minWidth="320sp"
     android:orientation="vertical"
     android:layout_gravity="center"
-    android:background="#dddddd"
+    android:background="?android:attr/colorBackground"
     >
 
     <TextView
@@ -12,16 +13,16 @@
         android:layout_height="wrap_content"
         android:text="@string/welcome_to_mobile_game_master"
         android:textStyle="bold"
-        android:textColor="#ffffff"
+        android:textColor="?android:attr/textColorPrimary"
         android:gravity="center"
-        android:background="#bb77bb"
+        android:background="?android:attr/colorAccent"
         android:fontFamily="serif"
         />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/welcome_intro"
-        android:textColor="#000000"
+        android:textColor="?android:attr/textColorPrimary"
         android:layout_marginBottom="4sp"
         android:layout_marginStart="2sp"
         />
@@ -30,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/welcome_body1"
-        android:textColor="#000000"
+        android:textColor="?android:attr/textColorPrimary"
         android:layout_marginBottom="4sp"
         android:layout_marginStart="2sp"
         />
@@ -39,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/welcome_body2"
-        android:textColor="#000000"
+        android:textColor="?android:attr/textColorPrimary"
         android:layout_marginBottom="4sp"
         android:layout_marginStart="2sp"
         />
@@ -48,7 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/welcome_body3"
-        android:textColor="#000000"
+        android:textColor="?android:attr/textColorPrimary"
         android:layout_marginBottom="4sp"
         android:layout_marginStart="2sp"
         />
@@ -57,7 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/welcome_body4"
-        android:textColor="#000000"
+        android:textColor="?android:attr/textColorPrimary"
         android:layout_marginBottom="4sp"
         android:layout_marginStart="2sp"
         />

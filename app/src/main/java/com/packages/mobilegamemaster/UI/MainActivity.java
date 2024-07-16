@@ -1,14 +1,17 @@
 package com.packages.mobilegamemaster.UI;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -31,11 +34,11 @@ public class MainActivity extends AppCompatActivity {
     //CREATE REPOSITORY, ROOM LIST
     Repository repository;
     List<Room> allRooms;
-    TextView signInText, cancelText;
+    Button signInButton, cancelButton;
     EditText username, password;
     Dialog loginDialog, startupDialog;
     Button okButton;
-    boolean found;
+    boolean found, dialogShown;
     public static final String PREFS_NAME = "MyPrefsFile";
 
     @Override
@@ -58,15 +61,15 @@ public class MainActivity extends AppCompatActivity {
         //SETUP SIGN-IN DIALOG FOR ADMIN MENU
         loginDialog = new Dialog(MainActivity.this);
         loginDialog.setContentView(R.layout.dialog_login);
-        signInText = loginDialog.findViewById(R.id.signInText);
-        cancelText = loginDialog.findViewById(R.id.cancelText);
+        signInButton = loginDialog.findViewById(R.id.signInButton);
+        cancelButton = loginDialog.findViewById(R.id.cancelButton);
 
         //SETUP FIRST TIME STARTUP DIALOG AND SHARED PREFS SETTINGS
         startupDialog = new Dialog(MainActivity.this);
         startupDialog.setContentView(R.layout.dialog_startup);
         okButton = startupDialog.findViewById(R.id.okButton);
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        boolean dialogShown = settings.getBoolean("dialogShown", false);
+        dialogShown = settings.getBoolean("dialogShown", false);
 
         if (!dialogShown) {
             startupDialog.show();
@@ -100,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
             this.finish();
             return true;
         }
-        signInText.setOnClickListener(v -> {
+        signInButton.setOnClickListener(v -> {
             //ASSIGN EDIT TEXT VIEW AND SET FOUND TO FALSE
             username = loginDialog.findViewById(R.id.username);
             password = loginDialog.findViewById(R.id.password);
@@ -118,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 for (Password pass : repository.getmAllPasswords()) {
                     if ((pass.getPassword().equals(String.valueOf(password.getText()))) && (pass.getUserName().equals(String.valueOf(username.getText())))) {
                         found = true;
+                        hideKeyboardFrom(this, v);
                         if (item.getItemId() == R.id.add_room) {
                             Intent intent = new Intent(MainActivity.this, AddRoom.class);
                             startActivity(intent);
@@ -147,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
                 password.setText("");
         });
 
-        cancelText.setOnClickListener(v -> {
+        cancelButton.setOnClickListener(v -> {
             username = loginDialog.findViewById(R.id.username);
             password = loginDialog.findViewById(R.id.password);
             username.setText("");
@@ -171,5 +175,10 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.chooseGameRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(roomAdapter);
+    }
+    //HIDES KEYBOARD IN FRAGMENT AFTER CORRECT LOGIN ATTEMPT
+    public static void hideKeyboardFrom(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

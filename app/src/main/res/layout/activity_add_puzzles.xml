@@ -24,17 +24,17 @@
             android:layout_height="wrap_content"
             android:layout_margin="10sp"
             android:text="@string/room"
-            android:textSize="20sp"
+            android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="@color/black"/>
+            android:textColor="?android:attr/textColorPrimary"/>
 
         <TextView
             android:id="@+id/roomNameView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/room_name"
-            android:textSize="20sp"
-            android:textColor="@color/black"/>
+            android:textSize="24sp"
+            android:textColor="?android:attr/textColorPrimary"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -59,20 +59,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/nudge_num"
-                android:textSize="18sp"
-                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textColor="?android:attr/textColorPrimary"
                 android:labelFor="@+id/editNudgeText"/>
 
             <EditText
                 android:id="@+id/editNudgeText"
                 android:layout_width="wrap_content"
-                android:layout_height="48sp"
+                android:layout_height="wrap_content"
                 android:autofillHints="nudge"
                 android:ems="10"
                 android:gravity="start|top"
                 android:inputType="textMultiLine"
-                android:textSize="18sp"
-                android:textColor="@color/black"/>
+                android:textSize="20sp"
+                android:textColor="?android:attr/textColorPrimary"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -85,20 +85,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hint_num"
-                android:textSize="18sp"
-                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textColor="?android:attr/textColorPrimary"
                 android:labelFor="@+id/editHintText"/>
 
             <EditText
                 android:id="@+id/editHintText"
                 android:layout_width="wrap_content"
-                android:layout_height="48sp"
+                android:layout_height="wrap_content"
                 android:autofillHints="hint"
                 android:ems="10"
                 android:gravity="start|top"
                 android:inputType="textMultiLine"
-                android:textSize="18sp"
-                android:textColor="@color/black"/>
+                android:textSize="20sp"
+                android:textColor="?android:attr/textColorPrimary"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -111,20 +111,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/solution_num"
-                android:textSize="18sp"
-                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textColor="?android:attr/textColorPrimary"
                 android:labelFor="@+id/editSolutionText"/>
 
             <EditText
                 android:id="@+id/editSolutionText"
                 android:layout_width="wrap_content"
-                android:layout_height="48sp"
+                android:layout_height="wrap_content"
                 android:autofillHints="solution"
                 android:ems="10"
                 android:gravity="start|top"
                 android:inputType="textMultiLine"
-                android:textSize="18sp"
-            android:textColor="@color/black"/>
+                android:textSize="20sp"
+                android:textColor="?android:attr/textColorPrimary"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -144,7 +144,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/nextPuzzleButton"
             android:text="@string/next_puzzle"
-            android:layout_marginStart="4sp"/>
+            android:layout_marginStart="4sp"
+            android:background="?android:attr/colorButtonNormal"/>
 
         <Button
             android:layout_width="110sp"
@@ -152,14 +153,15 @@
             android:id="@+id/finishButton"
             android:text="@string/save_and_finish"
             android:layout_marginHorizontal="4sp"
-            />
+            android:background="?android:attr/colorButtonNormal" />
 
         <Button
             android:layout_width="110sp"
             android:layout_height="wrap_content"
             android:id="@+id/abandonButton"
             android:text="@string/abandon_puzzle"
-            android:layout_marginEnd="4sp"/>
+            android:layout_marginEnd="4sp"
+            android:background="?android:attr/colorButtonNormal"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 

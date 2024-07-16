@@ -25,31 +25,33 @@
             android:textSize="36sp"
             android:textStyle="bold"
             android:layout_margin="30sp"
-            android:textColor="@color/black"
+            android:textColor="?android:attr/textColorPrimary"
             />
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_margin="30sp">
+            android:layout_margin="15sp">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight=".4"
                 android:text="@string/room_name"
                 android:textSize="20sp"
                 android:labelFor="@+id/enterNameText"
-                android:textColor="@color/black"/>
+                android:textColor="?android:attr/textColorPrimary"/>
 
             <EditText
                 android:id="@+id/enterNameText"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight=".5"
                 android:inputType="text"
+                android:textSize="20sp"
                 android:autofillHints="name"
                 android:layout_marginStart="12sp"
-                android:textColor="@color/black"
-                />
+                android:textColor="?android:attr/textColorPrimary" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat

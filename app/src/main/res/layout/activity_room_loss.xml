@@ -27,7 +27,7 @@
             android:gravity="center"
             android:text="@string/timer"
             android:textSize="30sp"
-            android:textColor="#081fb1"/>
+            android:textColor="?android:attr/textColorPrimary"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textColor="#081FB1"
+            android:textColor="@color/blue"
             android:textSize="60sp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -61,9 +61,9 @@
             android:id="@+id/lossText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Loss message here"
+            android:text="@string/placeholder"
             android:textAlignment="center"
-            android:textColor="#081FB1"
+            android:textColor="@color/blue"
             android:textSize="32sp"
             android:textStyle="bold" />
 
@@ -88,8 +88,8 @@
             android:textAlignment="center"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="#ffffff"
-            android:background="#000000"/>
+            android:textColor="@color/white"
+            android:background="@color/black"/>
 
         <Button
             android:id="@+id/finishButton"

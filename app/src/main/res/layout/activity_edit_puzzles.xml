@@ -58,8 +58,7 @@
         app:layout_constraintBottom_toTopOf="@+id/buttonLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/listTitleLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        >
+        app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -72,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxWidth="200sp"
-                android:minWidth="100sp"
+                android:minWidth="125sp"
                 android:text="@string/nudge_num"
                 android:textSize="18sp"
                 android:labelFor="@+id/editNudgeText"
@@ -80,10 +79,10 @@
 
             <EditText
                 android:id="@+id/editNudgeText"
-                android:layout_width="200sp"
-                android:layout_height="48sp"
-                android:maxWidth="488dp"
-                android:minWidth="200sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="225sp"
+                android:maxWidth="488sp"
                 android:autofillHints="nudge"
                 android:gravity="start|top"
                 android:inputType="textMultiLine"
@@ -101,8 +100,7 @@
                     android:id="@+id/hintNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:maxWidth="200sp"
-                    android:minWidth="100sp"
+                    android:minWidth="125sp"
                     android:text="@string/hint_num"
                     android:textSize="18sp"
                     android:labelFor="@+id/editHintText"
@@ -110,10 +108,10 @@
 
                 <EditText
                     android:id="@+id/editHintText"
-                    android:layout_width="200sp"
-                    android:layout_height="48sp"
-                    android:maxWidth="488dp"
-                    android:minWidth="200sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="488sp"
+                    android:minWidth="225sp"
                     android:autofillHints="hint"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
@@ -131,8 +129,7 @@
                     android:id="@+id/solutionNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:maxWidth="200sp"
-                    android:minWidth="100sp"
+                    android:minWidth="125sp"
                     android:text="@string/solution_num"
                     android:textSize="18sp"
                     android:labelFor="@+id/editSolutionText"
@@ -140,10 +137,10 @@
 
                 <EditText
                     android:id="@+id/editSolutionText"
-                    android:layout_width="200sp"
-                    android:layout_height="48sp"
-                    android:maxWidth="488dp"
-                    android:minWidth="200sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="488sp"
+                    android:minWidth="225sp"
                     android:autofillHints="solution"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
@@ -163,23 +160,26 @@
         android:gravity="center">
 
         <Button
-            android:layout_width="100sp"
-            android:layout_height="55sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="110sp"
             android:layout_marginHorizontal="12sp"
             android:id="@+id/savePuzzleButton"
             android:text="@string/save_puzzle"
             />
 
         <Button
-            android:layout_width="105sp"
-            android:layout_height="55sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="110sp"
             android:layout_marginHorizontal="12sp"
             android:id="@+id/cancelChangesButton"
             android:text="@string/cancel_changes"/>
 
         <Button
-            android:layout_width="100sp"
-            android:layout_height="55sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="110sp"
             android:layout_marginHorizontal="12sp"
             android:id="@+id/deletePuzzleButton"
             android:text="@string/delete_puzzle"/>

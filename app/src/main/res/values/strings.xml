@@ -80,4 +80,6 @@
     <string name="finish_edits">Finish Edits</string>
     <string name="delete_room">Delete Room</string>
     <string name="submit">Submit</string>
+    <string name="edit_puzzles">Edit Puzzles</string>
+    <string name="add_puzzles">Add Puzzles</string>
 </resources>

@@ -122,7 +122,6 @@
                 android:textStyle="bold"
                 android:textColor="?android:attr/textColorPrimary"/>
         </TableRow>
-        <HorizontalScrollView>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/gameLogRecyclerView"
@@ -130,9 +129,8 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/gameLogsView"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:scrollbars="vertical"/>
-        </HorizontalScrollView>
+                app:layout_constraintStart_toStartOf="parent" />
+
     </TableLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

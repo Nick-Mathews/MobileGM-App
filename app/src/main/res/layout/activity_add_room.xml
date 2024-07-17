@@ -31,12 +31,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_margin="15sp">
+            android:layout_margin="15sp"
+            android:gravity="center">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight=".4"
+                android:maxWidth="150sp"
                 android:text="@string/room_name"
                 android:textSize="20sp"
                 android:labelFor="@+id/enterNameText"
@@ -44,9 +45,11 @@
 
             <EditText
                 android:id="@+id/enterNameText"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight=".5"
+                android:maxWidth="488sp"
+                android:minWidth="250sp"
+                android:minHeight="48sp"
                 android:inputType="text"
                 android:textSize="20sp"
                 android:autofillHints="name"

@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:shrinkColumns="*"
+    android:stretchColumns="*"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:shrinkColumns="*"
-        android:stretchColumns="*"
-        >
+    <TableRow>
         <TextView
             android:layout_column="1"
             android:id="@+id/logName"
@@ -20,7 +17,7 @@
             android:text="@string/room_name"
             android:textSize="18sp"
             android:textColor="?android:attr/textColorPrimary"
-            android:layout_margin="4sp"/>
+            />
 
         <TextView
             android:layout_column="2"
@@ -30,7 +27,7 @@
             android:text="@string/time_left"
             android:textSize="18sp"
             android:textColor="?android:attr/textColorPrimary"
-            android:layout_margin="4sp"/>
+            />
 
         <TextView
             android:layout_column="3"
@@ -40,7 +37,7 @@
             android:text="@string/date_played"
             android:textSize="18sp"
             android:textColor="?android:attr/textColorPrimary"
-            android:layout_margin="4sp"/>
+            />
 
         <TextView
             android:layout_column="4"
@@ -50,6 +47,6 @@
             android:text="@string/start_time"
             android:textSize="18sp"
             android:textColor="?android:attr/textColorPrimary"
-            android:layout_margin="4sp"/>
-    </androidx.appcompat.widget.LinearLayoutCompat>
-</HorizontalScrollView>
+            />
+    </TableRow>
+</TableLayout>

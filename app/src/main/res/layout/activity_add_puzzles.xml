@@ -13,30 +13,44 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@id/addHintLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/roomText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10sp"
-            android:text="@string/room"
-            android:textSize="24sp"
+            android:text="@string/add_puzzles"
+            android:textSize="32sp"
             android:textStyle="bold"
             android:textColor="?android:attr/textColorPrimary"/>
 
-        <TextView
-            android:id="@+id/roomNameView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/room_name"
-            android:textSize="24sp"
-            android:textColor="?android:attr/textColorPrimary"/>
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
 
+            <TextView
+                android:id="@+id/roomText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10sp"
+                android:text="@string/room"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="?android:attr/textColorPrimary"/>
+
+            <TextView
+                android:id="@+id/roomNameView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/room_name"
+                android:textSize="24sp"
+                android:textColor="?android:attr/textColorPrimary"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/addHintLayout"
         android:layout_width="match_parent"
@@ -52,12 +66,14 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="start|center">
 
             <TextView
                 android:id="@+id/nudgeNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:minWidth="125sp"
                 android:text="@string/nudge_num"
                 android:textSize="20sp"
                 android:textColor="?android:attr/textColorPrimary"
@@ -67,8 +83,9 @@
                 android:id="@+id/editNudgeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:minWidth="225sp"
+                android:maxWidth="488sp"
                 android:autofillHints="nudge"
-                android:ems="10"
                 android:gravity="start|top"
                 android:inputType="textMultiLine"
                 android:textSize="20sp"
@@ -78,12 +95,14 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="start|center">
 
             <TextView
                 android:id="@+id/hintNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:minWidth="125sp"
                 android:text="@string/hint_num"
                 android:textSize="20sp"
                 android:textColor="?android:attr/textColorPrimary"
@@ -94,7 +113,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autofillHints="hint"
-                android:ems="10"
+                android:minWidth="225sp"
+                android:maxWidth="488sp"
                 android:gravity="start|top"
                 android:inputType="textMultiLine"
                 android:textSize="20sp"
@@ -104,12 +124,14 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="start|center">
 
             <TextView
                 android:id="@+id/solutionNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:minWidth="125sp"
                 android:text="@string/solution_num"
                 android:textSize="20sp"
                 android:textColor="?android:attr/textColorPrimary"
@@ -120,7 +142,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autofillHints="solution"
-                android:ems="10"
+                android:minWidth="225sp"
+                android:maxWidth="488sp"
                 android:gravity="start|top"
                 android:inputType="textMultiLine"
                 android:textSize="20sp"
@@ -140,28 +163,28 @@
         android:gravity="center">
 
         <Button
-            android:layout_width="110sp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minWidth="110sp"
             android:id="@+id/nextPuzzleButton"
             android:text="@string/next_puzzle"
-            android:layout_marginStart="4sp"
-            android:background="?android:attr/colorButtonNormal"/>
+            android:layout_marginStart="4sp" />
 
         <Button
-            android:layout_width="110sp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minWidth="110sp"
             android:id="@+id/finishButton"
             android:text="@string/save_and_finish"
-            android:layout_marginHorizontal="4sp"
-            android:background="?android:attr/colorButtonNormal" />
+            android:layout_marginHorizontal="4sp" />
 
         <Button
-            android:layout_width="110sp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minWidth="110sp"
             android:id="@+id/abandonButton"
             android:text="@string/abandon_puzzle"
-            android:layout_marginEnd="4sp"
-            android:background="?android:attr/colorButtonNormal"/>
+            android:layout_marginEnd="4sp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 

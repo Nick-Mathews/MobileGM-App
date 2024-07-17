@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="12sp"
             android:gravity="center"
-            android:text="@string/puzzle_list"
+            android:text="@string/edit_puzzles"
             android:textSize="32sp"
             android:textStyle="bold"
             android:textColor="?android:attr/textColorPrimary"/>
@@ -65,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="start|center">
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/nudgeNum"
@@ -95,7 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="start|center">
+                android:gravity="center">
 
                 <TextView
                     android:id="@+id/hintNum"
@@ -125,7 +125,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="start|center">
+                android:gravity="center">
 
                 <TextView
                     android:id="@+id/solutionNum"

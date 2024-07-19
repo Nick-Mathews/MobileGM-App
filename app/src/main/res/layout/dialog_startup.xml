@@ -15,7 +15,7 @@
         android:textStyle="bold"
         android:textColor="?android:attr/textColorPrimary"
         android:gravity="center"
-        android:background="?android:attr/colorAccent"
+        android:background="?android:attr/colorBackground"
         android:fontFamily="serif"
         />
     <TextView

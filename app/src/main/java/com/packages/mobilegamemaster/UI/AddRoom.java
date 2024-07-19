@@ -40,14 +40,14 @@ public class AddRoom extends AppCompatActivity {
         EditText nameTextView = findViewById(R.id.enterNameText);
 
         //CREATE BUTTON AND CLICK LISTENER FOR CANCEL
-        Button cancelButton = findViewById(R.id.addroom_cancelbutton);
+        Button cancelButton = findViewById(R.id.add_room_cancel_button);
         cancelButton.setOnClickListener(v -> {
             Intent intent = new Intent(AddRoom.this, MainActivity.class);
             startActivity(intent);
         });
 
         //CREATE BUTTON AND CLICK LISTENER FOR CONTINUE
-        Button continueButton = findViewById(R.id.addroom_continuebutton);
+        Button continueButton = findViewById(R.id.add_room_continue_button);
         continueButton.setOnClickListener(v -> {
             String nameText = String.valueOf(nameTextView.getText());
             if (!nameText.isEmpty()) {

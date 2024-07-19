@@ -9,8 +9,10 @@
     tools:context=".UI.MainActivity">
     <!--background image attribute: Photo by John Salvino on Unsplash-->
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/toolbarLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -26,7 +28,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/gray"
+            android:background="?android:attr/colorBackground"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             tools:layout_editor_absoluteX="0dp"
@@ -39,17 +41,18 @@
         android:id="@+id/startTextLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
         android:gravity="center"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
+        app:layout_constraintBottom_toTopOf="@+id/chooseGameTextView">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/main_title"
             android:textAlignment="center"
-            android:textColor="#8A3030"
+            android:textColor="@color/title_red"
             android:textSize="58sp"
             android:textStyle="bold"
             android:fontFamily="sans-serif-black"/>
@@ -61,16 +64,19 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
         android:text="@string/choose_your_game"
-        android:textColor="#8A3030"
+        android:textColor="@color/title_red"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startTextLinearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/startTextLinearLayout"
+        app:layout_constraintBottom_toTopOf="@+id/chooseGameRecyclerView"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chooseGameRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chooseGameTextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

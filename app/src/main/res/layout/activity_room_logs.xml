@@ -33,31 +33,44 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <TextView
-        android:id="@+id/gameLogsView"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/logTitleLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/game_logs"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        android:layout_margin="12sp"
-        android:textColor="?android:attr/textColorPrimary"/>
-    <TextView
-        android:id="@+id/searchText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gameLogsView"
-        android:text="@string/search_by_room_name"
-        android:textStyle="italic|bold"
-        android:layout_marginStart="8sp"
-        android:layout_marginEnd="8sp"
-        android:labelFor="@+id/searchEditText"
-        android:textColor="?android:attr/textColorPrimary"/>
+        app:layout_constraintBottom_toTopOf="@id/searchBarLayout"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/gameLogsView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/game_logs"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
+            app:layout_constraintBottom_toTopOf="@+id/searchText"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:layout_margin="12sp"
+            android:textColor="?android:attr/textColorPrimary"/>
+        <TextView
+            android:id="@+id/searchText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/gameLogsView"
+            android:text="@string/search_by_room_name"
+            android:textStyle="italic|bold"
+            android:layout_marginStart="8sp"
+            android:layout_marginEnd="8sp"
+            android:labelFor="@+id/searchEditText"
+            android:textColor="?android:attr/textColorPrimary"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -65,15 +78,19 @@
         android:id="@+id/searchBarLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchText"
+        app:layout_constraintTop_toBottomOf="@+id/logTitleLayout"
+        app:layout_constraintBottom_toTopOf="@+id/logTableLayout"
         android:orientation="horizontal"
         android:gravity="center">
 
         <EditText
             android:id="@+id/searchEditText"
-            android:layout_width="240sp"
-            android:layout_height="48sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="200sp"
+            android:maxWidth="388sp"
             android:autofillHints="room name"
+            android:textSize="20sp"
             android:inputType="text"
             android:textColor="?android:attr/textColorPrimary"/>
 
@@ -85,9 +102,12 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <TableLayout
+        android:id="@+id/logTableLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/searchBarLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         android:shrinkColumns="*"
         android:stretchColumns="*"
         >
@@ -140,7 +160,7 @@
         android:layout_margin="20sp"
         android:clickable="true"
         android:contentDescription="@string/back"
-        android:src="@android:drawable/ic_menu_revert"
+        android:src="@android:drawable/ic_media_previous"
         app:fabSize="auto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

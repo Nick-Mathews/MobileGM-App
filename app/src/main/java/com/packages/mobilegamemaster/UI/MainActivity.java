@@ -58,6 +58,16 @@ public class MainActivity extends AppCompatActivity {
         final RoomAdapter roomAdapter = new RoomAdapter(this);
         roomAdapter.setRooms(allRooms);
 
+        //CHECK IF REPOSITORY IS EMPTY
+        if (repository.getmAllPasswords().isEmpty()) {
+            Password first = new Password(1, "Admin", "8675");
+            try {
+                repository.insert(first);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
         //SETUP SIGN-IN DIALOG FOR ADMIN MENU
         loginDialog = new Dialog(MainActivity.this);
         loginDialog.setContentView(R.layout.dialog_login);
@@ -108,19 +118,12 @@ public class MainActivity extends AppCompatActivity {
             username = loginDialog.findViewById(R.id.username);
             password = loginDialog.findViewById(R.id.password);
             found = false;
-            //CHECK IF REPOSITORY IS EMPTY
-            if (repository.getmAllPasswords().isEmpty()) {
-                Password first = new Password(1, "Admin", "8675");
-                try {
-                    repository.insert(first);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
+
                 //CHECK REPOSITORY FOR MATCHING PASSWORD
                 for (Password pass : repository.getmAllPasswords()) {
-                    if ((pass.getPassword().equals(String.valueOf(password.getText()))) && (pass.getUserName().equals(String.valueOf(username.getText())))) {
+                    if ((pass.getPassword().equals(String.valueOf(password.getText()).trim())) && (pass.getUserName().equals(String.valueOf(username.getText()).trim()))) {
                         found = true;
+                        loginDialog.dismiss();
                         hideKeyboardFrom(this, v);
                         if (item.getItemId() == R.id.add_room) {
                             Intent intent = new Intent(MainActivity.this, AddRoom.class);

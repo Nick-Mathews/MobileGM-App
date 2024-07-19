@@ -50,7 +50,7 @@
                 android:maxWidth="488sp"
                 android:minWidth="250sp"
                 android:minHeight="48sp"
-                android:inputType="text"
+                android:inputType="textCapWords"
                 android:textSize="20sp"
                 android:autofillHints="name"
                 android:layout_marginStart="12sp"
@@ -66,15 +66,16 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4sp"
                 android:text="@string/continue_text"
-                android:id="@+id/addroom_continuebutton"
-                android:layout_marginEnd="30sp"/>
+                android:id="@+id/add_room_continue_button" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4sp"
                 android:text="@string/cancel"
-                android:id="@+id/addroom_cancelbutton"/>
+                android:id="@+id/add_room_cancel_button"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.constraintlayout.widget.ConstraintLayout>

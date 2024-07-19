@@ -16,6 +16,8 @@
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/roomListRecyclerView"
         android:id="@+id/editRoomTextLayout"
         >
 
@@ -44,6 +46,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editRoomTextLayout"
+        app:layout_constraintBottom_toTopOf="@id/finishButton"
+        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/roomListRecyclerView"
         android:layout_margin="12sp"
 

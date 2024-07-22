@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_room_list, menu);
+        getMenuInflater().inflate(R.menu.menu_main_activity, menu);
         return true;
     }
 
@@ -138,22 +138,9 @@ public class MainActivity extends AppCompatActivity {
                         found = true;
                         loginDialog.dismiss();
                         hideKeyboardFrom(this, v);
-                        if (item.getItemId() == R.id.add_room) {
-                            Intent intent = new Intent(MainActivity.this, AddRoom.class);
-                            startActivity(intent);
-                        }
-
-                        if (item.getItemId() == R.id.edit_delete_room) {
-                            Intent intent = new Intent(MainActivity.this, RoomList.class);
-                            startActivity(intent);
-                        }
-
-                        if (item.getItemId() == R.id.edit_delete_passwords) {
-                            Intent intent = new Intent(MainActivity.this, PasswordsList.class);
-                            startActivity(intent);
-                        }
-                        if (item.getItemId() == R.id.report_logs) {
-                            Intent intent = new Intent(MainActivity.this, RoomLogs.class);
+                        if (item.getItemId() == R.id.adminMenu) {
+                            Intent intent = new Intent(MainActivity.this, AdminMenu.class);
+                            intent.putExtra("name", String.valueOf(username.getText()).trim());
                             startActivity(intent);
                         }
                     }

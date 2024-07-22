@@ -99,7 +99,7 @@ public class EditPasswords extends AppCompatActivity {
                             } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }
-                            Intent intent = new Intent(EditPasswords.this, PasswordsList.class);
+                            Intent intent = new Intent(EditPasswords.this, PasswordList.class);
                             startActivity(intent);
                         }
                         //CHECK FOR ALL ENTRY FIELDS AND MATCH CURRENT USER PASSWORDS PRIOR TO UPDATE
@@ -120,7 +120,7 @@ public class EditPasswords extends AppCompatActivity {
                                 } catch (Exception e) {
                                     throw new RuntimeException(e);
                                 }
-                                Intent intent = new Intent(EditPasswords.this, PasswordsList.class);
+                                Intent intent = new Intent(EditPasswords.this, PasswordList.class);
                                 startActivity(intent);
 
                             } else {
@@ -136,7 +136,7 @@ public class EditPasswords extends AppCompatActivity {
         //CREATE BUTTON AND LISTENER FOR CANCEL CHANGES BUTTON
         cancelChangesButton = findViewById(R.id.cancelChangesButton);
         cancelChangesButton.setOnClickListener(v -> {
-           Intent intent = new Intent(EditPasswords.this, PasswordsList.class);
+           Intent intent = new Intent(EditPasswords.this, PasswordList.class);
            startActivity(intent);
 
         });
@@ -145,7 +145,7 @@ public class EditPasswords extends AppCompatActivity {
         deleteUserButton = findViewById(R.id.deleteUserButton);
         deleteUserButton.setOnClickListener(v -> {
             if (String.valueOf(userNameView.getText()).equals("New User")) {
-                Intent intent = new Intent(EditPasswords.this, PasswordsList.class);
+                Intent intent = new Intent(EditPasswords.this, PasswordList.class);
                 startActivity(intent);
             }
             else {
@@ -154,7 +154,7 @@ public class EditPasswords extends AppCompatActivity {
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-                Intent intent = new Intent(EditPasswords.this, PasswordsList.class);
+                Intent intent = new Intent(EditPasswords.this, PasswordList.class);
                 startActivity(intent);
             }
     });

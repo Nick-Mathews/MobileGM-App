@@ -48,7 +48,7 @@ public class RoomList extends AppCompatActivity {
         //CREATE AND SET CLICK LISTENER FOR FINISH BUTTON
         finishButton = findViewById(R.id.finishButton);
         finishButton.setOnClickListener(v -> {
-            Intent intent = new Intent(RoomList.this, MainActivity.class);
+            Intent intent = new Intent(RoomList.this, AdminMenu.class);
             startActivity(intent);
         });
     }

@@ -25,7 +25,7 @@ import com.packages.mobilegamemaster.database.Repository;
 
 import java.util.List;
 
-public class PasswordsList extends AppCompatActivity {
+public class PasswordList extends AppCompatActivity {
     //CREATE REPOSITORY AND PASSWORD LIST
     Repository repository;
     List<Password> allPasswords;
@@ -52,7 +52,7 @@ public class PasswordsList extends AppCompatActivity {
         allPasswords = repository.getmAllPasswords();
 
         //SETUP FIRST TIME STARTUP DIALOG
-        startupDialog3 = new Dialog(PasswordsList.this);
+        startupDialog3 = new Dialog(PasswordList.this);
         startupDialog3.setContentView(R.layout.dialog_startup);
         okButton3 = startupDialog3.findViewById(R.id.saveButton);
         dialogCheckBox3 = startupDialog3.findViewById(R.id.dialogCheckBox);
@@ -83,14 +83,14 @@ public class PasswordsList extends AppCompatActivity {
         //CREATE AND SET CLICK LISTENER FOR FINISH BUTTON
         finishButton = findViewById(R.id.finishButton);
         finishButton.setOnClickListener(v -> {
-            Intent intent = new Intent(PasswordsList.this, MainActivity.class);
+            Intent intent = new Intent(PasswordList.this, AdminMenu.class);
             startActivity(intent);
         });
 
         //CREATE AND SET CLICK LISTENER FOR ADD USER BUTTON
         addUserButton = findViewById(R.id.addUserButton);
         addUserButton.setOnClickListener(v -> {
-            Intent intent = new Intent(PasswordsList.this, EditPasswords.class);
+            Intent intent = new Intent(PasswordList.this, EditPasswords.class);
             intent.putExtra("id", allPasswords.get(allPasswords.size() -1 ).getPasswordID() + 1);
             startActivity(intent);
 

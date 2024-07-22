@@ -77,7 +77,7 @@ public class AddRoom extends AppCompatActivity {
         cancelButton = findViewById(R.id.add_room_cancel_button);
         cancelButton.setOnClickListener(v -> {
             cancelButton.setEnabled(false);
-            Intent intent = new Intent(AddRoom.this, MainActivity.class);
+            Intent intent = new Intent(AddRoom.this, AdminMenu.class);
             startActivity(intent);
         });
 

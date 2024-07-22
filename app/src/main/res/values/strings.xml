@@ -79,4 +79,6 @@
     <string name="check_to_turn_off_tip">Check to turn off tip</string>
     <string name="update_room_name">Update Room Name</string>
     <string name="save">Save</string>
+    <string name="admin_menu">Admin Menu</string>
+    <string name="sign_out">Sign Out</string>
 </resources>

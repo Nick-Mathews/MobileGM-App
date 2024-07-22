@@ -30,7 +30,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class RoomLogs extends AppCompatActivity {
+public class GameLogs extends AppCompatActivity {
     //CREATE REPOSITORY AND LIST OF TIMERS
     Repository repository;
     List<Timer> allTimers, roomTimers;
@@ -64,7 +64,7 @@ public class RoomLogs extends AppCompatActivity {
         logAdapter.setmTimers(allTimers);
 
         //SETUP FIRST TIME STARTUP DIALOG
-        startupDialog4 = new Dialog(RoomLogs.this);
+        startupDialog4 = new Dialog(GameLogs.this);
         startupDialog4.setContentView(R.layout.dialog_startup);
         okButton4 = startupDialog4.findViewById(R.id.saveButton);
         dialogCheckBox4 = startupDialog4.findViewById(R.id.dialogCheckBox);
@@ -124,7 +124,7 @@ public class RoomLogs extends AppCompatActivity {
         //BACK NAVIGATION BUTTON
         backButton = findViewById(R.id.floating_back_button);
         backButton.setOnClickListener(v -> {
-            Intent intent = new Intent(RoomLogs.this, MainActivity.class);
+            Intent intent = new Intent(GameLogs.this, AdminMenu.class);
             startActivity(intent);
         });
     }

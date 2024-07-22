@@ -13,10 +13,13 @@
         android:theme="@style/Theme.MobileGameMaster"
         tools:targetApi="31" >
         <activity
+            android:name=".UI.AdminMenu"
+            android:exported="false" />
+        <activity
             android:name=".UI.EditPasswords"
             android:exported="false" />
         <activity
-            android:name=".UI.PasswordsList"
+            android:name=".UI.PasswordList"
             android:exported="false" />
         <activity
             android:name=".UI.PuzzleList"
@@ -28,9 +31,9 @@
             android:name=".UI.RoomList"
             android:exported="false" />
         <activity
-            android:name=".UI.RoomLogs"
+            android:name=".UI.GameLogs"
             android:exported="false"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".UI.RoomLoss"
             android:exported="false" />

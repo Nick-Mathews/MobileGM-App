@@ -22,6 +22,8 @@ public class RoomList extends AppCompatActivity {
     //CREATE REPOSITORY AND ROOM LIST
     Repository repository;
     List<Room> allRooms;
+    RecyclerView recyclerView;
+    Button finishButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,14 +39,14 @@ public class RoomList extends AppCompatActivity {
         allRooms = repository.getmAllRooms();
 
         //SET ROOM LIST ON ADAPTER; SET LAYOUT MANAGER AND ADAPTER ON RECYCLERVIEW
-        RecyclerView recyclerView = findViewById(R.id.roomListRecyclerView);
+        recyclerView = findViewById(R.id.roomListRecyclerView);
         final EditRoomAdapter editRoomAdapter = new EditRoomAdapter(this);
         editRoomAdapter.setRooms(allRooms);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(editRoomAdapter);
 
         //CREATE AND SET CLICK LISTENER FOR FINISH BUTTON
-        Button finishButton = findViewById(R.id.finishButton);
+        finishButton = findViewById(R.id.finishButton);
         finishButton.setOnClickListener(v -> {
             Intent intent = new Intent(RoomList.this, MainActivity.class);
             startActivity(intent);
@@ -55,8 +57,8 @@ public class RoomList extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        List<Room> allRooms=repository.getmAllRooms();
-        RecyclerView recyclerView=findViewById(R.id.roomListRecyclerView);
+        allRooms = repository.getmAllRooms();
+        recyclerView = findViewById(R.id.roomListRecyclerView);
         final EditRoomAdapter editRoomAdapter = new EditRoomAdapter(this);
         editRoomAdapter.setRooms(allRooms);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

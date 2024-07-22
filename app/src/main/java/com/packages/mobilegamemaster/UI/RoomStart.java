@@ -19,6 +19,8 @@ public class RoomStart extends AppCompatActivity {
     int roomID;
     String roomName;
     TextView nameView;
+    Button startButton;
+    FloatingActionButton backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +39,7 @@ public class RoomStart extends AppCompatActivity {
         nameView.setText(roomName);
 
         //CREATE START BUTTON AND SET ONCLICK LISTENER
-        Button startButton = findViewById(R.id.startButton);
+        startButton = findViewById(R.id.startButton);
         startButton.setOnClickListener(v -> {
             Intent intent = new Intent(RoomStart.this, RoomPuzzles.class);
             intent.putExtra("name", roomName);
@@ -46,7 +48,7 @@ public class RoomStart extends AppCompatActivity {
             startActivity(intent);
         });
 
-        FloatingActionButton backButton = findViewById(R.id.floating_back_button);
+        backButton = findViewById(R.id.floating_back_button);
         backButton.setOnClickListener(v -> {
             Intent intent = new Intent(RoomStart.this, MainActivity.class);
             startActivity(intent);

@@ -1,9 +1,15 @@
 package com.packages.mobilegamemaster.UI;
 
+import static com.packages.mobilegamemaster.UI.MainActivity.PREFS_NAME;
+
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -20,7 +26,13 @@ public class AddRoom extends AppCompatActivity {
     //CREATE REPOSITORY, PUZZLENUM, ROOMID AND NEWROOM VARIABLES
     Repository repository;
     int puzzleNum, roomID;
+    TextView startupText2;
     Room newRoom;
+    EditText nameTextView;
+    Dialog startupDialog2;
+    boolean dialog2Checked;
+    Button cancelButton, continueButton,  okButton2;
+    CheckBox dialogCheckBox2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,18 +49,42 @@ public class AddRoom extends AppCompatActivity {
         puzzleNum = 1;
 
         //SET ROOM NAME TEXTVIEW
-        EditText nameTextView = findViewById(R.id.enterNameText);
+        nameTextView = findViewById(R.id.enterNameText);
+
+        //SETUP FIRST TIME STARTUP DIALOG
+        startupDialog2 = new Dialog(AddRoom.this);
+        startupDialog2.setContentView(R.layout.dialog_startup);
+        okButton2 = startupDialog2.findViewById(R.id.saveButton);
+        dialogCheckBox2 = startupDialog2.findViewById(R.id.dialogCheckBox);
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        dialog2Checked = settings.getBoolean("dialog2Checked", false);
+
+        if (!dialog2Checked) {
+            startupText2 = startupDialog2.findViewById(R.id.dialog_startup_textview);
+            startupText2.setText(R.string.add_room_intro);
+            startupDialog2.show();
+            okButton2.setOnClickListener(v -> {
+                startupDialog2.dismiss();
+                if (dialogCheckBox2.isChecked()) {
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putBoolean("dialog2Checked", true);
+                    editor.apply();
+                }
+            });
+        }
 
         //CREATE BUTTON AND CLICK LISTENER FOR CANCEL
-        Button cancelButton = findViewById(R.id.add_room_cancel_button);
+        cancelButton = findViewById(R.id.add_room_cancel_button);
         cancelButton.setOnClickListener(v -> {
+            cancelButton.setEnabled(false);
             Intent intent = new Intent(AddRoom.this, MainActivity.class);
             startActivity(intent);
         });
 
         //CREATE BUTTON AND CLICK LISTENER FOR CONTINUE
-        Button continueButton = findViewById(R.id.add_room_continue_button);
+        continueButton = findViewById(R.id.add_room_continue_button);
         continueButton.setOnClickListener(v -> {
+            continueButton.setEnabled(false);
             String nameText = String.valueOf(nameTextView.getText());
             if (!nameText.isEmpty()) {
                 if (repository.getmAllRooms().isEmpty()) {
@@ -73,6 +109,7 @@ public class AddRoom extends AppCompatActivity {
             else{
                 Toast toast = Toast.makeText(AddRoom.this, "You must enter a room name to continue", Toast.LENGTH_LONG);
                 toast.show();
+                continueButton.setEnabled(true);
             }
 
 

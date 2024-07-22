@@ -34,11 +34,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/choose_room_to_edit_or_delete"
+            android:text="@string/tap_room_to_edit_or_delete"
             android:gravity="center"
-            android:layout_margin="18sp"
+            android:layout_margin="6sp"
             android:textSize="20sp"
             android:textColor="?android:attr/textColorPrimary" />
+
 
     </androidx.appcompat.widget.LinearLayoutCompat>
     <androidx.recyclerview.widget.RecyclerView
@@ -50,7 +51,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/roomListRecyclerView"
         android:layout_margin="12sp"
-
         />
 
     <Button

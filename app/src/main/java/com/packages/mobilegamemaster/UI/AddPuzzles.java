@@ -23,7 +23,13 @@ public class AddPuzzles extends AppCompatActivity {
     //CREATE REPOSITORY, ROOMID AND PUZZLEID VARIABLES
     Repository repository;
     Room currentRoom;
-    int puzzleID;
+    int puzzleID, roomID, puzzleNum;
+    String roomName, nudgeLabel, hintLabel, solutionLabel, nudgeText, hintText, solutionText;
+    Puzzle newPuzzle;
+    TextView roomNameView, nudgeView, hintView, solutionView;
+    EditText nudgeEntry, hintEntry, solutionEntry;
+    Button abandonButton, finishButton, addNextButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,35 +45,36 @@ public class AddPuzzles extends AppCompatActivity {
         repository  = new Repository(getApplication());
 
         //RETRIEVE INTENT EXTRAS FOR USE
-        String roomName = getIntent().getStringExtra("name");
-        int roomID = getIntent().getIntExtra("id", -1);
-        int puzzleNum = getIntent().getIntExtra("puzzle_num", -1);
+        roomName = getIntent().getStringExtra("name");
+        roomID = getIntent().getIntExtra("id", -1);
+        puzzleNum = getIntent().getIntExtra("puzzle_num", -1);
 
         //FIND AND SET ROOM NAME TEXTVIEW
-        TextView roomNameView = findViewById(R.id.roomNameView);
+        roomNameView = findViewById(R.id.roomNameView);
         roomNameView.setText(roomName);
 
         //CREATE CONTAINERS FOR THE EDITTEXT ENTRIES
-        EditText nudgeEntry = findViewById(R.id.editNudgeText);
-        EditText hintEntry = findViewById(R.id.editHintText);
-        EditText solutionEntry = findViewById(R.id.editSolutionText);
+        nudgeEntry = findViewById(R.id.editNudgeText);
+        hintEntry = findViewById(R.id.editHintText);
+        solutionEntry = findViewById(R.id.editSolutionText);
 
         //SET TEXTVIEWS FOR HINT ENTRY FIELDS
-        TextView nudgeView = findViewById(R.id.nudgeNum);
-        String nudgeLabel = "Puzzle " + puzzleNum + " Nudge:";
+        nudgeView = findViewById(R.id.nudgeNum);
+        nudgeLabel = "Puzzle " + puzzleNum + " Nudge:";
         nudgeView.setText(nudgeLabel);
 
-        TextView hintView = findViewById(R.id.hintNum);
-        String hintLabel = "Puzzle " + puzzleNum + " Hint:";
+        hintView = findViewById(R.id.hintNum);
+        hintLabel = "Puzzle " + puzzleNum + " Hint:";
         hintView.setText(hintLabel);
 
-        TextView solutionView = findViewById(R.id.solutionNum);
-        String solutionLabel = "Puzzle " + puzzleNum + " Solution:";
+        solutionView = findViewById(R.id.solutionNum);
+        solutionLabel = "Puzzle " + puzzleNum + " Solution:";
         solutionView.setText(solutionLabel);
 
         //CREATE BUTTON AND LISTENER FOR 'ABANDON PUZZLE' BUTTON
-        Button abandonButton = findViewById(R.id.abandonButton);
+        abandonButton = findViewById(R.id.abandonButton);
         abandonButton.setOnClickListener(v -> {
+            abandonButton.setEnabled(false);
             if(roomID == -1) {
                 Intent intent = new Intent(AddPuzzles.this, MainActivity.class);
                 startActivity(intent);
@@ -81,19 +88,22 @@ public class AddPuzzles extends AppCompatActivity {
         });
 
         //CREATE BUTTON AND LISTENER FOR 'SAVE AND FINISH' BUTTON
-        Button finishButton = findViewById(R.id.finishButton);
+        finishButton = findViewById(R.id.finishButton);
         finishButton.setOnClickListener(v -> {
+            finishButton.setEnabled(false);
             if (roomID == -1) {
                 Toast msg = Toast.makeText(AddPuzzles.this, "Your room ID is invalid", Toast.LENGTH_LONG);
                 msg.show();
+                finishButton.setEnabled(true);
             }
             else {
-                String nudgeText = String.valueOf(nudgeEntry.getText());
-                String hintText = String.valueOf(hintEntry.getText());
-                String solutionText = String.valueOf(solutionEntry.getText());
+                nudgeText = String.valueOf(nudgeEntry.getText());
+                hintText = String.valueOf(hintEntry.getText());
+                solutionText = String.valueOf(solutionEntry.getText());
                 if ((nudgeText.isEmpty()) || (hintText.isEmpty()) || (solutionText.isEmpty())) {
                     Toast msg = Toast.makeText(AddPuzzles.this, "You must complete all fields before saving", Toast.LENGTH_LONG);
                     msg.show();
+                    finishButton.setEnabled(true);
                 } else {
                     if (repository.getmAllPuzzles().isEmpty()){
                         puzzleID = 1;
@@ -101,7 +111,7 @@ public class AddPuzzles extends AppCompatActivity {
                     else {
                         puzzleID = repository.getmAllPuzzles().get(repository.getmAllPuzzles().size()-1).getPuzzleID() + 1;
                     }
-                    Puzzle newPuzzle = new Puzzle(puzzleID, puzzleNum, roomID, nudgeText, hintText, solutionText);
+                    newPuzzle = new Puzzle(puzzleID, puzzleNum, roomID, nudgeText, hintText, solutionText);
                     try {
                         repository.insert(newPuzzle);
                     } catch (Exception e) {
@@ -116,19 +126,22 @@ public class AddPuzzles extends AppCompatActivity {
         });
 
         //CREATE BUTTON AND LISTENER FOR 'ADD NEXT' BUTTON
-        Button addNextButton = findViewById(R.id.nextPuzzleButton);
+        addNextButton = findViewById(R.id.nextPuzzleButton);
         addNextButton.setOnClickListener(v -> {
+            addNextButton.setEnabled(false);
         if (roomID == -1) {
             Toast msg = Toast.makeText(AddPuzzles.this, "Your room ID is invalid", Toast.LENGTH_LONG);
             msg.show();
+            addNextButton.setEnabled(true);
         }
         else {
-            String nudgeText = String.valueOf(nudgeEntry.getText());
-            String hintText = String.valueOf(hintEntry.getText());
-            String solutionText = String.valueOf(solutionEntry.getText());
+            nudgeText = String.valueOf(nudgeEntry.getText());
+            hintText = String.valueOf(hintEntry.getText());
+            solutionText = String.valueOf(solutionEntry.getText());
             if ((nudgeText.isEmpty()) || (hintText.isEmpty()) || (solutionText.isEmpty())) {
                 Toast msg = Toast.makeText(AddPuzzles.this, "You must complete all fields before saving", Toast.LENGTH_LONG);
                 msg.show();
+                addNextButton.setEnabled(true);
             } else {
                 if (repository.getmAllPuzzles().isEmpty()){
                     puzzleID = 1;
@@ -136,7 +149,7 @@ public class AddPuzzles extends AppCompatActivity {
                 else {
                     puzzleID = repository.getmAllPuzzles().get(repository.getmAllPuzzles().size()-1).getPuzzleID() + 1;
                 }
-                Puzzle newPuzzle = new Puzzle(puzzleID, puzzleNum, roomID, nudgeText, hintText, solutionText);
+                newPuzzle = new Puzzle(puzzleID, puzzleNum, roomID, nudgeText, hintText, solutionText);
                 try {
                     repository.insert(newPuzzle);
                 } catch (Exception e) {

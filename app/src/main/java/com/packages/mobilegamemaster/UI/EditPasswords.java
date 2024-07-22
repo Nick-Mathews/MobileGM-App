@@ -24,8 +24,9 @@ public class EditPasswords extends AppCompatActivity {
     Repository repository;
     List<Password> allPasswords;
     Password currentPassword;
-    String userName, password;
+    String userName, password,userNameText, newPasswordText, currentPasswordText;
     int passwordID;
+    Button saveButton, cancelChangesButton, deleteUserButton;
     TextView userNameView;
     EditText userNameEntry, currentPasswordEntry, newPasswordEntry;
 
@@ -42,6 +43,8 @@ public class EditPasswords extends AppCompatActivity {
         //POPULATE REPOSITORY AND ALL PASSWORDS LIST
         repository = new Repository(getApplication());
         allPasswords = repository.getmAllPasswords();
+
+
 
         //RETRIEVE INTENT FOR USE, CREATE PASSWORD OBJECT, RETRIEVE USERNAME AND PASSWORD
         passwordID = getIntent().getIntExtra("id", -1);
@@ -69,21 +72,24 @@ public class EditPasswords extends AppCompatActivity {
 
 
         //CREATE BUTTON AND LISTENER FOR SAVE USER BUTTON
-        Button saveButton = findViewById(R.id.saveUserButton);
+        saveButton = findViewById(R.id.saveUserButton);
         saveButton.setOnClickListener(v -> {
+            saveButton.setEnabled(false);
                 //CHECK FOR VALID PASSWORD ID
                 if (passwordID==-1) {
                     Toast msg = Toast.makeText(EditPasswords.this, "Your username is invalid", Toast.LENGTH_LONG);
                     msg.show();
+                    saveButton.setEnabled(true);
                 }
                 //CHECK PASSWORD ID FOR NEW USER
                 else {
                     if (passwordID == allPasswords.get(allPasswords.size() - 1).getPasswordID() + 1) {
-                        String userNameText = String.valueOf(userNameEntry.getText());
-                        String newPasswordText = String.valueOf(newPasswordEntry.getText());
+                        userNameText = String.valueOf(userNameEntry.getText());
+                        newPasswordText = String.valueOf(newPasswordEntry.getText());
                         if (userNameText.isEmpty() || newPasswordText.isEmpty()) {
                             Toast msg = Toast.makeText(EditPasswords.this, "You must enter username and new password before saving", Toast.LENGTH_LONG);
                             msg.show();
+                            saveButton.setEnabled(true);
                         }
                         //INSERT NEW USER
                         else {
@@ -98,12 +104,13 @@ public class EditPasswords extends AppCompatActivity {
                         }
                         //CHECK FOR ALL ENTRY FIELDS AND MATCH CURRENT USER PASSWORDS PRIOR TO UPDATE
                     } else {
-                        String userNameText = String.valueOf(userNameEntry.getText());
-                        String currentPasswordText = String.valueOf(currentPasswordEntry.getText());
-                        String newPasswordText = String.valueOf(newPasswordEntry.getText());
+                        userNameText = String.valueOf(userNameEntry.getText());
+                        currentPasswordText = String.valueOf(currentPasswordEntry.getText());
+                        newPasswordText = String.valueOf(newPasswordEntry.getText());
                         if (userNameText.isEmpty() || currentPasswordText.isEmpty() || newPasswordText.isEmpty()) {
                             Toast msg = Toast.makeText(EditPasswords.this, "You must complete all fields before saving", Toast.LENGTH_LONG);
                             msg.show();
+                            saveButton.setEnabled(true);
                         } else {
                             if (currentPasswordText.equals(currentPassword.getPassword())) {
                                 currentPassword.setUserName(userNameText);
@@ -119,6 +126,7 @@ public class EditPasswords extends AppCompatActivity {
                             } else {
                                 Toast msg = Toast.makeText(EditPasswords.this, "You must enter the current password correctly", Toast.LENGTH_LONG);
                                 msg.show();
+                                saveButton.setEnabled(true);
                             }
                         }
                     }
@@ -126,7 +134,7 @@ public class EditPasswords extends AppCompatActivity {
         });
 
         //CREATE BUTTON AND LISTENER FOR CANCEL CHANGES BUTTON
-        Button cancelChangesButton = findViewById(R.id.cancelChangesButton);
+        cancelChangesButton = findViewById(R.id.cancelChangesButton);
         cancelChangesButton.setOnClickListener(v -> {
            Intent intent = new Intent(EditPasswords.this, PasswordsList.class);
            startActivity(intent);
@@ -134,7 +142,7 @@ public class EditPasswords extends AppCompatActivity {
         });
 
         //CREATE BUTTON AND LISTENER FOR DELETE USER BUTTON
-        Button deleteUserButton = findViewById(R.id.deleteUserButton);
+        deleteUserButton = findViewById(R.id.deleteUserButton);
         deleteUserButton.setOnClickListener(v -> {
             if (String.valueOf(userNameView.getText()).equals("New User")) {
                 Intent intent = new Intent(EditPasswords.this, PasswordsList.class);

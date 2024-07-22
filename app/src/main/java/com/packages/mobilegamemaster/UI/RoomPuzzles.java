@@ -30,13 +30,17 @@ import java.util.List;
 import java.util.Locale;
 
 public class RoomPuzzles extends AppCompatActivity {
-    //CREATE REPOSITORY, ROOM NAME STRING, ROOM ID STRING, PUZZLE NUMBER INT, LIST OF PUZZLES, AND CURRENT PUZZLE
+    //DECLARE REPOSITORY AND GLOBAL VARIABLES
     Repository repository;
-    String roomName, startTime;
+    String roomName, startTime, puzzleText, hint, solution, nextPuzzleText;
     int roomID, puzzleNum;
     List<Puzzle> allPuzzles;
     Puzzle currentPuzzle;
-    TextView countDownTimerView;
+    TextView countDownTimerView, puzzleTextView, nameView, view;
+    EditText solutionTextView;
+    CountDownTimer countDownTimer;
+    Button nudgeButton, hintButton, solutionButton, submitButton;
+    Date end;
 
     //CREATE NUMBER AND DATE FORMATS
     DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
@@ -62,10 +66,11 @@ public class RoomPuzzles extends AppCompatActivity {
         startTime = timeFormat.format(Calendar.getInstance().getTime());
 
         //CREATE AND ASSIGN TEXT VIEWS
-        TextView puzzleTextView = findViewById(R.id.puzzleTextView);
-        TextView nameView = findViewById(R.id.roomNameView);
+        puzzleTextView = findViewById(R.id.puzzleTextView);
+        nameView = findViewById(R.id.roomNameView);
         countDownTimerView = findViewById(R.id.countdownTimerView);
-        EditText solutionTextView = findViewById(R.id.solutionEditTextView);
+        solutionTextView = findViewById(R.id.solutionEditTextView);
+        view = findViewById(R.id.hintTextView);
 
         //POPULATE PUZZLE LIST AND OBTAIN THE FIRST PUZZLE
         allPuzzles = repository.getmRoomPuzzles(roomID);
@@ -75,41 +80,39 @@ public class RoomPuzzles extends AppCompatActivity {
         nameView.setText(roomName);
 
         //CREATE STRING FOR PUZZLE NUMBER TEXT AND SET TEXT VIEW
-        String puzzleText = "Puzzle " + (currentPuzzle.getPuzzleNum());
+        puzzleText = "Puzzle " + (currentPuzzle.getPuzzleNum());
         puzzleTextView.setText(puzzleText);
 
-        //CREATE AND START COUNTDOWN TIMER
-        CountDownTimer countDownTimer = getCountDownTimer();
+        //START COUNTDOWN TIMER
+        countDownTimer = getCountDownTimer();
 
         //CREATE AND SET BUTTON FOR NUDGE
-        Button nudgeButton = findViewById(R.id.nudge_button);
+        nudgeButton = findViewById(R.id.nudge_button);
         nudgeButton.setOnClickListener(v -> {
-            String hint = currentPuzzle.getNudge();
-            TextView view = findViewById(R.id.hintTextView);
+            hint = currentPuzzle.getNudge();
             view.setText(hint);
         });
 
         //CREATE AND SET BUTTON FOR HINT
-        Button hintButton = findViewById(R.id.hint_button);
+        hintButton = findViewById(R.id.hint_button);
         hintButton.setOnClickListener(v -> {
-            String hint = currentPuzzle.getHint();
-            TextView view = findViewById(R.id.hintTextView);
+            hint = currentPuzzle.getHint();
             view.setText(hint);
         });
 
         //CREATE AND SET BUTTON FOR SOLUTION
-        Button solutionButton = findViewById(R.id.solution_button);
+        solutionButton = findViewById(R.id.solution_button);
         solutionButton.setOnClickListener(v -> {
-            String hint = currentPuzzle.getSolution();
-            TextView view = findViewById(R.id.hintTextView);
+            hint = currentPuzzle.getSolution();
             view.setText(hint);
         });
 
         //CREATE AND SET BUTTON FOR SUBMITTING AN ANSWER
-        Button submitButton = findViewById(R.id.submitButton);
+        submitButton = findViewById(R.id.submitButton);
         submitButton.setOnClickListener(v -> {
+            submitButton.setEnabled(false);
             //CREATE SOLUTION STRING
-            String solution = currentPuzzle.getSolution();
+            solution = currentPuzzle.getSolution();
 
             //CHECKS FOR CORRECT SOLUTION
             if (String.valueOf(solutionTextView.getText()).equals(solution)) {
@@ -120,7 +123,7 @@ public class RoomPuzzles extends AppCompatActivity {
                     intent.putExtra("start_time", startTime);
                     intent.putExtra("name", roomName);
                     intent.putExtra("time_left", countDownTimerView.getText());
-                    Date end = Calendar.getInstance().getTime();
+                    end = Calendar.getInstance().getTime();
                     intent.putExtra("end_time", timeFormat.format(end));
                     intent.putExtra("end_date", dateFormat.format(end));
                     intent.putExtra("id", roomID);
@@ -131,7 +134,6 @@ public class RoomPuzzles extends AppCompatActivity {
                     String msg = "Correct!";
                     Toast toast = Toast.makeText(RoomPuzzles.this, msg, Toast.LENGTH_LONG);
                     toast.show();
-                    TextView view = findViewById(R.id.hintTextView);
                     view.setText("");
 
                     currentPuzzle.setPuzzleNum(currentPuzzle.getPuzzleNum()+1);
@@ -139,9 +141,11 @@ public class RoomPuzzles extends AppCompatActivity {
                     currentPuzzle.setHint(allPuzzles.get(currentPuzzle.getPuzzleNum()-1).getHint());
                     currentPuzzle.setSolution(allPuzzles.get(currentPuzzle.getPuzzleNum()-1).getSolution());
 
-                    String text = "Puzzle " + (currentPuzzle.getPuzzleNum());
-                    puzzleTextView.setText(text);
+                    nextPuzzleText = "Puzzle " + (currentPuzzle.getPuzzleNum());
+                    puzzleTextView.setText(nextPuzzleText);
                     solutionTextView.setText("");
+
+                    submitButton.setEnabled(true);
                 }
             }
             //RUNS WHEN THE ANSWER IS INCORRECT
@@ -149,6 +153,7 @@ public class RoomPuzzles extends AppCompatActivity {
                 String msg = "That answer is incorrect";
                 Toast toast = Toast.makeText(RoomPuzzles.this, msg, Toast.LENGTH_LONG);
                 toast.show();
+                submitButton.setEnabled(true);
             }
         });
 
@@ -181,7 +186,7 @@ public class RoomPuzzles extends AppCompatActivity {
                 intent.putExtra("start_time", startTime);
                 intent.putExtra("time_left", endTime);
                 intent.putExtra("name", roomName);
-                Date end = Calendar.getInstance().getTime();
+                end = Calendar.getInstance().getTime();
                 intent.putExtra("end_time", timeFormat.format(end));
                 intent.putExtra("end_date", dateFormat.format(end));
                 intent.putExtra("id", roomID);

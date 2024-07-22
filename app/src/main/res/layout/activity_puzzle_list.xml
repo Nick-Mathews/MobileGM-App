@@ -45,7 +45,17 @@
             android:text="@string/placeholder"
             android:textSize="28sp"
             android:textStyle="bold"
-            android:textColor="?android:attr/textColorPrimary"/>
+            android:textColor="?android:attr/textColorPrimary"
+            android:clickable="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="@string/press_and_hold_to_rename"
+            android:layout_gravity="center"
+            android:textColor="?android:attr/textColorPrimary"
+            />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

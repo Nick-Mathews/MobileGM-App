@@ -11,7 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -36,9 +38,13 @@ public class MainActivity extends AppCompatActivity {
     List<Room> allRooms;
     Button signInButton, cancelButton;
     EditText username, password;
-    Dialog loginDialog, startupDialog;
+    TextView startupText;
+    RecyclerView recyclerView;
+    Toolbar toolbar;
+    Dialog loginDialog, startupDialog1;
     Button okButton;
-    boolean found, dialogShown;
+    CheckBox dialogCheckBox;
+    boolean found, dialog1Checked;
     public static final String PREFS_NAME = "MyPrefsFile";
 
     @Override
@@ -60,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
         //CHECK IF REPOSITORY IS EMPTY
         if (repository.getmAllPasswords().isEmpty()) {
-            Password first = new Password(1, "Admin", "8675");
+            Password first = new Password(1, "Admin", "password");
             try {
                 repository.insert(first);
             } catch (Exception e) {
@@ -75,27 +81,34 @@ public class MainActivity extends AppCompatActivity {
         cancelButton = loginDialog.findViewById(R.id.cancelButton);
 
         //SETUP FIRST TIME STARTUP DIALOG AND SHARED PREFS SETTINGS
-        startupDialog = new Dialog(MainActivity.this);
-        startupDialog.setContentView(R.layout.dialog_startup);
-        okButton = startupDialog.findViewById(R.id.okButton);
+        startupDialog1 = new Dialog(MainActivity.this);
+        startupDialog1.setContentView(R.layout.dialog_startup);
+        okButton = startupDialog1.findViewById(R.id.saveButton);
+        dialogCheckBox = startupDialog1.findViewById(R.id.dialogCheckBox);
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        dialogShown = settings.getBoolean("dialogShown", false);
+        dialog1Checked = settings.getBoolean("dialog1Checked", false);
 
-        if (!dialogShown) {
-            startupDialog.show();
-            okButton.setOnClickListener(v -> startupDialog.dismiss());
-            SharedPreferences.Editor editor = settings.edit();
-            editor.putBoolean("dialogShown", true);
-            editor.apply();
+        if (!dialog1Checked) {
+            startupText = startupDialog1.findViewById(R.id.dialog_startup_textview);
+            startupText.setText(R.string.welcome_intro);
+            startupDialog1.show();
+            okButton.setOnClickListener(v -> {
+                startupDialog1.dismiss();
+                if (dialogCheckBox.isChecked()) {
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putBoolean("dialog1Checked", true);
+                    editor.apply();
+            }
+            });
         }
 
         //SET LAYOUT MANAGER AND ADAPTER ON RECYCLER VIEW
-        RecyclerView recyclerView = findViewById(R.id.chooseGameRecyclerView);
+        recyclerView = findViewById(R.id.chooseGameRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(roomAdapter);
 
         //SET TOOLBAR TO ACTIONBAR
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
 
@@ -175,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
         roomAdapter.setRooms(allRooms);
 
         //SET LAYOUT MANAGER AND ADAPTER ON RECYCLER VIEW
-        RecyclerView recyclerView = findViewById(R.id.chooseGameRecyclerView);
+        recyclerView = findViewById(R.id.chooseGameRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(roomAdapter);
     }

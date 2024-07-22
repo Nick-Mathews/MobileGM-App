@@ -20,6 +20,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     private List<Room> mRooms;
     private final Context context;
     private final LayoutInflater mInflater;
+    int position;
 
     public RoomAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
@@ -33,7 +34,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
             super(itemView);
             roomView = itemView.findViewById(R.id.roomTextView);
             itemView.setOnClickListener(v -> {
-                int position = getAdapterPosition();
+                position = getAdapterPosition();
                 final Room currentRoom = mRooms.get(position);
                 Intent intent = new Intent(context, RoomStart.class);
                 intent.putExtra("id", currentRoom.getRoomID());

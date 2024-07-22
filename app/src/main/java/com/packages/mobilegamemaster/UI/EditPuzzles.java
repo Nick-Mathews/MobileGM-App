@@ -24,6 +24,11 @@ public class EditPuzzles extends AppCompatActivity {
     Room currentRoom;
     Puzzle currentPuzzle;
     int roomID, puzzleID, puzzleNum;
+    String nudgeText, hintText, solutionText;
+    TextView roomNameView, nudgeLabel, hintLabel, solutionLabel;
+    EditText nudgeEntry, hintEntry, solutionEntry;
+    Button saveButton, cancelChangesButton, deletePuzzleButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,33 +51,33 @@ public class EditPuzzles extends AppCompatActivity {
         puzzleNum = currentPuzzle.getPuzzleNum();
 
         //FIND AND SET ROOM NAME TEXTVIEW
-        TextView roomNameView = findViewById(R.id.roomNameText);
+        roomNameView = findViewById(R.id.roomNameText);
         roomNameView.setText(currentRoom.getRoomName());
 
         //CREATE CONTAINERS FOR THE EDITTEXT ENTRIES AND POPULATE WITH CURRENT CLUES
-        EditText nudgeEntry = findViewById(R.id.editNudgeText);
-        EditText hintEntry = findViewById(R.id.editHintText);
-        EditText solutionEntry = findViewById(R.id.editSolutionText);
+        nudgeEntry = findViewById(R.id.editNudgeText);
+        hintEntry = findViewById(R.id.editHintText);
+        solutionEntry = findViewById(R.id.editSolutionText);
 
         nudgeEntry.setText(currentPuzzle.getNudge());
         hintEntry.setText(currentPuzzle.getHint());
         solutionEntry.setText(currentPuzzle.getSolution());
 
         //SET TEXTVIEWS FOR HINT ENTRY FIELDS
-        TextView nudgeLabel = findViewById(R.id.nudgeNum);
-        String nudgeText = "Puzzle " + puzzleNum + " Nudge:";
-        nudgeLabel.setText(nudgeText);
+         nudgeLabel = findViewById(R.id.nudgeNum);
+         nudgeText = "Puzzle " + puzzleNum + " Nudge:";
+         nudgeLabel.setText(nudgeText);
 
-        TextView hintLabel = findViewById(R.id.hintNum);
-        String hintText = "Puzzle " + puzzleNum + " Hint:";
-        hintLabel.setText(hintText);
+         hintLabel = findViewById(R.id.hintNum);
+         hintText = "Puzzle " + puzzleNum + " Hint:";
+         hintLabel.setText(hintText);
 
-        TextView solutionLabel = findViewById(R.id.solutionNum);
-        String solutionText = "Puzzle " + puzzleNum + " Solution:";
-        solutionLabel.setText(solutionText);
+         solutionLabel = findViewById(R.id.solutionNum);
+         solutionText = "Puzzle " + puzzleNum + " Solution:";
+         solutionLabel.setText(solutionText);
 
         //CREATE BUTTON AND LISTENER FOR SAVE PUZZLE BUTTON
-        Button saveButton = findViewById(R.id.savePuzzleButton);
+        saveButton = findViewById(R.id.savePuzzleButton);
         saveButton.setOnClickListener(v -> {
             if (roomID == -1) {
                 Toast msg = Toast.makeText(EditPuzzles.this, "Your room ID is invalid", Toast.LENGTH_LONG);
@@ -103,7 +108,7 @@ public class EditPuzzles extends AppCompatActivity {
         });
 
         //CREATE BUTTON AND LISTENER FOR CANCEL CHANGES BUTTON
-        Button cancelChangesButton = findViewById(R.id.cancelChangesButton);
+        cancelChangesButton = findViewById(R.id.cancelChangesButton);
         cancelChangesButton.setOnClickListener(v -> {
             Intent intent = new Intent(EditPuzzles.this, PuzzleList.class);
             intent.putExtra("name", currentRoom.getRoomName());
@@ -113,7 +118,7 @@ public class EditPuzzles extends AppCompatActivity {
         });
 
         //CREATE BUTTON AND LISTENER FOR DELETE PUZZLE BUTTON
-        Button deletePuzzleButton = findViewById(R.id.deletePuzzleButton);
+        deletePuzzleButton = findViewById(R.id.deletePuzzleButton);
         deletePuzzleButton.setOnClickListener(v -> {
             try {
                 repository.delete(currentPuzzle);

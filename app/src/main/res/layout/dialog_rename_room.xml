@@ -2,48 +2,47 @@
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:minWidth="320sp"
+    android:minWidth="220sp"
     android:orientation="vertical"
     android:layout_gravity="center"
-    android:background="?android:attr/colorBackground"
-    >
+    android:background="?android:attr/colorBackground">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/welcome_to_mobile_game_master"
+        android:text="@string/update_room_name"
         android:textStyle="bold"
         android:textColor="?android:attr/textColorPrimary"
         android:gravity="center"
         android:background="?android:attr/colorBackground"
         android:fontFamily="serif"
-        />
+        android:labelFor="@+id/roomRenameEditText"/>
 
-    <TextView
-        android:id="@+id/dialog_startup_textview"
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/placeholder"
-        android:textColor="?android:attr/textColorPrimary"
-        android:layout_marginBottom="6sp"
-        />
+        android:inputType="textCapWords"
+        android:id="@+id/roomRenameEditText"
+        android:autofillHints="name"
+        android:textAlignment="textStart"/>
+
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:orientation="horizontal">
-    <Button
-        android:id="@+id/saveButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/ok"
-        />
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save" />
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <CheckBox
-        android:id="@+id/dialogCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/check_to_turn_off_tip" />
 </androidx.appcompat.widget.LinearLayoutCompat>

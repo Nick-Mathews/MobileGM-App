@@ -6,9 +6,11 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,11 +28,13 @@ public class AddRoom extends AppCompatActivity {
     //CREATE REPOSITORY, PUZZLENUM, ROOMID AND NEWROOM VARIABLES
     Repository repository;
     int puzzleNum, roomID;
+    String nameText;
     TextView startupText2;
     Room newRoom;
     EditText nameTextView;
     Dialog startupDialog2;
-    boolean dialog2Checked;
+    ProgressBar pgBar;
+    boolean dialog2Checked, roomFound;
     Button cancelButton, continueButton,  okButton2;
     CheckBox dialogCheckBox2;
 
@@ -51,15 +55,18 @@ public class AddRoom extends AppCompatActivity {
         //SET ROOM NAME TEXTVIEW
         nameTextView = findViewById(R.id.enterNameText);
 
-        //SETUP FIRST TIME STARTUP DIALOG
-        startupDialog2 = new Dialog(AddRoom.this);
-        startupDialog2.setContentView(R.layout.dialog_startup);
-        okButton2 = startupDialog2.findViewById(R.id.saveButton);
-        dialogCheckBox2 = startupDialog2.findViewById(R.id.dialogCheckBox);
+        //SETUP FIRST TIME STARTUP DIALOG AND LOADING DIALOG
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         dialog2Checked = settings.getBoolean("dialog2Checked", false);
 
+        //SET PROGRESS BAR VIEW
+        pgBar = findViewById(R.id.progressBar);
+
         if (!dialog2Checked) {
+            startupDialog2 = new Dialog(AddRoom.this);
+            startupDialog2.setContentView(R.layout.dialog_startup);
+            okButton2 = startupDialog2.findViewById(R.id.saveButton);
+            dialogCheckBox2 = startupDialog2.findViewById(R.id.dialogCheckBox);
             startupText2 = startupDialog2.findViewById(R.id.dialog_startup_textview);
             startupText2.setText(R.string.add_room_intro);
             startupDialog2.show();
@@ -76,6 +83,7 @@ public class AddRoom extends AppCompatActivity {
         //CREATE BUTTON AND CLICK LISTENER FOR CANCEL
         cancelButton = findViewById(R.id.add_room_cancel_button);
         cancelButton.setOnClickListener(v -> {
+            pgBar.setVisibility(View.VISIBLE);
             cancelButton.setEnabled(false);
             Intent intent = new Intent(AddRoom.this, AdminMenu.class);
             startActivity(intent);
@@ -84,35 +92,49 @@ public class AddRoom extends AppCompatActivity {
         //CREATE BUTTON AND CLICK LISTENER FOR CONTINUE
         continueButton = findViewById(R.id.add_room_continue_button);
         continueButton.setOnClickListener(v -> {
+            pgBar.setVisibility(View.VISIBLE);
             continueButton.setEnabled(false);
-            String nameText = String.valueOf(nameTextView.getText());
+            roomFound = false;
+            nameText = String.valueOf(nameTextView.getText());
             if (!nameText.isEmpty()) {
-                if (repository.getmAllRooms().isEmpty()) {
-                    roomID = 1;
+                for (Room room: repository.getmAllRooms()) {
+                    if (room.getRoomName().equals(nameText)){
+                        roomFound = true;
+                        break;
+                    }
+                }
+                if(!roomFound) {
+                    if (repository.getmAllRooms().isEmpty()) {
+                        roomID = 1;
+                    } else {
+                        roomID = repository.getmAllRooms().get(repository.getmAllRooms().size() - 1).getRoomID() + 1;
+                    }
+                    newRoom = new Room(roomID, nameText);
+                    try {
+                        repository.insert(newRoom);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    Intent intent = new Intent(AddRoom.this, AddPuzzles.class);
+                    intent.putExtra("name", newRoom.getRoomName());
+                    intent.putExtra("id", newRoom.getRoomID());
+                    intent.putExtra("puzzle_num", puzzleNum);
+                    startActivity(intent);
                 }
                 else {
-                    roomID = repository.getmAllRooms().get(repository.getmAllRooms().size()-1).getRoomID() + 1;
+                    Toast msg = Toast.makeText(AddRoom.this, "That name matches an existing room", Toast.LENGTH_LONG);
+                    msg.show();
+                    pgBar.setVisibility(View.INVISIBLE);
+                    continueButton.setEnabled(true);
                 }
-                newRoom = new Room(roomID, nameText);
-                try {
-                    repository.insert(newRoom);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-
-                Intent intent = new Intent(AddRoom.this, AddPuzzles.class);
-                intent.putExtra("name", newRoom.getRoomName());
-                intent.putExtra("id", newRoom.getRoomID());
-                intent.putExtra("puzzle_num", puzzleNum);
-                startActivity(intent);
             }
             else{
-                Toast toast = Toast.makeText(AddRoom.this, "You must enter a room name to continue", Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(AddRoom.this, "You must enter a valid room name to continue", Toast.LENGTH_LONG);
                 toast.show();
+                pgBar.setVisibility(View.INVISIBLE);
                 continueButton.setEnabled(true);
             }
-
-
         });
     }
 }

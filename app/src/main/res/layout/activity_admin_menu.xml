@@ -7,6 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".UI.AdminMenu"
     android:background="@drawable/pavel_neznanov_background">
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        style="@android:style/Widget.DeviceDefault.ProgressBar.Large"        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/adminTitleLayout"
@@ -28,15 +38,29 @@
             android:textColor="?android:attr/textColorPrimary"
             android:textStyle="bold"/>
 
-        <TextView
-            android:id="@+id/adminNameText"
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="@string/placeholder"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textSize="28sp"/>
+            android:orientation="horizontal"
+            android:gravity="center">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/user"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="28sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/adminNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="28sp"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/adminButtonLayout"

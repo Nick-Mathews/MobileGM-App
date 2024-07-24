@@ -2,8 +2,10 @@ package com.packages.mobilegamemaster.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +30,7 @@ public class EditPuzzles extends AppCompatActivity {
     TextView roomNameView, nudgeLabel, hintLabel, solutionLabel;
     EditText nudgeEntry, hintEntry, solutionEntry;
     Button saveButton, cancelChangesButton, deletePuzzleButton;
-
+    ProgressBar pgBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,9 @@ public class EditPuzzles extends AppCompatActivity {
         });
         //POPULATE REPOSITORY
         repository  = new Repository(getApplication());
+
+        //SET PROGRESS BAR VIEWS
+        pgBar = findViewById(R.id.progressBar);
 
         //RETRIEVE INTENT EXTRA FOR USE, CREATE ROOM OBJECT, CREATE PUZZLE OBJECT
         roomID = getIntent().getIntExtra("room_id", -1);
@@ -79,9 +84,11 @@ public class EditPuzzles extends AppCompatActivity {
         //CREATE BUTTON AND LISTENER FOR SAVE PUZZLE BUTTON
         saveButton = findViewById(R.id.savePuzzleButton);
         saveButton.setOnClickListener(v -> {
+            pgBar.setVisibility(View.VISIBLE);
             if (roomID == -1) {
                 Toast msg = Toast.makeText(EditPuzzles.this, "Your room ID is invalid", Toast.LENGTH_LONG);
                 msg.show();
+                pgBar.setVisibility(View.INVISIBLE);
             }
             else {
                 String nudgeText1 = String.valueOf(nudgeEntry.getText());
@@ -90,6 +97,7 @@ public class EditPuzzles extends AppCompatActivity {
                 if ((nudgeText1.isEmpty()) || (hintText1.isEmpty()) || (solutionText1.isEmpty())) {
                     Toast msg = Toast.makeText(EditPuzzles.this, "You must complete all fields before saving", Toast.LENGTH_LONG);
                     msg.show();
+                    pgBar.setVisibility(View.INVISIBLE);
                 } else {
                         currentPuzzle.setNudge(nudgeText1);
                         currentPuzzle.setHint(hintText1);
@@ -110,6 +118,7 @@ public class EditPuzzles extends AppCompatActivity {
         //CREATE BUTTON AND LISTENER FOR CANCEL CHANGES BUTTON
         cancelChangesButton = findViewById(R.id.cancelChangesButton);
         cancelChangesButton.setOnClickListener(v -> {
+            pgBar.setVisibility(View.VISIBLE);
             Intent intent = new Intent(EditPuzzles.this, PuzzleList.class);
             intent.putExtra("name", currentRoom.getRoomName());
             intent.putExtra("id", roomID);
@@ -120,6 +129,7 @@ public class EditPuzzles extends AppCompatActivity {
         //CREATE BUTTON AND LISTENER FOR DELETE PUZZLE BUTTON
         deletePuzzleButton = findViewById(R.id.deletePuzzleButton);
         deletePuzzleButton.setOnClickListener(v -> {
+            pgBar.setVisibility(View.VISIBLE);
             try {
                 repository.delete(currentPuzzle);
             } catch (Exception e) {

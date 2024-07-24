@@ -20,6 +20,8 @@ public class EditRoomAdapter extends RecyclerView.Adapter<EditRoomAdapter.EditVi
     private List<Room> mRooms;
     private final Context context;
     private final LayoutInflater mInflater;
+    Room currentRoom;
+    String name;
 
     //ADAPTER CONSTRUCTOR
     public EditRoomAdapter(Context context) {
@@ -36,13 +38,12 @@ public class EditRoomAdapter extends RecyclerView.Adapter<EditRoomAdapter.EditVi
             editView = itemView.findViewById(R.id.editTextView);
             itemView.setOnClickListener(v -> {
                 int position = getAdapterPosition();
-                final Room currentRoom = mRooms.get(position);
+                currentRoom = mRooms.get(position);
                 Intent intent = new Intent(context, PuzzleList.class);
                 intent.putExtra("name", currentRoom.getRoomName());
                 intent.putExtra("id", currentRoom.getRoomID());
                 context.startActivity(intent);
             });
-
         }
     }
     @NonNull
@@ -55,12 +56,12 @@ public class EditRoomAdapter extends RecyclerView.Adapter<EditRoomAdapter.EditVi
     @Override
     public void onBindViewHolder(@NonNull EditRoomAdapter.EditViewHolder holder, int position) {
         if (mRooms != null) {
-            Room currentRoom = mRooms.get(position);
-            String name = currentRoom.getRoomName();
+            currentRoom = mRooms.get(position);
+            name = currentRoom.getRoomName();
             holder.editView.setText(name);
         }
         else {
-            String name = "No room name";
+            name = "No room name";
             holder.editView.setText(name);
         }
     }

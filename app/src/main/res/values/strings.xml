@@ -81,4 +81,6 @@
     <string name="save">Save</string>
     <string name="admin_menu">Admin Menu</string>
     <string name="sign_out">Sign Out</string>
+    <string name="user">User:</string>
+    <string name="loading">Loading…</string>
 </resources>

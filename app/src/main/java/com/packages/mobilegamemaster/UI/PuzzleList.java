@@ -3,8 +3,10 @@ package com.packages.mobilegamemaster.UI;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +40,7 @@ public class PuzzleList extends AppCompatActivity {
     PuzzleListAdapter puzzleListAdapter;
     Dialog renameDialog;
     EditText renameEditText;
+    ProgressBar pgBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,7 @@ public class PuzzleList extends AppCompatActivity {
         roomPuzzles = repository.getmRoomPuzzles(roomID);
         roomName = getIntent().getStringExtra("name");
         allRooms = repository.getmAllRooms();
+        pgBar = findViewById(R.id.progressBar);
 
         //SET ROOM NAME
         roomNameText = findViewById(R.id.roomNameText);
@@ -73,6 +77,7 @@ public class PuzzleList extends AppCompatActivity {
         //BUTTON THAT ADDS A NEW PUZZLE TO ROOM
         addPuzzleButton = findViewById(R.id.addPuzzleButton);
         addPuzzleButton.setOnClickListener(v -> {
+            pgBar.setVisibility(View.VISIBLE);
             addPuzzleButton.setEnabled(false);
             Intent intent = new Intent(PuzzleList.this, AddPuzzles.class);
             intent.putExtra("name", roomName);
@@ -84,6 +89,7 @@ public class PuzzleList extends AppCompatActivity {
         //BUTTON THAT RETURNS TO THE MAIN ACTIVITY
         finishButton = findViewById(R.id.finishEditsButton);
         finishButton.setOnClickListener(v -> {
+            pgBar.setVisibility(View.VISIBLE);
             finishButton.setEnabled(false);
             Intent intent = new Intent(PuzzleList.this, RoomList.class);
             startActivity(intent);
@@ -92,6 +98,7 @@ public class PuzzleList extends AppCompatActivity {
         //BUTTON THAT DELETES THE EXISTING ROOM AND PUZZLES
         deleteRoomButton = findViewById(R.id.deleteRoomButton);
         deleteRoomButton.setOnClickListener(v -> {
+            pgBar.setVisibility(View.VISIBLE);
             deleteRoomButton.setEnabled(false);
             if (roomID == -1) {
                 Intent intent = new Intent(PuzzleList.this, RoomList.class);
@@ -121,12 +128,17 @@ public class PuzzleList extends AppCompatActivity {
             startActivity(intent);
         });
 
-        //SETUP RENAME DIALOG
+    //SET UP RENAME DIALOG
         renameDialog = new Dialog(PuzzleList.this);
         renameDialog.setContentView(R.layout.dialog_rename_room);
         renameEditText = renameDialog.findViewById(R.id.roomRenameEditText);
-        saveButton = renameDialog.findViewById(R.id.saveButton);
         cancelButton = renameDialog.findViewById(R.id.cancelButton);
+        saveButton = renameDialog.findViewById(R.id.saveButton);
+        cancelButton.setOnClickListener(v -> {
+            renameEditText.setText("");
+            renameDialog.hide();
+        });
+
         saveButton.setOnClickListener(v -> {
             saveButton.setEnabled(false);
             nameFound = false;
@@ -160,11 +172,6 @@ public class PuzzleList extends AppCompatActivity {
                 }
 
             }
-        });
-
-        cancelButton.setOnClickListener(v -> {
-            renameEditText.setText("");
-            renameDialog.dismiss();
         });
 
         //TAP AND HOLD FUNCTION THAT ACTIVATES RENAME ROOM DIALOG

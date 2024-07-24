@@ -2,8 +2,10 @@ package com.packages.mobilegamemaster.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +31,7 @@ public class EditPasswords extends AppCompatActivity {
     Button saveButton, cancelChangesButton, deleteUserButton;
     TextView userNameView;
     EditText userNameEntry, currentPasswordEntry, newPasswordEntry;
+    ProgressBar pgBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +46,7 @@ public class EditPasswords extends AppCompatActivity {
         //POPULATE REPOSITORY AND ALL PASSWORDS LIST
         repository = new Repository(getApplication());
         allPasswords = repository.getmAllPasswords();
-
+        pgBar = findViewById(R.id.progressBar);
 
 
         //RETRIEVE INTENT FOR USE, CREATE PASSWORD OBJECT, RETRIEVE USERNAME AND PASSWORD
@@ -74,12 +77,14 @@ public class EditPasswords extends AppCompatActivity {
         //CREATE BUTTON AND LISTENER FOR SAVE USER BUTTON
         saveButton = findViewById(R.id.saveUserButton);
         saveButton.setOnClickListener(v -> {
+            pgBar.setVisibility(View.VISIBLE);
             saveButton.setEnabled(false);
                 //CHECK FOR VALID PASSWORD ID
                 if (passwordID==-1) {
                     Toast msg = Toast.makeText(EditPasswords.this, "Your username is invalid", Toast.LENGTH_LONG);
                     msg.show();
                     saveButton.setEnabled(true);
+                    pgBar.setVisibility(View.INVISIBLE);
                 }
                 //CHECK PASSWORD ID FOR NEW USER
                 else {
@@ -90,6 +95,7 @@ public class EditPasswords extends AppCompatActivity {
                             Toast msg = Toast.makeText(EditPasswords.this, "You must enter username and new password before saving", Toast.LENGTH_LONG);
                             msg.show();
                             saveButton.setEnabled(true);
+                            pgBar.setVisibility(View.INVISIBLE);
                         }
                         //INSERT NEW USER
                         else {
@@ -111,6 +117,7 @@ public class EditPasswords extends AppCompatActivity {
                             Toast msg = Toast.makeText(EditPasswords.this, "You must complete all fields before saving", Toast.LENGTH_LONG);
                             msg.show();
                             saveButton.setEnabled(true);
+                            pgBar.setVisibility(View.INVISIBLE);
                         } else {
                             if (currentPasswordText.equals(currentPassword.getPassword())) {
                                 currentPassword.setUserName(userNameText);
@@ -127,6 +134,7 @@ public class EditPasswords extends AppCompatActivity {
                                 Toast msg = Toast.makeText(EditPasswords.this, "You must enter the current password correctly", Toast.LENGTH_LONG);
                                 msg.show();
                                 saveButton.setEnabled(true);
+                                pgBar.setVisibility(View.INVISIBLE);
                             }
                         }
                     }
@@ -136,6 +144,7 @@ public class EditPasswords extends AppCompatActivity {
         //CREATE BUTTON AND LISTENER FOR CANCEL CHANGES BUTTON
         cancelChangesButton = findViewById(R.id.cancelChangesButton);
         cancelChangesButton.setOnClickListener(v -> {
+            pgBar.setVisibility(View.VISIBLE);
            Intent intent = new Intent(EditPasswords.this, PasswordList.class);
            startActivity(intent);
 
@@ -144,6 +153,7 @@ public class EditPasswords extends AppCompatActivity {
         //CREATE BUTTON AND LISTENER FOR DELETE USER BUTTON
         deleteUserButton = findViewById(R.id.deleteUserButton);
         deleteUserButton.setOnClickListener(v -> {
+            pgBar.setVisibility(View.VISIBLE);
             if (String.valueOf(userNameView.getText()).equals("New User")) {
                 Intent intent = new Intent(EditPasswords.this, PasswordList.class);
                 startActivity(intent);

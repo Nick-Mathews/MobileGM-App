@@ -50,7 +50,7 @@ public class GameLogs extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_room_logs);
+        setContentView(R.layout.activity_game_logs);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -64,14 +64,14 @@ public class GameLogs extends AppCompatActivity {
         logAdapter.setmTimers(allTimers);
 
         //SETUP FIRST TIME STARTUP DIALOG
-        startupDialog4 = new Dialog(GameLogs.this);
-        startupDialog4.setContentView(R.layout.dialog_startup);
-        okButton4 = startupDialog4.findViewById(R.id.saveButton);
-        dialogCheckBox4 = startupDialog4.findViewById(R.id.dialogCheckBox);
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         dialog4Checked = settings.getBoolean("dialog4Checked", false);
 
         if (!dialog4Checked) {
+            startupDialog4 = new Dialog(GameLogs.this);
+            startupDialog4.setContentView(R.layout.dialog_startup);
+            okButton4 = startupDialog4.findViewById(R.id.saveButton);
+            dialogCheckBox4 = startupDialog4.findViewById(R.id.dialogCheckBox);
             startupText4 = startupDialog4.findViewById(R.id.dialog_startup_textview);
             startupText4.setText(R.string.report_logs_intro);
             startupDialog4.show();

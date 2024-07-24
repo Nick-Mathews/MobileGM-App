@@ -2,8 +2,10 @@ package com.packages.mobilegamemaster.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +31,7 @@ public class AddPuzzles extends AppCompatActivity {
     TextView roomNameView, nudgeView, hintView, solutionView;
     EditText nudgeEntry, hintEntry, solutionEntry;
     Button abandonButton, finishButton, addNextButton;
-
+    ProgressBar pgBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,9 @@ public class AddPuzzles extends AppCompatActivity {
         });
         //POPULATE REPOSITORY
         repository  = new Repository(getApplication());
+
+        //SET PROGRESS BAR VIEW
+        pgBar = findViewById(R.id.progressBar);
 
         //RETRIEVE INTENT EXTRAS FOR USE
         roomName = getIntent().getStringExtra("name");
@@ -74,27 +79,30 @@ public class AddPuzzles extends AppCompatActivity {
         //CREATE BUTTON AND LISTENER FOR 'ABANDON PUZZLE' BUTTON
         abandonButton = findViewById(R.id.abandonButton);
         abandonButton.setOnClickListener(v -> {
+            pgBar.setVisibility(View.VISIBLE);
             abandonButton.setEnabled(false);
+            Intent intent;
             if(roomID == -1) {
-                Intent intent = new Intent(AddPuzzles.this, MainActivity.class);
-                startActivity(intent);
+                intent = new Intent(AddPuzzles.this, MainActivity.class);
             }
             else {
-                Intent intent = new Intent(AddPuzzles.this, PuzzleList.class);
+                intent = new Intent(AddPuzzles.this, PuzzleList.class);
                 intent.putExtra("id", roomID);
                 intent.putExtra("name", roomName);
-                startActivity(intent);
             }
+            startActivity(intent);
         });
 
         //CREATE BUTTON AND LISTENER FOR 'SAVE AND FINISH' BUTTON
         finishButton = findViewById(R.id.finishButton);
         finishButton.setOnClickListener(v -> {
+            pgBar.setVisibility(View.VISIBLE);
             finishButton.setEnabled(false);
             if (roomID == -1) {
                 Toast msg = Toast.makeText(AddPuzzles.this, "Your room ID is invalid", Toast.LENGTH_LONG);
                 msg.show();
                 finishButton.setEnabled(true);
+                pgBar.setVisibility(View.INVISIBLE);
             }
             else {
                 nudgeText = String.valueOf(nudgeEntry.getText());
@@ -104,6 +112,7 @@ public class AddPuzzles extends AppCompatActivity {
                     Toast msg = Toast.makeText(AddPuzzles.this, "You must complete all fields before saving", Toast.LENGTH_LONG);
                     msg.show();
                     finishButton.setEnabled(true);
+                    pgBar.setVisibility(View.INVISIBLE);
                 } else {
                     if (repository.getmAllPuzzles().isEmpty()){
                         puzzleID = 1;
@@ -128,45 +137,48 @@ public class AddPuzzles extends AppCompatActivity {
         //CREATE BUTTON AND LISTENER FOR 'ADD NEXT' BUTTON
         addNextButton = findViewById(R.id.nextPuzzleButton);
         addNextButton.setOnClickListener(v -> {
+            pgBar.setVisibility(View.VISIBLE);
             addNextButton.setEnabled(false);
-        if (roomID == -1) {
-            Toast msg = Toast.makeText(AddPuzzles.this, "Your room ID is invalid", Toast.LENGTH_LONG);
-            msg.show();
-            addNextButton.setEnabled(true);
-        }
-        else {
-            nudgeText = String.valueOf(nudgeEntry.getText());
-            hintText = String.valueOf(hintEntry.getText());
-            solutionText = String.valueOf(solutionEntry.getText());
-            if ((nudgeText.isEmpty()) || (hintText.isEmpty()) || (solutionText.isEmpty())) {
-                Toast msg = Toast.makeText(AddPuzzles.this, "You must complete all fields before saving", Toast.LENGTH_LONG);
+            if (roomID == -1) {
+                Toast msg = Toast.makeText(AddPuzzles.this, "Your room ID is invalid", Toast.LENGTH_LONG);
                 msg.show();
                 addNextButton.setEnabled(true);
-            } else {
-                if (repository.getmAllPuzzles().isEmpty()){
-                    puzzleID = 1;
-                }
-                else {
-                    puzzleID = repository.getmAllPuzzles().get(repository.getmAllPuzzles().size()-1).getPuzzleID() + 1;
-                }
-                newPuzzle = new Puzzle(puzzleID, puzzleNum, roomID, nudgeText, hintText, solutionText);
-                try {
-                    repository.insert(newPuzzle);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-                for (Room room: repository.getmAllRooms()) {
-                    if (room.getRoomID() == roomID) {
-                        currentRoom = room;
-                    }
-                }
-                Intent intent = new Intent(AddPuzzles.this, AddPuzzles.class);
-                intent.putExtra("name", currentRoom.getRoomName());
-                intent.putExtra("id", currentRoom.getRoomID());
-                int nextPuzzleNum = newPuzzle.getPuzzleNum() + 1;
-                intent.putExtra("puzzle_num", nextPuzzleNum);
-                startActivity(intent);
+                pgBar.setVisibility(View.INVISIBLE);
             }
+            else {
+                nudgeText = String.valueOf(nudgeEntry.getText());
+                hintText = String.valueOf(hintEntry.getText());
+                solutionText = String.valueOf(solutionEntry.getText());
+                if ((nudgeText.isEmpty()) || (hintText.isEmpty()) || (solutionText.isEmpty())) {
+                    Toast msg = Toast.makeText(AddPuzzles.this, "You must complete all fields before saving", Toast.LENGTH_LONG);
+                    msg.show();
+                    addNextButton.setEnabled(true);
+                    pgBar.setVisibility(View.INVISIBLE);
+                } else {
+                    if (repository.getmAllPuzzles().isEmpty()){
+                        puzzleID = 1;
+                    }
+                    else {
+                        puzzleID = repository.getmAllPuzzles().get(repository.getmAllPuzzles().size()-1).getPuzzleID() + 1;
+                    }
+                    newPuzzle = new Puzzle(puzzleID, puzzleNum, roomID, nudgeText, hintText, solutionText);
+                    try {
+                        repository.insert(newPuzzle);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                    for (Room room: repository.getmAllRooms()) {
+                        if (room.getRoomID() == roomID) {
+                            currentRoom = room;
+                        }
+                    }
+                    Intent intent = new Intent(AddPuzzles.this, AddPuzzles.class);
+                    intent.putExtra("name", currentRoom.getRoomName());
+                    intent.putExtra("id", currentRoom.getRoomID());
+                    int nextPuzzleNum = newPuzzle.getPuzzleNum() + 1;
+                    intent.putExtra("puzzle_num", nextPuzzleNum);
+                    startActivity(intent);
+                }
         }
         });
     }

@@ -7,8 +7,10 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -36,6 +38,7 @@ public class PasswordList extends AppCompatActivity {
     TextView startupText3;
     RecyclerView recyclerView;
     PasswordListAdapter passwordListAdapter;
+    ProgressBar pgBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,16 +53,17 @@ public class PasswordList extends AppCompatActivity {
         //POPULATE REPOSITORY AND PASSWORDS LIST
         repository = new Repository(getApplication());
         allPasswords = repository.getmAllPasswords();
+        pgBar = findViewById(R.id.progressBar);
 
         //SETUP FIRST TIME STARTUP DIALOG
-        startupDialog3 = new Dialog(PasswordList.this);
-        startupDialog3.setContentView(R.layout.dialog_startup);
-        okButton3 = startupDialog3.findViewById(R.id.saveButton);
-        dialogCheckBox3 = startupDialog3.findViewById(R.id.dialogCheckBox);
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         dialog3Checked = settings.getBoolean("dialog3Checked", false);
 
         if (!dialog3Checked) {
+            startupDialog3 = new Dialog(PasswordList.this);
+            startupDialog3.setContentView(R.layout.dialog_startup);
+            okButton3 = startupDialog3.findViewById(R.id.saveButton);
+            dialogCheckBox3 = startupDialog3.findViewById(R.id.dialogCheckBox);
             startupText3 = startupDialog3.findViewById(R.id.dialog_startup_textview);
             startupText3.setText(R.string.edit_users_intro);
             startupDialog3.show();
@@ -83,6 +87,7 @@ public class PasswordList extends AppCompatActivity {
         //CREATE AND SET CLICK LISTENER FOR FINISH BUTTON
         finishButton = findViewById(R.id.finishButton);
         finishButton.setOnClickListener(v -> {
+            pgBar.setVisibility(View.VISIBLE);
             Intent intent = new Intent(PasswordList.this, AdminMenu.class);
             startActivity(intent);
         });
@@ -90,21 +95,10 @@ public class PasswordList extends AppCompatActivity {
         //CREATE AND SET CLICK LISTENER FOR ADD USER BUTTON
         addUserButton = findViewById(R.id.addUserButton);
         addUserButton.setOnClickListener(v -> {
+            pgBar.setVisibility(View.VISIBLE);
             Intent intent = new Intent(PasswordList.this, EditPasswords.class);
             intent.putExtra("id", allPasswords.get(allPasswords.size() -1 ).getPasswordID() + 1);
             startActivity(intent);
-
         });
-    }
-    //ON RESUME FUNCTION THAT REPOPULATES AND REFRESHES THE ADAPTER
-    @Override
-    public void onResume() {
-        super.onResume();
-        allPasswords = repository.getmAllPasswords();
-        recyclerView = findViewById(R.id.passwordListRecyclerView);
-        passwordListAdapter = new PasswordListAdapter(this);
-        passwordListAdapter.setPasswords(allPasswords);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(passwordListAdapter);
     }
 }

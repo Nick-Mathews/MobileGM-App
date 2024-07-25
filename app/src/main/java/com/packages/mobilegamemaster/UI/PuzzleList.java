@@ -133,7 +133,7 @@ public class PuzzleList extends AppCompatActivity {
         renameDialog.setContentView(R.layout.dialog_rename_room);
         renameEditText = renameDialog.findViewById(R.id.roomRenameEditText);
         cancelButton = renameDialog.findViewById(R.id.cancelButton);
-        saveButton = renameDialog.findViewById(R.id.saveButton);
+        saveButton = renameDialog.findViewById(R.id.okButton);
         cancelButton.setOnClickListener(v -> {
             renameEditText.setText("");
             renameDialog.hide();

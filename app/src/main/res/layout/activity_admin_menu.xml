@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".UI.AdminMenu"
     android:background="@drawable/pavel_neznanov_background">
+
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
@@ -16,7 +17,8 @@
         style="@android:style/Widget.DeviceDefault.ProgressBar.Large"        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/adminTitleLayout"
@@ -77,30 +79,42 @@
             android:id="@+id/menuAddRoom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxWidth="150sp"
             android:text="@string/add_room"/>
 
         <Button
             android:id="@+id/menuEditRoom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxWidth="150sp"
             android:text="@string/edit_delete_room"/>
 
         <Button
             android:id="@+id/menuEditPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxWidth="150sp"
             android:text="@string/edit_delete_users"/>
 
         <Button
             android:id="@+id/menuGameLogs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxWidth="150sp"
             android:text="@string/game_logs"/>
+
+        <Button
+            android:id="@+id/menuStartupReset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="150sp"
+            android:text="@string/tutorial_popups_on"/>
 
         <Button
             android:id="@+id/menuSignOut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxWidth="150sp"
             android:text="@string/sign_out"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>

@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         if (!dialog1Checked) {
             startupDialog1 = new Dialog(MainActivity.this);
             startupDialog1.setContentView(R.layout.dialog_startup);
-            okButton = startupDialog1.findViewById(R.id.saveButton);
+            okButton = startupDialog1.findViewById(R.id.okButton);
             dialogCheckBox = startupDialog1.findViewById(R.id.dialogCheckBox);
             startupText = startupDialog1.findViewById(R.id.dialog_startup_textview);
             startupText.setText(R.string.welcome_intro);

@@ -56,9 +56,9 @@
     <string name="welcome_to_mobile_game_master">Welcome to Mobile Game Master!</string>
     <string name="welcome_intro">This app is designed to assist Escape Room Players and Gamemasters. The menu in the upper right accesses admin functions.
     The default username/password is Admin and password. </string>
-    <string name="add_room_intro">Use Add Room to create a new Escape Room. After naming the room you can add any number of puzzles on the next screen.
-    Puzzles include a Nudge text, Hint text, and Solution text.</string>
-    <string name="edit_room_intro">Edit/Delete Room lets you delete a Room and all of its Puzzles, or simply to add to or edit a Rooms existing puzzles.</string>
+    <string name="add_room_intro">Use Add Room to create a new Escape Room. After naming the room you can add any number of puzzles.
+    Puzzles include a Nudge, a Hint, and a Solution.</string>
+    <string name="edit_room_intro">Edit/Delete Room lets you delete a Room and all of its Puzzles, or simply add or edit a Rooms puzzles.</string>
     <string name="edit_users_intro"> Edit/Delete Users lets you add new users or edit the credentials of existing users.</string>
     <string name="report_logs_intro">The Report Logs give you a record of statistics for groups who have completed your rooms. You can search by room name and find
     the name of the room played, the date and time the room was started and the time remaining at the end.</string>
@@ -83,4 +83,5 @@
     <string name="sign_out">Sign Out</string>
     <string name="user">User:</string>
     <string name="loading">Loading…</string>
+    <string name="tutorial_popups_on">Tutorial Popups On</string>
 </resources>

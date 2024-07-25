@@ -70,7 +70,7 @@ public class GameLogs extends AppCompatActivity {
         if (!dialog4Checked) {
             startupDialog4 = new Dialog(GameLogs.this);
             startupDialog4.setContentView(R.layout.dialog_startup);
-            okButton4 = startupDialog4.findViewById(R.id.saveButton);
+            okButton4 = startupDialog4.findViewById(R.id.okButton);
             dialogCheckBox4 = startupDialog4.findViewById(R.id.dialogCheckBox);
             startupText4 = startupDialog4.findViewById(R.id.dialog_startup_textview);
             startupText4.setText(R.string.report_logs_intro);

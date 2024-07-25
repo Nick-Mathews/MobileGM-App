@@ -9,6 +9,18 @@
     android:background="@drawable/hans_eiskonen_timer">
     <!--Photo by Hans Eiskonen on Unsplash-->
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        style="@android:style/Widget.DeviceDefault.ProgressBar.Large"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/titleLayout"
         android:layout_width="match_parent"

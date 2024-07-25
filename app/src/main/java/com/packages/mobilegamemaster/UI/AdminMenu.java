@@ -21,8 +21,9 @@ import com.packages.mobilegamemaster.R;
 public class AdminMenu extends AppCompatActivity {
     String adminName, settingsName;
     TextView nameView;
-    Button menuAddRoom, menuEditRoom, menuEditPassword, menuGameLogs, menuSignOut;
+    Button menuAddRoom, menuEditRoom, menuEditPassword, menuGameLogs, menuSignOut, menuStartupReset;
     ProgressBar pgBar;
+    SharedPreferences settings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +35,7 @@ public class AdminMenu extends AppCompatActivity {
             return insets;
         });
         //GET INTENT AND SET ADMIN NAME
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        settings = getSharedPreferences(PREFS_NAME, 0);
         settingsName = settings.getString("adminName", "Admin");
         adminName = getIntent().getStringExtra("name");
         if ((adminName != null) && (!(adminName.equals(settingsName)))) {
@@ -50,36 +51,55 @@ public class AdminMenu extends AppCompatActivity {
         menuEditRoom = findViewById(R.id.menuEditRoom);
         menuEditPassword = findViewById(R.id.menuEditPassword);
         menuGameLogs = findViewById(R.id.menuGameLogs);
+        menuStartupReset = findViewById(R.id.menuStartupReset);
         menuSignOut = findViewById(R.id.menuSignOut);
 
         menuAddRoom.setOnClickListener(v->{
             pgBar.setVisibility(View.VISIBLE);
+            pgBar.bringToFront();
             Intent intent = new Intent(AdminMenu.this, AddRoom.class);
             startActivity(intent);
         });
 
         menuEditRoom.setOnClickListener(v->{
             pgBar.setVisibility(View.VISIBLE);
+            pgBar.bringToFront();
             Intent intent = new Intent(AdminMenu.this, RoomList.class);
             startActivity(intent);
         });
 
         menuEditPassword.setOnClickListener(v->{
             pgBar.setVisibility(View.VISIBLE);
+            pgBar.bringToFront();
             Intent intent = new Intent(AdminMenu.this, PasswordList.class);
             startActivity(intent);
         });
 
         menuGameLogs.setOnClickListener(v->{
             pgBar.setVisibility(View.VISIBLE);
+            pgBar.bringToFront();
             Intent intent = new Intent(AdminMenu.this, GameLogs.class);
             startActivity(intent);
         });
 
         menuSignOut.setOnClickListener(v->{
             pgBar.setVisibility(View.VISIBLE);
+            pgBar.bringToFront();
             Intent intent = new Intent(AdminMenu.this, MainActivity.class);
             startActivity(intent);
+        });
+
+        menuStartupReset.setOnClickListener(v-> {
+            pgBar.setVisibility(View.VISIBLE);
+            pgBar.bringToFront();
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putBoolean("dialog1Checked", false);
+            editor.putBoolean("dialog2Checked", false);
+            editor.putBoolean("dialog3Checked", false);
+            editor.putBoolean("dialog4Checked", false);
+            editor.putBoolean("dialog5Checked", false);
+            editor.apply();
+            pgBar.setVisibility(View.INVISIBLE);
         });
 
         //SET PROGRESS BAR VIEW

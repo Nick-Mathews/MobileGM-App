@@ -62,7 +62,7 @@ public class PasswordList extends AppCompatActivity {
         if (!dialog3Checked) {
             startupDialog3 = new Dialog(PasswordList.this);
             startupDialog3.setContentView(R.layout.dialog_startup);
-            okButton3 = startupDialog3.findViewById(R.id.saveButton);
+            okButton3 = startupDialog3.findViewById(R.id.okButton);
             dialogCheckBox3 = startupDialog3.findViewById(R.id.dialogCheckBox);
             startupText3 = startupDialog3.findViewById(R.id.dialog_startup_textview);
             startupText3.setText(R.string.edit_users_intro);

@@ -55,7 +55,7 @@ public class AddRoom extends AppCompatActivity {
         //SET ROOM NAME TEXTVIEW
         nameTextView = findViewById(R.id.enterNameText);
 
-        //SETUP FIRST TIME STARTUP DIALOG AND LOADING DIALOG
+        //SETUP FIRST TIME STARTUP DIALOG
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         dialog2Checked = settings.getBoolean("dialog2Checked", false);
 
@@ -65,7 +65,7 @@ public class AddRoom extends AppCompatActivity {
         if (!dialog2Checked) {
             startupDialog2 = new Dialog(AddRoom.this);
             startupDialog2.setContentView(R.layout.dialog_startup);
-            okButton2 = startupDialog2.findViewById(R.id.saveButton);
+            okButton2 = startupDialog2.findViewById(R.id.okButton);
             dialogCheckBox2 = startupDialog2.findViewById(R.id.dialogCheckBox);
             startupText2 = startupDialog2.findViewById(R.id.dialog_startup_textview);
             startupText2.setText(R.string.add_room_intro);

@@ -28,18 +28,6 @@ import com.packages.mobilegamemaster.database.Repository;
 import java.util.List;
 
 public class PasswordList extends AppCompatActivity {
-    //CREATE REPOSITORY AND PASSWORD LIST
-    Repository repository;
-    List<Password> allPasswords;
-    Dialog startupDialog3;
-    Button okButton3, finishButton, addUserButton;
-    CheckBox dialogCheckBox3;
-    boolean dialog3Checked;
-    TextView startupText3;
-    RecyclerView recyclerView;
-    PasswordListAdapter passwordListAdapter;
-    ProgressBar pgBar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,20 +39,20 @@ public class PasswordList extends AppCompatActivity {
             return insets;
         });
         //POPULATE REPOSITORY AND PASSWORDS LIST
-        repository = new Repository(getApplication());
-        allPasswords = repository.getmAllPasswords();
-        pgBar = findViewById(R.id.progressBar);
+        Repository repository = new Repository(getApplication());
+        List<Password> allPasswords = repository.getmAllPasswords();
+        ProgressBar pgBar = findViewById(R.id.progressBar);
 
         //SETUP FIRST TIME STARTUP DIALOG
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        dialog3Checked = settings.getBoolean("dialog3Checked", false);
+        boolean dialog3Checked = settings.getBoolean("dialog3Checked", false);
 
         if (!dialog3Checked) {
-            startupDialog3 = new Dialog(PasswordList.this);
+            Dialog startupDialog3 = new Dialog(PasswordList.this);
             startupDialog3.setContentView(R.layout.dialog_startup);
-            okButton3 = startupDialog3.findViewById(R.id.okButton);
-            dialogCheckBox3 = startupDialog3.findViewById(R.id.dialogCheckBox);
-            startupText3 = startupDialog3.findViewById(R.id.dialog_startup_textview);
+            Button okButton3 = startupDialog3.findViewById(R.id.okButton);
+            CheckBox dialogCheckBox3 = startupDialog3.findViewById(R.id.dialogCheckBox);
+            TextView startupText3 = startupDialog3.findViewById(R.id.dialog_startup_textview);
             startupText3.setText(R.string.edit_users_intro);
             startupDialog3.show();
             okButton3.setOnClickListener(v -> {
@@ -78,24 +66,26 @@ public class PasswordList extends AppCompatActivity {
         }
 
         //SET PASSWORD LIST ON ADAPTER; SET LAYOUT MANGER AND ADAPTER ON RECYCLERVIEW
-        recyclerView = findViewById(R.id.passwordListRecyclerView);
-        passwordListAdapter = new PasswordListAdapter(this);
+        RecyclerView recyclerView = findViewById(R.id.passwordListRecyclerView);
+        PasswordListAdapter passwordListAdapter = new PasswordListAdapter(this, pgBar);
         passwordListAdapter.setPasswords(allPasswords);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(passwordListAdapter);
 
         //CREATE AND SET CLICK LISTENER FOR FINISH BUTTON
-        finishButton = findViewById(R.id.finishButton);
+        Button finishButton = findViewById(R.id.finishButton);
         finishButton.setOnClickListener(v -> {
             pgBar.setVisibility(View.VISIBLE);
+            pgBar.bringToFront();
             Intent intent = new Intent(PasswordList.this, AdminMenu.class);
             startActivity(intent);
         });
 
         //CREATE AND SET CLICK LISTENER FOR ADD USER BUTTON
-        addUserButton = findViewById(R.id.addUserButton);
+        Button addUserButton = findViewById(R.id.addUserButton);
         addUserButton.setOnClickListener(v -> {
             pgBar.setVisibility(View.VISIBLE);
+            pgBar.bringToFront();
             Intent intent = new Intent(PasswordList.this, EditPasswords.class);
             intent.putExtra("id", allPasswords.get(allPasswords.size() -1 ).getPasswordID() + 1);
             startActivity(intent);

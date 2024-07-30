@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,16 +30,10 @@ import java.util.Locale;
 
 public class RoomPuzzles extends AppCompatActivity {
     //DECLARE REPOSITORY AND GLOBAL VARIABLES
-    Repository repository;
-    String roomName, startTime, puzzleText, hint, solution, nextPuzzleText;
-    int roomID, puzzleNum;
-    List<Puzzle> allPuzzles;
-    Puzzle currentPuzzle;
-    TextView countDownTimerView, puzzleTextView, nameView, view;
-    EditText solutionTextView;
-    CountDownTimer countDownTimer;
-    Button nudgeButton, hintButton, solutionButton, submitButton;
-    Date end;
+
+    String roomName, startTime, hint;
+    int roomID;
+    TextView countDownTimerView;
 
     //CREATE NUMBER AND DATE FORMATS
     DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
@@ -57,73 +50,73 @@ public class RoomPuzzles extends AppCompatActivity {
             return insets;
         });
         //POPULATE REPOSITORY, ROOM NAME, ROOM ID AND PUZZLE NUMBER
-        repository = new Repository(getApplication());
+        Repository repository = new Repository(getApplication());
         roomName = getIntent().getStringExtra("name");
         roomID = getIntent().getIntExtra("id", -1);
-        puzzleNum = getIntent().getIntExtra("puzzle_num", -1);
+        int puzzleNum = getIntent().getIntExtra("puzzle_num", -1);
 
         //CREATE START TIME STRING
         startTime = timeFormat.format(Calendar.getInstance().getTime());
 
         //CREATE AND ASSIGN TEXT VIEWS
-        puzzleTextView = findViewById(R.id.puzzleTextView);
-        nameView = findViewById(R.id.roomNameView);
+        TextView puzzleTextView = findViewById(R.id.puzzleTextView);
+        TextView nameView = findViewById(R.id.roomNameView);
         countDownTimerView = findViewById(R.id.countdownTimerView);
-        solutionTextView = findViewById(R.id.solutionEditTextView);
-        view = findViewById(R.id.hintTextView);
+        TextView solutionTextView = findViewById(R.id.solutionEditTextView);
+        TextView hintView = findViewById(R.id.hintTextView);
 
         //POPULATE PUZZLE LIST AND OBTAIN THE FIRST PUZZLE
-        allPuzzles = repository.getmRoomPuzzles(roomID);
-        currentPuzzle = allPuzzles.get(puzzleNum);
+        List<Puzzle> allPuzzles = repository.getmRoomPuzzles(roomID);
+        Puzzle currentPuzzle = allPuzzles.get(puzzleNum);
 
         //SET ROOM NAME ON TEXT VIEW
         nameView.setText(roomName);
 
         //CREATE STRING FOR PUZZLE NUMBER TEXT AND SET TEXT VIEW
-        puzzleText = "Puzzle " + (currentPuzzle.getPuzzleNum());
+        String puzzleText = "Puzzle " + (currentPuzzle.getPuzzleNum());
         puzzleTextView.setText(puzzleText);
 
         //START COUNTDOWN TIMER
-        countDownTimer = getCountDownTimer();
+        CountDownTimer countDownTimer = getCountDownTimer();
 
         //CREATE AND SET BUTTON FOR NUDGE
-        nudgeButton = findViewById(R.id.nudge_button);
+        Button nudgeButton = findViewById(R.id.nudge_button);
         nudgeButton.setOnClickListener(v -> {
             hint = currentPuzzle.getNudge();
-            view.setText(hint);
+            hintView.setText(hint);
         });
 
         //CREATE AND SET BUTTON FOR HINT
-        hintButton = findViewById(R.id.hint_button);
+        Button hintButton = findViewById(R.id.hint_button);
         hintButton.setOnClickListener(v -> {
             hint = currentPuzzle.getHint();
-            view.setText(hint);
+            hintView.setText(hint);
         });
 
         //CREATE AND SET BUTTON FOR SOLUTION
-        solutionButton = findViewById(R.id.solution_button);
+        Button solutionButton = findViewById(R.id.solution_button);
         solutionButton.setOnClickListener(v -> {
             hint = currentPuzzle.getSolution();
-            view.setText(hint);
+            hintView.setText(hint);
         });
 
         //CREATE AND SET BUTTON FOR SUBMITTING AN ANSWER
-        submitButton = findViewById(R.id.submitButton);
+        Button submitButton = findViewById(R.id.submitButton);
         submitButton.setOnClickListener(v -> {
             submitButton.setEnabled(false);
             //CREATE SOLUTION STRING
-            solution = currentPuzzle.getSolution();
+            String solution = currentPuzzle.getSolution();
 
             //CHECKS FOR CORRECT SOLUTION
             if (String.valueOf(solutionTextView.getText()).equals(solution)) {
                 //RUNS WHEN SOLUTION IS CORRECT AND YOU'VE REACHED THE LAST PUZZLE
                 if (currentPuzzle.getPuzzleNum() == allPuzzles.size()) {
                     countDownTimer.cancel();
+                    Date end = Calendar.getInstance().getTime();
                     Intent intent = new Intent(RoomPuzzles.this, RoomWin.class);
                     intent.putExtra("start_time", startTime);
                     intent.putExtra("name", roomName);
                     intent.putExtra("time_left", countDownTimerView.getText());
-                    end = Calendar.getInstance().getTime();
                     intent.putExtra("end_time", timeFormat.format(end));
                     intent.putExtra("end_date", dateFormat.format(end));
                     intent.putExtra("id", roomID);
@@ -134,14 +127,14 @@ public class RoomPuzzles extends AppCompatActivity {
                     String msg = "Correct!";
                     Toast toast = Toast.makeText(RoomPuzzles.this, msg, Toast.LENGTH_LONG);
                     toast.show();
-                    view.setText("");
+                    hintView.setText("");
 
                     currentPuzzle.setPuzzleNum(currentPuzzle.getPuzzleNum()+1);
                     currentPuzzle.setNudge(allPuzzles.get(currentPuzzle.getPuzzleNum()-1).getNudge());
                     currentPuzzle.setHint(allPuzzles.get(currentPuzzle.getPuzzleNum()-1).getHint());
                     currentPuzzle.setSolution(allPuzzles.get(currentPuzzle.getPuzzleNum()-1).getSolution());
 
-                    nextPuzzleText = "Puzzle " + (currentPuzzle.getPuzzleNum());
+                    String nextPuzzleText = "Puzzle " + (currentPuzzle.getPuzzleNum());
                     puzzleTextView.setText(nextPuzzleText);
                     solutionTextView.setText("");
 
@@ -181,12 +174,11 @@ public class RoomPuzzles extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                String endTime = String.valueOf(countDownTimerView.getText());
+                Date end = Calendar.getInstance().getTime();
                 Intent intent = new Intent(RoomPuzzles.this, RoomLoss.class);
                 intent.putExtra("start_time", startTime);
-                intent.putExtra("time_left", endTime);
+                intent.putExtra("time_left", countDownTimerView.getText());
                 intent.putExtra("name", roomName);
-                end = Calendar.getInstance().getTime();
                 intent.putExtra("end_time", timeFormat.format(end));
                 intent.putExtra("end_date", dateFormat.format(end));
                 intent.putExtra("id", roomID);

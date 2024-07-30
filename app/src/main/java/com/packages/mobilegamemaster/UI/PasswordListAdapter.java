@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,11 +21,13 @@ public class PasswordListAdapter extends RecyclerView.Adapter<PasswordListAdapte
     private List<Password> mPasswords;
     private final Context context;
     private final LayoutInflater mInflater;
+    ProgressBar pgBar;
 
     //ADAPTER CONSTRUCTOR
-    public PasswordListAdapter(Context context) {
+    public PasswordListAdapter(Context context, ProgressBar pgBar) {
         mInflater = LayoutInflater.from(context);
         this.context = context;
+        this.pgBar = pgBar;
     }
 
     //VIEW HOLDER CLASS FOR ADAPTER
@@ -35,6 +38,8 @@ public class PasswordListAdapter extends RecyclerView.Adapter<PasswordListAdapte
             super(itemView);
             passwordView = itemView.findViewById(R.id.passwordTextView);
             itemView.setOnClickListener(v -> {
+                pgBar.setVisibility(View.VISIBLE);
+                pgBar.bringToFront();
                 int position = getAdapterPosition();
                 final Password currentPassword = mPasswords.get(position);
                 Intent intent = new Intent(context, EditPasswords.class);

@@ -33,19 +33,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     //CREATE REPOSITORY, ROOM LIST
     Repository repository;
-    List<Room> allRooms;
-    Button signInButton, cancelButton;
     EditText username, password;
-    String name;
-    TextView startupText;
-    RecyclerView recyclerView;
-    Toolbar toolbar;
-    Dialog loginDialog, startupDialog1;
     ProgressBar pgBar;
-    Button okButton;
-    CheckBox dialogCheckBox;
-    boolean found, dialog1Checked;
-    SharedPreferences settings;
     public static final String PREFS_NAME = "MyPrefsFile";
 
     @Override
@@ -61,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         //POPULATE REPOSITORY, SET ROOM LIST, AND ADD ROOM LIST TO THE ADAPTER
         repository = new Repository(getApplication());
-        allRooms = repository.getmAllRooms();
+        List<Room> allRooms = repository.getmAllRooms();
         final RoomAdapter roomAdapter = new RoomAdapter(this);
         roomAdapter.setRooms(allRooms);
 
@@ -76,14 +65,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //SETUP FIRST TIME STARTUP DIALOG AND SHARED PREFS SETTINGS
-        settings = getSharedPreferences(PREFS_NAME, 0);
-        dialog1Checked = settings.getBoolean("dialog1Checked", false);
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        boolean dialog1Checked = settings.getBoolean("dialog1Checked", false);
         if (!dialog1Checked) {
-            startupDialog1 = new Dialog(MainActivity.this);
+            Dialog startupDialog1 = new Dialog(MainActivity.this);
             startupDialog1.setContentView(R.layout.dialog_startup);
-            okButton = startupDialog1.findViewById(R.id.okButton);
-            dialogCheckBox = startupDialog1.findViewById(R.id.dialogCheckBox);
-            startupText = startupDialog1.findViewById(R.id.dialog_startup_textview);
+            Button okButton = startupDialog1.findViewById(R.id.okButton);
+            CheckBox dialogCheckBox = startupDialog1.findViewById(R.id.dialogCheckBox);
+            TextView startupText = startupDialog1.findViewById(R.id.dialog_startup_textview);
             startupText.setText(R.string.welcome_intro);
             startupDialog1.show();
             okButton.setOnClickListener(v -> {
@@ -97,12 +86,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //SET LAYOUT MANAGER AND ADAPTER ON RECYCLER VIEW
-        recyclerView = findViewById(R.id.chooseGameRecyclerView);
+        RecyclerView recyclerView = findViewById(R.id.chooseGameRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(roomAdapter);
 
         //SET TOOLBAR TO ACTIONBAR
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         //SET PROGRESS BAR VIEW
@@ -119,10 +108,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         //SETUP SIGN-IN DIALOG FOR ADMIN MENU
-        loginDialog = new Dialog(MainActivity.this);
+        Dialog loginDialog = new Dialog(MainActivity.this);
         loginDialog.setContentView(R.layout.dialog_login);
-        signInButton = loginDialog.findViewById(R.id.signInButton);
-        cancelButton = loginDialog.findViewById(R.id.cancelButton);
+        Button signInButton = loginDialog.findViewById(R.id.signInButton);
+        Button cancelButton = loginDialog.findViewById(R.id.cancelButton);
+        username = loginDialog.findViewById(R.id.username);
+        password = loginDialog.findViewById(R.id.password);
         loginDialog.show();
 
         if(item.getItemId()==android.R.id.home){
@@ -130,11 +121,9 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         signInButton.setOnClickListener(v -> {
-            //ASSIGN EDIT TEXT VIEW AND SET FOUND TO FALSE
             pgBar.setVisibility(View.VISIBLE);
-            username = loginDialog.findViewById(R.id.username);
-            password = loginDialog.findViewById(R.id.password);
-            found = false;
+            //SET FOUND TO FALSE
+            boolean found = false;
 
                 //CHECK REPOSITORY FOR MATCHING PASSWORD
                 for (Password pass : repository.getmAllPasswords()) {
@@ -142,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                         found = true;
                         loginDialog.dismiss();
                         if (item.getItemId() == R.id.adminMenu) {
-                            name = String.valueOf(username.getText()).trim();
+                            String name = String.valueOf(username.getText()).trim();
                             Intent intent = new Intent(MainActivity.this, AdminMenu.class);
                             intent.putExtra("name", name);
                             startActivity(intent);
@@ -160,8 +149,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         cancelButton.setOnClickListener(v -> {
-            username = loginDialog.findViewById(R.id.username);
-            password = loginDialog.findViewById(R.id.password);
             username.setText("");
             password.setText("");
             loginDialog.hide();

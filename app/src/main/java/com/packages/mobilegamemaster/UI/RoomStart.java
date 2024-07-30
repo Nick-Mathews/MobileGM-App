@@ -19,15 +19,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.packages.mobilegamemaster.database.Repository;
 
 public class RoomStart extends AppCompatActivity {
-    //CREATE ROOM ID AND ROOM NAME VARIABLES, AND ROOM NAME TEXT VIEWS
-    int roomID;
-    String roomName;
-    TextView nameView;
-    Button startButton;
-    FloatingActionButton backButton;
-    Repository repository;
-    ProgressBar pgBar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,17 +30,17 @@ public class RoomStart extends AppCompatActivity {
             return insets;
         });
         //SET REPOSITORY AND PROGRESS BAR
-        repository = new Repository(getApplication());
-        pgBar = findViewById(R.id.progressBar);
+        Repository repository = new Repository(getApplication());
+        ProgressBar pgBar = findViewById(R.id.progressBar);
 
         //POPULATE ROOM ID AND ROOM NAME; SET ROOM NAME TO TEXT VIEW
-        roomID = getIntent().getIntExtra("id", -1);
-        roomName = getIntent().getStringExtra("name");
-        nameView = findViewById(R.id.roomNameView);
+        int roomID = getIntent().getIntExtra("id", -1);
+        String roomName = getIntent().getStringExtra("name");
+        TextView nameView = findViewById(R.id.roomNameView);
         nameView.setText(roomName);
 
         //CREATE START BUTTON AND SET ONCLICK LISTENER
-        startButton = findViewById(R.id.startButton);
+        Button startButton = findViewById(R.id.startButton);
         startButton.setOnClickListener(v -> {
             pgBar.setVisibility(View.VISIBLE);
             if(repository.getmRoomPuzzles(roomID).isEmpty()){
@@ -66,11 +57,10 @@ public class RoomStart extends AppCompatActivity {
             }
         });
 
-        backButton = findViewById(R.id.floating_back_button);
+        FloatingActionButton backButton = findViewById(R.id.floating_back_button);
         backButton.setOnClickListener(v -> {
             pgBar.setVisibility(View.VISIBLE);
-            Intent intent = new Intent(RoomStart.this, MainActivity.class);
-            startActivity(intent);
+            getOnBackPressedDispatcher().onBackPressed();
         });
     }
 }

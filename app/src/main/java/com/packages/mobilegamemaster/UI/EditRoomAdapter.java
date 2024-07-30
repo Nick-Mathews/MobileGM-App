@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,25 +21,28 @@ public class EditRoomAdapter extends RecyclerView.Adapter<EditRoomAdapter.EditVi
     private List<Room> mRooms;
     private final Context context;
     private final LayoutInflater mInflater;
-    Room currentRoom;
-    String name;
+    ProgressBar pgBar;
 
     //ADAPTER CONSTRUCTOR
-    public EditRoomAdapter(Context context) {
+    public EditRoomAdapter(Context context, ProgressBar pgBar) {
         mInflater = LayoutInflater.from(context);
         this.context = context;
+        this.pgBar = pgBar;
     }
 
     //VIEW HOLDER CLASS FOR ADAPTER
     public class EditViewHolder extends RecyclerView.ViewHolder {
         private final TextView editView;
 
+
         public EditViewHolder(@NonNull View itemView) {
             super(itemView);
             editView = itemView.findViewById(R.id.editTextView);
             itemView.setOnClickListener(v -> {
+                pgBar.setVisibility(View.VISIBLE);
+                pgBar.bringToFront();
                 int position = getAdapterPosition();
-                currentRoom = mRooms.get(position);
+                Room currentRoom = mRooms.get(position);
                 Intent intent = new Intent(context, PuzzleList.class);
                 intent.putExtra("name", currentRoom.getRoomName());
                 intent.putExtra("id", currentRoom.getRoomID());
@@ -56,13 +60,14 @@ public class EditRoomAdapter extends RecyclerView.Adapter<EditRoomAdapter.EditVi
     @Override
     public void onBindViewHolder(@NonNull EditRoomAdapter.EditViewHolder holder, int position) {
         if (mRooms != null) {
-            currentRoom = mRooms.get(position);
-            name = currentRoom.getRoomName();
+            Room currentRoom = mRooms.get(position);
+            String name = currentRoom.getRoomName();
             holder.editView.setText(name);
         }
         else {
-            name = "No room name";
+            String name = "No room name";
             holder.editView.setText(name);
+
         }
     }
 

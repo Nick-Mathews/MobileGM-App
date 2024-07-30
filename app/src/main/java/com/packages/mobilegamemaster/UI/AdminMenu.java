@@ -19,11 +19,6 @@ import androidx.core.view.WindowInsetsCompat;
 import com.packages.mobilegamemaster.R;
 
 public class AdminMenu extends AppCompatActivity {
-    String adminName, settingsName;
-    TextView nameView;
-    Button menuAddRoom, menuEditRoom, menuEditPassword, menuGameLogs, menuSignOut, menuStartupReset;
-    ProgressBar pgBar;
-    SharedPreferences settings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,24 +30,28 @@ public class AdminMenu extends AppCompatActivity {
             return insets;
         });
         //GET INTENT AND SET ADMIN NAME
-        settings = getSharedPreferences(PREFS_NAME, 0);
-        settingsName = settings.getString("adminName", "Admin");
-        adminName = getIntent().getStringExtra("name");
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        String settingsName = settings.getString("adminName", "Admin");
+        String adminName = getIntent().getStringExtra("name");
         if ((adminName != null) && (!(adminName.equals(settingsName)))) {
             SharedPreferences.Editor editor = settings.edit();
             editor.putString("adminName", adminName);
             editor.apply();
             settingsName = settings.getString("adminName", "Admin");
         }
-        nameView = findViewById(R.id.adminNameText);
+        TextView nameView = findViewById(R.id.adminNameText);
         nameView.setText(settingsName);
 
-        menuAddRoom = findViewById(R.id.menuAddRoom);
-        menuEditRoom = findViewById(R.id.menuEditRoom);
-        menuEditPassword = findViewById(R.id.menuEditPassword);
-        menuGameLogs = findViewById(R.id.menuGameLogs);
-        menuStartupReset = findViewById(R.id.menuStartupReset);
-        menuSignOut = findViewById(R.id.menuSignOut);
+        //SET PROGRESS BAR VIEW
+        ProgressBar pgBar = findViewById(R.id.progressBar);
+
+        //SET BUTTONS AND LISTENERS
+        Button menuAddRoom = findViewById(R.id.menuAddRoom);
+        Button menuEditRoom = findViewById(R.id.menuEditRoom);
+        Button menuEditPassword = findViewById(R.id.menuEditPassword);
+        Button menuGameLogs = findViewById(R.id.menuGameLogs);
+        Button menuStartupReset = findViewById(R.id.menuStartupReset);
+        Button menuSignOut = findViewById(R.id.menuSignOut);
 
         menuAddRoom.setOnClickListener(v->{
             pgBar.setVisibility(View.VISIBLE);
@@ -101,8 +100,5 @@ public class AdminMenu extends AppCompatActivity {
             editor.apply();
             pgBar.setVisibility(View.INVISIBLE);
         });
-
-        //SET PROGRESS BAR VIEW
-        pgBar = findViewById(R.id.progressBar);
     }
 }

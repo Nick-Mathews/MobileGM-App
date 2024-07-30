@@ -1,6 +1,8 @@
 package com.packages.mobilegamemaster.UI;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -26,22 +28,6 @@ import com.packages.mobilegamemaster.database.Repository;
 import java.util.List;
 
 public class PuzzleList extends AppCompatActivity {
-    //CREATE REPOSITORY, LIST OF PUZZLES, CURRENT ROOM, ROOM NAME STRING, ROOM ID INT, AND LAST INDEX INT
-    Repository repository;
-    List<Puzzle> roomPuzzles;
-    List<Room> allRooms;
-    Room currentRoom;
-    String roomName, renameText;
-    int roomID, lastIndex;
-    boolean nameFound;
-    Button addPuzzleButton, finishButton, deleteRoomButton, saveButton, cancelButton;
-    RecyclerView recyclerView;
-    TextView roomNameText;
-    PuzzleListAdapter puzzleListAdapter;
-    Dialog renameDialog;
-    EditText renameEditText;
-    ProgressBar pgBar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,29 +39,30 @@ public class PuzzleList extends AppCompatActivity {
             return insets;
         });
         //POPULATE REPOSITORY, ROOM ID, PUZZLE LIST, AND ROOM NAME
-        repository = new Repository(getApplication());
-        roomID = getIntent().getIntExtra("id", -1);
-        roomPuzzles = repository.getmRoomPuzzles(roomID);
-        roomName = getIntent().getStringExtra("name");
-        allRooms = repository.getmAllRooms();
-        pgBar = findViewById(R.id.progressBar);
+        Repository repository = new Repository(getApplication());
+        int roomID = getIntent().getIntExtra("id", -1);
+        final List<Puzzle> roomPuzzles = repository.getmRoomPuzzles(roomID);
+        String roomName = getIntent().getStringExtra("name");
+        final Room currentRoom = repository.getmRoom(roomID);
+        List<Room> allRooms = repository.getmAllRooms();
+        ProgressBar pgBar = findViewById(R.id.progressBar);
 
         //SET ROOM NAME
-        roomNameText = findViewById(R.id.roomNameText);
+        TextView roomNameText = findViewById(R.id.roomNameText);
         roomNameText.setText(roomName);
 
         //GET INDEX OF LAST PUZZLE IN THE ROOM
-        lastIndex = roomPuzzles.size() + 1;
+        int lastIndex = roomPuzzles.size() + 1;
 
         //CREATE RECYCLER VIEW AND ADAPTER; SET RECYCLER VIEW AND ADAPTER
-        recyclerView = findViewById(R.id.puzzleListRecyclerView);
-        puzzleListAdapter = new PuzzleListAdapter(this);
+        RecyclerView recyclerView = findViewById(R.id.puzzleListRecyclerView);
+        PuzzleListAdapter puzzleListAdapter = new PuzzleListAdapter(this, pgBar);
         puzzleListAdapter.setPuzzles(roomPuzzles);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(puzzleListAdapter);
 
         //BUTTON THAT ADDS A NEW PUZZLE TO ROOM
-        addPuzzleButton = findViewById(R.id.addPuzzleButton);
+        Button addPuzzleButton = findViewById(R.id.addPuzzleButton);
         addPuzzleButton.setOnClickListener(v -> {
             pgBar.setVisibility(View.VISIBLE);
             addPuzzleButton.setEnabled(false);
@@ -87,7 +74,7 @@ public class PuzzleList extends AppCompatActivity {
         });
 
         //BUTTON THAT RETURNS TO THE MAIN ACTIVITY
-        finishButton = findViewById(R.id.finishEditsButton);
+        Button finishButton = findViewById(R.id.finishEditsButton);
         finishButton.setOnClickListener(v -> {
             pgBar.setVisibility(View.VISIBLE);
             finishButton.setEnabled(false);
@@ -96,82 +83,105 @@ public class PuzzleList extends AppCompatActivity {
         });
 
         //BUTTON THAT DELETES THE EXISTING ROOM AND PUZZLES
-        deleteRoomButton = findViewById(R.id.deleteRoomButton);
+        Button deleteRoomButton = findViewById(R.id.deleteRoomButton);
         deleteRoomButton.setOnClickListener(v -> {
-            pgBar.setVisibility(View.VISIBLE);
-            deleteRoomButton.setEnabled(false);
-            if (roomID == -1) {
-                Intent intent = new Intent(PuzzleList.this, RoomList.class);
-                startActivity(intent);
-            }
-            else {
-                currentRoom = repository.getmRoom(roomID);
-                roomPuzzles = repository.getmRoomPuzzles(roomID);
-                    if (roomPuzzles != null) {
-                        for(int i=0; i < roomPuzzles.size(); ++i) {
-                            Puzzle puzzle = roomPuzzles.get(i);
-                            try {
-                                repository.delete(puzzle);
-                            } catch (Exception e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                    }
-                }
-                try {
-                    repository.delete(currentRoom);
-                } catch(Exception e) {
-                    throw new RuntimeException(e);
-                }
+            new AlertDialog.Builder(this)
+                    .setMessage(R.string.db_dialog_message)
+                            .setNegativeButton(R.string.db_dialog_negative, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    return;
+                                }
+                            })
+                            .setPositiveButton(R.string.db_dialog_positive, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    pgBar.setVisibility(View.VISIBLE);
+                                    deleteRoomButton.setEnabled(false);
+                                    if (roomID == -1) {
+                                        Intent intent = new Intent(PuzzleList.this, RoomList.class);
+                                        startActivity(intent);
+                                    }
+                                    else {
+                                        for(int i=0; i < roomPuzzles.size(); ++i) {
+                                            Puzzle puzzle = roomPuzzles.get(i);
+                                            try {
+                                                repository.delete(puzzle);
+                                            } catch (Exception e) {
+                                                throw new RuntimeException(e);
+                                            }
+                                        }
+                                    }
+                                    try {
+                                        repository.delete(currentRoom);
+                                    } catch(Exception e) {
+                                        throw new RuntimeException(e);
+                                    }
 
-            Intent intent = new Intent(PuzzleList.this, RoomList.class);
-            startActivity(intent);
+                                    Intent intent = new Intent(PuzzleList.this, RoomList.class);
+                                    startActivity(intent);
+                                }
+                            }).show();
         });
 
-    //SET UP RENAME DIALOG
-        renameDialog = new Dialog(PuzzleList.this);
+        //SET UP RENAME DIALOG
+        Dialog renameDialog = new Dialog(PuzzleList.this);
         renameDialog.setContentView(R.layout.dialog_rename_room);
-        renameEditText = renameDialog.findViewById(R.id.roomRenameEditText);
-        cancelButton = renameDialog.findViewById(R.id.cancelButton);
-        saveButton = renameDialog.findViewById(R.id.okButton);
+        EditText renameEditText = renameDialog.findViewById(R.id.roomRenameEditText);
+
+        Button cancelButton = renameDialog.findViewById(R.id.cancelButton);
         cancelButton.setOnClickListener(v -> {
             renameEditText.setText("");
             renameDialog.hide();
         });
 
+        Button saveButton = renameDialog.findViewById(R.id.okButton);
         saveButton.setOnClickListener(v -> {
-            saveButton.setEnabled(false);
-            nameFound = false;
-            renameText = renameEditText.getText().toString();
-            if (renameText.isEmpty()) {
-                Toast msg = Toast.makeText(PuzzleList.this, "Please enter a name to save", Toast.LENGTH_LONG);
-                msg.show();
-                renameEditText.setText("");
-                saveButton.setEnabled(true);
-            }
-            else {
-                for (Room room: allRooms) {
-                    if (renameText.equals(room.getRoomName())) {
-                        nameFound = true;
-                        Toast msg = Toast.makeText(PuzzleList.this, "That name belongs to another room", Toast.LENGTH_LONG);
-                        msg.show();
-                        saveButton.setEnabled(true);
-                    }
-                }
-                if (!nameFound) {
-                    currentRoom = repository.getmRoom(roomID);
-                    currentRoom.setRoomName(renameText);
-                    try {
-                        repository.update(currentRoom);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                    roomNameText.setText(renameText);
-                    renameEditText.setText("");
-                    renameDialog.dismiss();
-                }
+            new AlertDialog.Builder(this)
+                    .setMessage(R.string.db_dialog_message)
+                    .setNegativeButton(R.string.db_dialog_negative, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            return;
+                        }
+                    })
+                    .setPositiveButton(R.string.db_dialog_positive, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            saveButton.setEnabled(false);
+                            boolean nameFound = false;
+                            String renameText = renameEditText.getText().toString();
+                            if (renameText.isEmpty()) {
+                                Toast msg = Toast.makeText(PuzzleList.this, "Please enter a name to save", Toast.LENGTH_LONG);
+                                msg.show();
+                                renameEditText.setText("");
+                                saveButton.setEnabled(true);
+                            }
+                            else {
+                                for (Room room: allRooms) {
+                                    if (renameText.equals(room.getRoomName())) {
+                                        nameFound = true;
+                                        Toast msg = Toast.makeText(PuzzleList.this, "That name belongs to another room", Toast.LENGTH_LONG);
+                                        msg.show();
+                                        saveButton.setEnabled(true);
+                                    }
+                                }
+                                if (!nameFound) {
+                                    currentRoom.setRoomName(renameText);
+                                    try {
+                                        repository.update(currentRoom);
+                                    } catch (Exception e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                    roomNameText.setText(renameText);
+                                    renameEditText.setText("");
+                                    renameDialog.dismiss();
+                                }
 
-            }
+                            }
+                        }
+                    }).show();
+
         });
 
         //TAP AND HOLD FUNCTION THAT ACTIVATES RENAME ROOM DIALOG

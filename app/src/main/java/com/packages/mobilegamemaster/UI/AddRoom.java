@@ -25,18 +25,8 @@ import com.packages.mobilegamemaster.R;
 import com.packages.mobilegamemaster.database.Repository;
 
 public class AddRoom extends AppCompatActivity {
-    //CREATE REPOSITORY, PUZZLENUM, ROOMID AND NEWROOM VARIABLES
-    Repository repository;
-    int puzzleNum, roomID;
-    String nameText;
-    TextView startupText2;
-    Room newRoom;
-    EditText nameTextView;
-    Dialog startupDialog2;
-    ProgressBar pgBar;
-    boolean dialog2Checked, roomFound;
-    Button cancelButton, continueButton,  okButton2;
-    CheckBox dialogCheckBox2;
+    //CREATE ROOM ID
+    int roomID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,26 +38,26 @@ public class AddRoom extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        //POPULATE REPOSITORY AND SET INITIAL PUZZLENUM
-        repository  = new Repository(getApplication());
-        puzzleNum = 1;
+        //POPULATE REPOSITORY AND SET INITIAL PUZZLE NUM
+        Repository repository  = new Repository(getApplication());
+        int puzzleNum = 1;
 
         //SET ROOM NAME TEXTVIEW
-        nameTextView = findViewById(R.id.enterNameText);
+        EditText nameTextView = findViewById(R.id.enterNameText);
 
         //SETUP FIRST TIME STARTUP DIALOG
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        dialog2Checked = settings.getBoolean("dialog2Checked", false);
+        boolean dialog2Checked = settings.getBoolean("dialog2Checked", false);
 
         //SET PROGRESS BAR VIEW
-        pgBar = findViewById(R.id.progressBar);
+        ProgressBar pgBar = findViewById(R.id.progressBar);
 
         if (!dialog2Checked) {
-            startupDialog2 = new Dialog(AddRoom.this);
+            Dialog startupDialog2 = new Dialog(AddRoom.this);
             startupDialog2.setContentView(R.layout.dialog_startup);
-            okButton2 = startupDialog2.findViewById(R.id.okButton);
-            dialogCheckBox2 = startupDialog2.findViewById(R.id.dialogCheckBox);
-            startupText2 = startupDialog2.findViewById(R.id.dialog_startup_textview);
+            Button okButton2 = startupDialog2.findViewById(R.id.okButton);
+            CheckBox dialogCheckBox2 = startupDialog2.findViewById(R.id.dialogCheckBox);
+            TextView startupText2 = startupDialog2.findViewById(R.id.dialog_startup_textview);
             startupText2.setText(R.string.add_room_intro);
             startupDialog2.show();
             okButton2.setOnClickListener(v -> {
@@ -81,7 +71,7 @@ public class AddRoom extends AppCompatActivity {
         }
 
         //CREATE BUTTON AND CLICK LISTENER FOR CANCEL
-        cancelButton = findViewById(R.id.add_room_cancel_button);
+        Button cancelButton = findViewById(R.id.add_room_cancel_button);
         cancelButton.setOnClickListener(v -> {
             pgBar.setVisibility(View.VISIBLE);
             cancelButton.setEnabled(false);
@@ -90,12 +80,12 @@ public class AddRoom extends AppCompatActivity {
         });
 
         //CREATE BUTTON AND CLICK LISTENER FOR CONTINUE
-        continueButton = findViewById(R.id.add_room_continue_button);
+        Button continueButton = findViewById(R.id.add_room_continue_button);
         continueButton.setOnClickListener(v -> {
             pgBar.setVisibility(View.VISIBLE);
             continueButton.setEnabled(false);
-            roomFound = false;
-            nameText = String.valueOf(nameTextView.getText());
+            boolean roomFound = false;
+            String nameText = String.valueOf(nameTextView.getText());
             if (!nameText.isEmpty()) {
                 for (Room room: repository.getmAllRooms()) {
                     if (room.getRoomName().equals(nameText)){
@@ -109,7 +99,7 @@ public class AddRoom extends AppCompatActivity {
                     } else {
                         roomID = repository.getmAllRooms().get(repository.getmAllRooms().size() - 1).getRoomID() + 1;
                     }
-                    newRoom = new Room(roomID, nameText);
+                    Room newRoom = new Room(roomID, nameText);
                     try {
                         repository.insert(newRoom);
                     } catch (Exception e) {

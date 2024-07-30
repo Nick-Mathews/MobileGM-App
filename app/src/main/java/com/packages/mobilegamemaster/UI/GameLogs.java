@@ -34,17 +34,7 @@ public class GameLogs extends AppCompatActivity {
     //CREATE REPOSITORY AND LIST OF TIMERS
     Repository repository;
     List<Timer> allTimers, roomTimers;
-    String searchTerm;
-    EditText searchEditText;
-    int roomID;
-    Dialog startupDialog4;
-    Button okButton4, searchButton;
-    CheckBox dialogCheckBox4;
-    boolean dialog4Checked;
-    TextView startupText4;
-    FloatingActionButton backButton;
     RecyclerView recyclerView;
-    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,14 +55,14 @@ public class GameLogs extends AppCompatActivity {
 
         //SETUP FIRST TIME STARTUP DIALOG
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        dialog4Checked = settings.getBoolean("dialog4Checked", false);
+        boolean dialog4Checked = settings.getBoolean("dialog4Checked", false);
 
         if (!dialog4Checked) {
-            startupDialog4 = new Dialog(GameLogs.this);
+            Dialog startupDialog4 = new Dialog(GameLogs.this);
             startupDialog4.setContentView(R.layout.dialog_startup);
-            okButton4 = startupDialog4.findViewById(R.id.okButton);
-            dialogCheckBox4 = startupDialog4.findViewById(R.id.dialogCheckBox);
-            startupText4 = startupDialog4.findViewById(R.id.dialog_startup_textview);
+            Button okButton4 = startupDialog4.findViewById(R.id.okButton);
+            CheckBox dialogCheckBox4 = startupDialog4.findViewById(R.id.dialogCheckBox);
+            TextView startupText4 = startupDialog4.findViewById(R.id.dialog_startup_textview);
             startupText4.setText(R.string.report_logs_intro);
             startupDialog4.show();
             okButton4.setOnClickListener(v -> {
@@ -91,15 +81,15 @@ public class GameLogs extends AppCompatActivity {
         recyclerView.setAdapter(logAdapter);
 
         //SET TOOLBAR AS ACTION BAR
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         //CREATE SEARCH BUTTON AND SET ONCLICK LISTENER
-        searchButton = findViewById(R.id.searchButton);
+        Button searchButton = findViewById(R.id.searchButton);
         searchButton.setOnClickListener(v -> {
-            roomID = -1;
-            searchEditText = findViewById(R.id.searchEditText);
-            searchTerm = searchEditText.getText().toString();
+            int roomID = -1;
+            EditText searchEditText = findViewById(R.id.searchEditText);
+            String searchTerm = searchEditText.getText().toString();
             for (Room current: repository.getmAllRooms()) {
                 if (current.getRoomName().toLowerCase().contains(searchTerm.toLowerCase()) && !searchTerm.isEmpty()){
                     roomID = current.getRoomID();
@@ -122,7 +112,7 @@ public class GameLogs extends AppCompatActivity {
         });
 
         //BACK NAVIGATION BUTTON
-        backButton = findViewById(R.id.floating_back_button);
+        FloatingActionButton backButton = findViewById(R.id.floating_back_button);
         backButton.setOnClickListener(v -> {
             Intent intent = new Intent(GameLogs.this, AdminMenu.class);
             startActivity(intent);

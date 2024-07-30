@@ -27,17 +27,6 @@ import com.packages.mobilegamemaster.database.Repository;
 import java.util.List;
 
 public class RoomList extends AppCompatActivity {
-    //CREATE REPOSITORY AND ROOM LIST
-    Repository repository;
-    List<Room> allRooms;
-    RecyclerView recyclerView;
-    TextView startupText5;
-    Button finishButton, okButton5;
-    ProgressBar pgBar;
-    Dialog startupDialog5;
-    CheckBox dialogCheckBox5;
-    boolean dialog5Checked;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,29 +38,31 @@ public class RoomList extends AppCompatActivity {
             return insets;
         });
         //POPULATE REPOSITORY, AND POPULATE ROOMS LIST
-        repository = new Repository(getApplication());
-        allRooms = repository.getmAllRooms();
+        Repository repository = new Repository(getApplication());
+        List<Room> allRooms = repository.getmAllRooms();
+
+        //SET PROGRESS BAR VIEW
+        ProgressBar pgBar = findViewById(R.id.progressBar);
 
         //SET ROOM LIST ON ADAPTER; SET LAYOUT MANAGER AND ADAPTER ON RECYCLERVIEW
-        recyclerView = findViewById(R.id.roomListRecyclerView);
-        final EditRoomAdapter editRoomAdapter = new EditRoomAdapter(this);
+        RecyclerView recyclerView = findViewById(R.id.roomListRecyclerView);
+        final EditRoomAdapter editRoomAdapter = new EditRoomAdapter(this, pgBar);
         editRoomAdapter.setRooms(allRooms);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(editRoomAdapter);
 
-        //SET PROGRESS BAR VIEW
-        pgBar = findViewById(R.id.progressBar);
+
 
         //SETUP AND CHECK FOR STARTUP DIALOG
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        dialog5Checked = settings.getBoolean("dialog5Checked", false);
+        boolean dialog5Checked = settings.getBoolean("dialog5Checked", false);
 
         if (!dialog5Checked){
-            startupDialog5 = new Dialog(this);
+            Dialog startupDialog5 = new Dialog(this);
             startupDialog5.setContentView(R.layout.dialog_startup);
-            okButton5 = startupDialog5.findViewById(R.id.okButton);
-            dialogCheckBox5 = startupDialog5.findViewById(R.id.dialogCheckBox);
-            startupText5 = startupDialog5.findViewById(R.id.dialog_startup_textview);
+            Button okButton5 = startupDialog5.findViewById(R.id.okButton);
+            CheckBox dialogCheckBox5 = startupDialog5.findViewById(R.id.dialogCheckBox);
+            TextView startupText5 = startupDialog5.findViewById(R.id.dialog_startup_textview);
             startupText5.setText(R.string.edit_room_intro);
             startupDialog5.show();
             okButton5.setOnClickListener(v-> {
@@ -85,7 +76,7 @@ public class RoomList extends AppCompatActivity {
         }
 
         //CREATE AND SET CLICK LISTENER FOR FINISH BUTTON
-        finishButton = findViewById(R.id.finishButton);
+        Button finishButton = findViewById(R.id.finishButton);
         finishButton.setOnClickListener(v -> {
             pgBar.setVisibility(View.VISIBLE);
             Intent intent = new Intent(RoomList.this, AdminMenu.class);

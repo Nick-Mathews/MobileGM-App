@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-07-25T03:01:33.412089700Z">
+        <DropdownSelection timestamp="2024-07-29T19:40:13.195455100Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\acian\.android\avd\Samsung_S9_API_29.avd" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\acian\.android\avd\Pixel_8_Pro_API_VanillaIceCream.avd" />
             </handle>
           </Target>
         </DropdownSelection>

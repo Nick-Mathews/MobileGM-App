@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,11 +20,12 @@ public class PuzzleListAdapter extends RecyclerView.Adapter<PuzzleListAdapter.Pu
     private List<Puzzle> mPuzzles;
     private final Context context;
     private final LayoutInflater mInflater;
+    ProgressBar pgBar;
 
-
-    public PuzzleListAdapter(Context context) {
+    public PuzzleListAdapter(Context context, ProgressBar pgBar) {
         mInflater = LayoutInflater.from(context);
         this.context = context;
+        this.pgBar = pgBar;
     }
 
     public class PuzzleListViewHolder extends RecyclerView.ViewHolder {
@@ -31,15 +33,14 @@ public class PuzzleListAdapter extends RecyclerView.Adapter<PuzzleListAdapter.Pu
 
         public PuzzleListViewHolder(@NonNull View itemView) {
             super(itemView);
-
             textView = itemView.findViewById(R.id.editTextView);
             itemView.setOnClickListener(v -> {
+                pgBar.setVisibility(View.VISIBLE);
+                pgBar.bringToFront();
                 int position = getAdapterPosition();
                 final Puzzle currentPuzzle = mPuzzles.get(position);
-
                 int roomID = currentPuzzle.getRoomID();
                 int puzzleID = currentPuzzle.getPuzzleID();
-
                 Intent intent = new Intent(context, EditPuzzles.class);
                 intent.putExtra("room_id", roomID);
                 intent.putExtra("puzzle_id", puzzleID);

@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_mgm_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MobileGameMaster"
+        android:enableOnBackInvokedCallback="true"
         tools:targetApi="31" >
         <activity
             android:name=".UI.AdminMenu"

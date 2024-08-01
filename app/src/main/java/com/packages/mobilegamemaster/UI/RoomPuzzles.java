@@ -3,6 +3,7 @@ package com.packages.mobilegamemaster.UI;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -150,7 +151,50 @@ public class RoomPuzzles extends AppCompatActivity {
             }
         });
 
-        //CANCEL BACK GESTURE FOR ANDROID 13 AND ABOVE
+        //LISTENER THAT RUNS SUBMIT BUTTON ACTION WHEN USER PRESSES ENTER ON KEYBOARD
+        solutionTextView.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                String solution = currentPuzzle.getSolution();
+
+                //CHECKS FOR CORRECT SOLUTION
+                if (String.valueOf(solutionTextView.getText()).equals(solution)) {
+                    //RUNS WHEN SOLUTION IS CORRECT AND YOU'VE REACHED THE LAST PUZZLE
+                    if (currentPuzzle.getPuzzleNum() == allPuzzles.size()) {
+                        countDownTimer.cancel();
+                        Date end = Calendar.getInstance().getTime();
+                        Intent intent = new Intent(RoomPuzzles.this, RoomWin.class);
+                        intent.putExtra("start_time", startTime);
+                        intent.putExtra("name", roomName);
+                        intent.putExtra("time_left", countDownTimerView.getText());
+                        intent.putExtra("end_time", timeFormat.format(end));
+                        intent.putExtra("end_date", dateFormat.format(end));
+                        intent.putExtra("id", roomID);
+                        startActivity(intent);
+                    }
+                    //RUNS WHEN SOLUTION IS CORRECT BUT YOU HAVEN'T REACHED THE LAST PUZZLE
+                    else {
+                        String msg = "Correct!";
+                        Toast toast = Toast.makeText(RoomPuzzles.this, msg, Toast.LENGTH_LONG);
+                        toast.show();
+                        hintView.setText("");
+
+                        currentPuzzle.setPuzzleNum(currentPuzzle.getPuzzleNum() + 1);
+                        currentPuzzle.setNudge(allPuzzles.get(currentPuzzle.getPuzzleNum() - 1).getNudge());
+                        currentPuzzle.setHint(allPuzzles.get(currentPuzzle.getPuzzleNum() - 1).getHint());
+                        currentPuzzle.setSolution(allPuzzles.get(currentPuzzle.getPuzzleNum() - 1).getSolution());
+
+                        String nextPuzzleText = "Puzzle " + (currentPuzzle.getPuzzleNum());
+                        puzzleTextView.setText(nextPuzzleText);
+                        solutionTextView.setText("");
+                    }
+
+                }
+
+            }
+            return true;
+        });
+
+        //HANDLE BACK GESTURE/BUTTON
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -187,13 +231,5 @@ public class RoomPuzzles extends AppCompatActivity {
         };
         countDownTimer.start();
         return countDownTimer;
-    }
-    //INTENDED TO STOP USERS FROM LEAVING THE ROOM PUZZLES ACTIVITY WITHOUT COMPLETING THE GAME
-    //BY PRESSING THE BACK BUTTON
-    //ONLY FOR ANDROID API LEVEL 12 AND BELOW
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
     }
 }

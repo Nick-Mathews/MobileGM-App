@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -74,6 +75,7 @@ public class AddRoom extends AppCompatActivity {
         Button cancelButton = findViewById(R.id.add_room_cancel_button);
         cancelButton.setOnClickListener(v -> {
             pgBar.setVisibility(View.VISIBLE);
+            pgBar.bringToFront();
             cancelButton.setEnabled(false);
             Intent intent = new Intent(AddRoom.this, AdminMenu.class);
             startActivity(intent);
@@ -83,6 +85,7 @@ public class AddRoom extends AppCompatActivity {
         Button continueButton = findViewById(R.id.add_room_continue_button);
         continueButton.setOnClickListener(v -> {
             pgBar.setVisibility(View.VISIBLE);
+            pgBar.bringToFront();
             continueButton.setEnabled(false);
             boolean roomFound = false;
             String nameText = String.valueOf(nameTextView.getText());
@@ -124,6 +127,18 @@ public class AddRoom extends AppCompatActivity {
                 toast.show();
                 pgBar.setVisibility(View.INVISIBLE);
                 continueButton.setEnabled(true);
+            }
+        });
+
+        //HANDLE BACK GESTURE/BUTTON
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                pgBar.setVisibility(View.VISIBLE);
+                pgBar.bringToFront();
+                Intent intent = new Intent(AddRoom.this, AdminMenu.class);
+                startActivity(intent);
+
             }
         });
     }

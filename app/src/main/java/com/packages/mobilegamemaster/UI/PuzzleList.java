@@ -2,7 +2,6 @@ package com.packages.mobilegamemaster.UI;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -87,40 +87,33 @@ public class PuzzleList extends AppCompatActivity {
         deleteRoomButton.setOnClickListener(v -> {
             new AlertDialog.Builder(this)
                     .setMessage(R.string.db_dialog_message)
-                            .setNegativeButton(R.string.db_dialog_negative, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    return;
-                                }
+                            .setNegativeButton(R.string.db_dialog_negative, (dialog, which) -> {
                             })
-                            .setPositiveButton(R.string.db_dialog_positive, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    pgBar.setVisibility(View.VISIBLE);
-                                    deleteRoomButton.setEnabled(false);
-                                    if (roomID == -1) {
-                                        Intent intent = new Intent(PuzzleList.this, RoomList.class);
-                                        startActivity(intent);
-                                    }
-                                    else {
-                                        for(int i=0; i < roomPuzzles.size(); ++i) {
-                                            Puzzle puzzle = roomPuzzles.get(i);
-                                            try {
-                                                repository.delete(puzzle);
-                                            } catch (Exception e) {
-                                                throw new RuntimeException(e);
-                                            }
-                                        }
-                                    }
-                                    try {
-                                        repository.delete(currentRoom);
-                                    } catch(Exception e) {
-                                        throw new RuntimeException(e);
-                                    }
-
+                            .setPositiveButton(R.string.db_dialog_positive, (dialog, which) -> {
+                                pgBar.setVisibility(View.VISIBLE);
+                                deleteRoomButton.setEnabled(false);
+                                if (roomID == -1) {
                                     Intent intent = new Intent(PuzzleList.this, RoomList.class);
                                     startActivity(intent);
                                 }
+                                else {
+                                    for(int i=0; i < roomPuzzles.size(); ++i) {
+                                        Puzzle puzzle = roomPuzzles.get(i);
+                                        try {
+                                            repository.delete(puzzle);
+                                        } catch (Exception e) {
+                                            throw new RuntimeException(e);
+                                        }
+                                    }
+                                }
+                                try {
+                                    repository.delete(currentRoom);
+                                } catch(Exception e) {
+                                    throw new RuntimeException(e);
+                                }
+
+                                Intent intent = new Intent(PuzzleList.this, RoomList.class);
+                                startActivity(intent);
                             }).show();
         });
 
@@ -139,46 +132,39 @@ public class PuzzleList extends AppCompatActivity {
         saveButton.setOnClickListener(v -> {
             new AlertDialog.Builder(this)
                     .setMessage(R.string.db_dialog_message)
-                    .setNegativeButton(R.string.db_dialog_negative, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            return;
-                        }
+                    .setNegativeButton(R.string.db_dialog_negative, (dialog, which) -> {
                     })
-                    .setPositiveButton(R.string.db_dialog_positive, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            saveButton.setEnabled(false);
-                            boolean nameFound = false;
-                            String renameText = renameEditText.getText().toString();
-                            if (renameText.isEmpty()) {
-                                Toast msg = Toast.makeText(PuzzleList.this, "Please enter a name to save", Toast.LENGTH_LONG);
-                                msg.show();
+                    .setPositiveButton(R.string.db_dialog_positive, (dialog, which) -> {
+                        saveButton.setEnabled(false);
+                        boolean nameFound = false;
+                        String renameText = renameEditText.getText().toString();
+                        if (renameText.isEmpty()) {
+                            Toast msg = Toast.makeText(PuzzleList.this, "Please enter a name to save", Toast.LENGTH_LONG);
+                            msg.show();
+                            renameEditText.setText("");
+                            saveButton.setEnabled(true);
+                        }
+                        else {
+                            for (Room room: allRooms) {
+                                if (renameText.equals(room.getRoomName())) {
+                                    nameFound = true;
+                                    Toast msg = Toast.makeText(PuzzleList.this, "That name belongs to another room", Toast.LENGTH_LONG);
+                                    msg.show();
+                                    saveButton.setEnabled(true);
+                                }
+                            }
+                            if (!nameFound) {
+                                currentRoom.setRoomName(renameText);
+                                try {
+                                    repository.update(currentRoom);
+                                } catch (Exception e) {
+                                    throw new RuntimeException(e);
+                                }
+                                roomNameText.setText(renameText);
                                 renameEditText.setText("");
-                                saveButton.setEnabled(true);
+                                renameDialog.dismiss();
                             }
-                            else {
-                                for (Room room: allRooms) {
-                                    if (renameText.equals(room.getRoomName())) {
-                                        nameFound = true;
-                                        Toast msg = Toast.makeText(PuzzleList.this, "That name belongs to another room", Toast.LENGTH_LONG);
-                                        msg.show();
-                                        saveButton.setEnabled(true);
-                                    }
-                                }
-                                if (!nameFound) {
-                                    currentRoom.setRoomName(renameText);
-                                    try {
-                                        repository.update(currentRoom);
-                                    } catch (Exception e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                    roomNameText.setText(renameText);
-                                    renameEditText.setText("");
-                                    renameDialog.dismiss();
-                                }
 
-                            }
                         }
                     }).show();
 
@@ -188,6 +174,17 @@ public class PuzzleList extends AppCompatActivity {
         roomNameText.setOnLongClickListener(v -> {
             renameDialog.show();
             return true;
+        });
+
+        //HANDLE BACK GESTURE/BUTTON
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                pgBar.setVisibility(View.VISIBLE);
+                pgBar.bringToFront();
+                Intent intent = new Intent(PuzzleList.this, RoomList.class);
+                startActivity(intent);
+            }
         });
     }
 

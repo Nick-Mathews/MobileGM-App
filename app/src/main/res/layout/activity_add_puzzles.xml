@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:layout_gravity="center"
-        style="@android:style/Widget.DeviceDefault.ProgressBar.Large"        app:layout_constraintBottom_toBottomOf="parent"
+        style="@android:style/Widget.DeviceDefault.ProgressBar.Large"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -83,12 +84,44 @@
             android:gravity="center">
 
             <TextView
+                android:id="@+id/puzzleName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="388sp"
+                android:minWidth="125sp"
+                android:gravity="end"
+                android:text="@string/puzzle_name"
+                android:textSize="20sp"
+                android:textColor="?android:attr/textColorPrimary"
+                android:labelFor="@+id/editNameText"/>
+
+            <EditText
+                android:id="@+id/editNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="225sp"
+                android:maxWidth="488sp"
+                android:autofillHints="name"
+                android:gravity="start|top"
+                android:inputType="textMultiLine|textCapSentences"
+                android:textSize="20sp"
+                android:textColor="?android:attr/textColorPrimary"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
                 android:id="@+id/nudgeNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxWidth="388sp"
                 android:minWidth="125sp"
-                android:text="@string/nudge_num"
+                android:gravity="end"
+                android:text="@string/nudge"
                 android:textSize="20sp"
                 android:textColor="?android:attr/textColorPrimary"
                 android:labelFor="@+id/editNudgeText"/>
@@ -117,7 +150,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="125sp"
-                android:text="@string/hint_num"
+                android:gravity="end"
+                android:text="@string/hint"
                 android:textSize="20sp"
                 android:textColor="?android:attr/textColorPrimary"
                 android:labelFor="@+id/editHintText"/>
@@ -146,7 +180,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="125sp"
-                android:text="@string/solution_num"
+                android:gravity="end"
+                android:text="@string/solution"
                 android:textSize="20sp"
                 android:textColor="?android:attr/textColorPrimary"
                 android:labelFor="@+id/editSolutionText"/>

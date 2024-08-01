@@ -8,12 +8,15 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
@@ -35,6 +38,7 @@ public class GameLogs extends AppCompatActivity {
     Repository repository;
     List<Timer> allTimers, roomTimers;
     RecyclerView recyclerView;
+    ProgressBar pgBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,9 @@ public class GameLogs extends AppCompatActivity {
         allTimers = repository.getmAllTimers();
         final LogAdapter logAdapter = new LogAdapter(this);
         logAdapter.setmTimers(allTimers);
+
+        //SET PROGRESS BAR
+        pgBar = findViewById(R.id.progressBar);
 
         //SETUP FIRST TIME STARTUP DIALOG
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
@@ -87,6 +94,7 @@ public class GameLogs extends AppCompatActivity {
         //CREATE SEARCH BUTTON AND SET ONCLICK LISTENER
         Button searchButton = findViewById(R.id.searchButton);
         searchButton.setOnClickListener(v -> {
+            pgBar.setVisibility(View.VISIBLE);
             int roomID = -1;
             EditText searchEditText = findViewById(R.id.searchEditText);
             String searchTerm = searchEditText.getText().toString();
@@ -109,6 +117,7 @@ public class GameLogs extends AppCompatActivity {
                 logAdapter.setmTimers(allTimers);
                 recyclerView.setAdapter(logAdapter);
             }
+            pgBar.setVisibility(View.INVISIBLE);
         });
 
         //BACK NAVIGATION BUTTON
@@ -116,6 +125,15 @@ public class GameLogs extends AppCompatActivity {
         backButton.setOnClickListener(v -> {
             Intent intent = new Intent(GameLogs.this, AdminMenu.class);
             startActivity(intent);
+        });
+
+        //HANDLE BACK GESTURE/BUTTON
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Intent intent = new Intent(GameLogs.this, AdminMenu.class);
+                startActivity(intent);
+            }
         });
     }
 
@@ -129,6 +147,7 @@ public class GameLogs extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         if (item.getItemId() == R.id.delete_logs) {
+            pgBar.setVisibility(View.VISIBLE);
             for (Timer timer: allTimers) {
                 try {
                     repository.delete(timer);
@@ -146,6 +165,8 @@ public class GameLogs extends AppCompatActivity {
             recyclerView = findViewById(R.id.gameLogRecyclerView);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setAdapter(logAdapter);
+
+            pgBar.setVisibility(View.INVISIBLE);
             return true;
         }
         if (item.getItemId() == android.R.id.home) {

@@ -145,7 +145,8 @@
             android:inputType="text"
             android:textAlignment="center"
             android:textSize="20sp"
-            android:textColor="?android:attr/textColorPrimary"/>
+            android:textColor="?android:attr/textColorPrimary"
+            android:imeOptions="actionDone"/>
 
         <Button
             android:id="@+id/submitButton"

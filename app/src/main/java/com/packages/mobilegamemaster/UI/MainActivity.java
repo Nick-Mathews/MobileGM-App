@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -96,6 +97,14 @@ public class MainActivity extends AppCompatActivity {
 
         //SET PROGRESS BAR VIEW
         pgBar = findViewById(R.id.progressBar);
+
+        //HANDLE BACK GESTURE FOR ANDROID 13 AND ABOVE
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+
+            }
+        });
     }
 
     @Override
@@ -122,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
         }
         signInButton.setOnClickListener(v -> {
             pgBar.setVisibility(View.VISIBLE);
+            pgBar.bringToFront();
             //SET FOUND TO FALSE
             boolean found = false;
 

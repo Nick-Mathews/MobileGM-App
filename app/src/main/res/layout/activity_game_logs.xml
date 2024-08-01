@@ -8,6 +8,18 @@
     tools:context=".UI.GameLogs"
     android:background="@drawable/pavel_neznanov_background">
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        style="@android:style/Widget.DeviceDefault.ProgressBar.Large"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -81,10 +93,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logTitleLayout"
         app:layout_constraintBottom_toTopOf="@+id/logTableLayout"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:orientation="vertical">
 
-        <EditText
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:endIconMode="clear_text">
+
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/searchEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -95,12 +113,17 @@
             android:inputType="text"
             android:textColor="?android:attr/textColorPrimary"/>
 
+    </com.google.android.material.textfield.TextInputLayout>
+
         <Button
             android:id="@+id/searchButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/search"/>
+            android:text="@string/search"
+            android:layout_gravity="center"/>
+
     </androidx.appcompat.widget.LinearLayoutCompat>
+
 
     <TableLayout
         android:id="@+id/logTableLayout"
@@ -108,40 +131,49 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/searchBarLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:shrinkColumns="*"
-        android:stretchColumns="*"
-        >
+        app:layout_constraintStart_toStartOf="parent">
         <TableRow>
             <TextView
                 android:layout_column="1"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/room_name"
                 android:textStyle="bold"
-                android:textColor="?android:attr/textColorPrimary"/>
+                android:textSize="18sp"
+                android:textColor="?android:attr/textColorPrimary"
+                android:layout_weight="1"
+                android:gravity="center"/>
             <TextView
                 android:layout_column="2"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/time_left"
                 android:textStyle="bold"
-                android:textColor="?android:attr/textColorPrimary"/>
+                android:textSize="18sp"
+                android:textColor="?android:attr/textColorPrimary"
+                android:layout_weight="1"
+                android:gravity="center"/>
             <TextView
                 android:layout_column="3"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/date_played"
                 android:textStyle="bold"
-                android:textColor="?android:attr/textColorPrimary"/>
+                android:textSize="18sp"
+                android:textColor="?android:attr/textColorPrimary"
+                android:layout_weight="1"
+                android:gravity="center"/>
 
             <TextView
                 android:layout_column="4"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/start_time"
                 android:textStyle="bold"
-                android:textColor="?android:attr/textColorPrimary"/>
+                android:textSize="18sp"
+                android:textColor="?android:attr/textColorPrimary"
+                android:layout_weight="1"
+                android:gravity="center"/>
         </TableRow>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -159,7 +191,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20sp"
-        android:clickable="true"
         android:contentDescription="@string/back"
         android:src="@android:drawable/ic_media_previous"
         app:fabSize="auto"

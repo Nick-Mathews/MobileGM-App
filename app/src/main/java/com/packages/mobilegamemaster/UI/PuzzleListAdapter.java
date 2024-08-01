@@ -59,7 +59,7 @@ public class PuzzleListAdapter extends RecyclerView.Adapter<PuzzleListAdapter.Pu
     public void onBindViewHolder(@NonNull PuzzleListViewHolder holder, int position) {
         if (mPuzzles != null) {
             Puzzle currentPuzzle = mPuzzles.get(position);
-            String name = "Puzzle " + currentPuzzle.getPuzzleNum();
+            String name = currentPuzzle.getPuzzleName();
             holder.textView.setText(name);
         }
         else {

@@ -7,15 +7,16 @@ public class Puzzle {
     @PrimaryKey(autoGenerate = true)
     private int puzzleID;
     private int puzzleNum;
+    private String puzzleName;
     private int roomID;
     private String nudge;
     private String hint;
     private String solution;
 
-
-    public Puzzle(int puzzleID, int puzzleNum, int roomID, String nudge, String hint, String solution) {
+    public Puzzle(int puzzleID, int puzzleNum, String puzzleName, int roomID, String nudge, String hint, String solution) {
         this.puzzleID = puzzleID;
         this.puzzleNum = puzzleNum;
+        this.puzzleName = puzzleName;
         this.roomID = roomID;
         this.nudge = nudge;
         this.hint = hint;
@@ -33,6 +34,12 @@ public class Puzzle {
     }
     public void setPuzzleNum(int puzzleNum) {
         this.puzzleNum = puzzleNum;
+    }
+    public String getPuzzleName() {
+        return puzzleName;
+    }
+    public void setPuzzleName(String puzzleName) {
+        this.puzzleName = puzzleName;
     }
     public int getRoomID() {
         return roomID;

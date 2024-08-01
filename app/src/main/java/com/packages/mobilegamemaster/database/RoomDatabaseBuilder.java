@@ -14,7 +14,7 @@ import com.packages.mobilegamemaster.Entities.Puzzle;
 import com.packages.mobilegamemaster.Entities.Room;
 import com.packages.mobilegamemaster.Entities.Timer;
 
-@Database(entities = {Room.class, Puzzle.class, Timer.class, Password.class}, version = 11, exportSchema = false)
+@Database(entities = {Room.class, Puzzle.class, Timer.class, Password.class}, version = 12, exportSchema = false)
 public abstract class RoomDatabaseBuilder extends RoomDatabase{
 
     //CREATE DAOS AND RDBB INSTANCE

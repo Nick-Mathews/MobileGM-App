@@ -9,8 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -99,6 +101,19 @@ public class AdminMenu extends AppCompatActivity {
             editor.putBoolean("dialog5Checked", false);
             editor.apply();
             pgBar.setVisibility(View.INVISIBLE);
+            Toast msg = Toast.makeText(this, "Tutorial pop-ups enabled", Toast.LENGTH_LONG);
+            msg.show();
+        });
+
+        //HANDLE BACK GESTURE/BUTTON
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                pgBar.setVisibility(View.VISIBLE);
+                pgBar.bringToFront();
+                Intent intent = new Intent(AdminMenu.this, MainActivity.class);
+                startActivity(intent);
+            }
         });
     }
 }

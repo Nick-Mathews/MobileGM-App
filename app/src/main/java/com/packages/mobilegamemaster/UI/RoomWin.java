@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -70,6 +71,15 @@ public class RoomWin extends AppCompatActivity {
         finishButton.setOnClickListener(v -> {
             Intent intent = new Intent(RoomWin.this, MainActivity.class);
             startActivity(intent);
+        });
+
+        //HANDLE BACK GESTURE/BUTTON
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Intent intent = new Intent(RoomWin.this, MainActivity.class);
+                startActivity(intent);
+            }
         });
     }
 }

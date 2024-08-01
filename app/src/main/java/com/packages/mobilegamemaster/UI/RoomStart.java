@@ -58,9 +58,6 @@ public class RoomStart extends AppCompatActivity {
         });
 
         FloatingActionButton backButton = findViewById(R.id.floating_back_button);
-        backButton.setOnClickListener(v -> {
-            pgBar.setVisibility(View.VISIBLE);
-            getOnBackPressedDispatcher().onBackPressed();
-        });
+        backButton.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
     }
 }

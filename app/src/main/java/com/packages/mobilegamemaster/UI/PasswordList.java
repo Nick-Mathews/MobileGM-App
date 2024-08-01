@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -89,6 +90,17 @@ public class PasswordList extends AppCompatActivity {
             Intent intent = new Intent(PasswordList.this, EditPasswords.class);
             intent.putExtra("id", allPasswords.get(allPasswords.size() -1 ).getPasswordID() + 1);
             startActivity(intent);
+        });
+
+        //HANDLE BACK GESTURE/BUTTON
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                pgBar.setVisibility(View.VISIBLE);
+                pgBar.bringToFront();
+                Intent intent = new Intent(PasswordList.this, AdminMenu.class);
+                startActivity(intent);
+            }
         });
     }
 }

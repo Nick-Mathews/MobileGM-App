@@ -1,7 +1,6 @@
 package com.packages.mobilegamemaster.UI;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -51,10 +51,12 @@ public class EditPuzzles extends AppCompatActivity {
         roomNameView.setText(currentRoom.getRoomName());
 
         //CREATE CONTAINERS FOR THE EDITTEXT ENTRIES AND POPULATE WITH CURRENT CLUES
+        EditText nameEntry = findViewById(R.id.editNameText);
         EditText nudgeEntry = findViewById(R.id.editNudgeText);
         EditText hintEntry = findViewById(R.id.editHintText);
         EditText solutionEntry = findViewById(R.id.editSolutionText);
 
+        nameEntry.setText(currentPuzzle.getPuzzleName());
         nudgeEntry.setText(currentPuzzle.getNudge());
         hintEntry.setText(currentPuzzle.getHint());
         solutionEntry.setText(currentPuzzle.getSolution());
@@ -77,45 +79,41 @@ public class EditPuzzles extends AppCompatActivity {
         saveButton.setOnClickListener(v -> {
             new AlertDialog.Builder(this)
                     .setMessage(R.string.db_dialog_message)
-                                    .setPositiveButton(R.string.db_dialog_positive, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            pgBar.setVisibility(View.VISIBLE);
-                                            if (roomID == -1) {
-                                                Toast msg = Toast.makeText(EditPuzzles.this, "Your room ID is invalid", Toast.LENGTH_LONG);
-                                                msg.show();
-                                                pgBar.setVisibility(View.INVISIBLE);
-                                            }
-                                            else {
-                                                String nudgeText1 = String.valueOf(nudgeEntry.getText());
-                                                String hintText1 = String.valueOf(hintEntry.getText());
-                                                String solutionText1 = String.valueOf(solutionEntry.getText());
-                                                if ((nudgeText1.isEmpty()) || (hintText1.isEmpty()) || (solutionText1.isEmpty())) {
-                                                    Toast msg = Toast.makeText(EditPuzzles.this, "You must complete all fields before saving", Toast.LENGTH_LONG);
-                                                    msg.show();
-                                                    pgBar.setVisibility(View.INVISIBLE);
-                                                } else {
-                                                    currentPuzzle.setNudge(nudgeText1);
-                                                    currentPuzzle.setHint(hintText1);
-                                                    currentPuzzle.setSolution(solutionText1);
-                                                    try {
-                                                        repository.update(currentPuzzle);
-                                                    } catch (Exception e) {
-                                                        throw new RuntimeException(e);
-                                                    }
-                                                    Intent intent = new Intent(EditPuzzles.this, PuzzleList.class);
-                                                    intent.putExtra("name", currentRoom.getRoomName());
-                                                    intent.putExtra("id", roomID);
-                                                    startActivity(intent);
-                                        }
-                                    }
-                }
-            })
-                    .setNegativeButton(R.string.db_dialog_negative, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            return;
+                    .setPositiveButton(R.string.db_dialog_positive, (dialog, which) -> {
+                        pgBar.setVisibility(View.VISIBLE);
+                        pgBar.bringToFront();
+                        if (roomID == -1) {
+                            Toast msg = Toast.makeText(EditPuzzles.this, "Your room ID is invalid", Toast.LENGTH_LONG);
+                            msg.show();
+                            pgBar.setVisibility(View.INVISIBLE);
                         }
+                        else {
+                            String nameText = String.valueOf(nameEntry.getText());
+                            String nudgeText1 = String.valueOf(nudgeEntry.getText());
+                            String hintText1 = String.valueOf(hintEntry.getText());
+                            String solutionText1 = String.valueOf(solutionEntry.getText());
+                            if ((nudgeText1.isEmpty()) || (hintText1.isEmpty()) || (solutionText1.isEmpty()) || (nameText.isEmpty())) {
+                                Toast msg = Toast.makeText(EditPuzzles.this, "You must complete all fields before saving", Toast.LENGTH_LONG);
+                                msg.show();
+                                pgBar.setVisibility(View.INVISIBLE);
+                            } else {
+                                currentPuzzle.setPuzzleName(nameText);
+                                currentPuzzle.setNudge(nudgeText1);
+                                currentPuzzle.setHint(hintText1);
+                                currentPuzzle.setSolution(solutionText1);
+                                try {
+                                    repository.update(currentPuzzle);
+                                } catch (Exception e) {
+                                    throw new RuntimeException(e);
+                                }
+                                Intent intent = new Intent(EditPuzzles.this, PuzzleList.class);
+                                intent.putExtra("name", currentRoom.getRoomName());
+                                intent.putExtra("id", roomID);
+                                startActivity(intent);
+                                    }
+                                }
+            })
+                    .setNegativeButton(R.string.db_dialog_negative, (dialog, which) -> {
                     }).show();
         });
 
@@ -123,6 +121,7 @@ public class EditPuzzles extends AppCompatActivity {
         Button cancelChangesButton = findViewById(R.id.cancelChangesButton);
         cancelChangesButton.setOnClickListener(v -> {
             pgBar.setVisibility(View.VISIBLE);
+            pgBar.bringToFront();
             Intent intent = new Intent(EditPuzzles.this, PuzzleList.class);
             intent.putExtra("name", currentRoom.getRoomName());
             intent.putExtra("id", roomID);
@@ -135,36 +134,43 @@ public class EditPuzzles extends AppCompatActivity {
         deletePuzzleButton.setOnClickListener(v -> {
             new AlertDialog.Builder(this).
                     setMessage(R.string.db_dialog_message)
-                    .setPositiveButton(R.string.db_dialog_positive, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            pgBar.setVisibility(View.VISIBLE);
-                            try {
-                                repository.delete(currentPuzzle);
-                            } catch (Exception e) {
-                                throw new RuntimeException(e);
-                            }
-                            int i = 1;
-                            for (Puzzle puzzle: repository.getmRoomPuzzles(roomID)){
-                                puzzle.setPuzzleNum(i);
-                                try {repository.update(puzzle);}
-                                catch(Exception e) {throw new RuntimeException(e);}
-                                ++i;
-                            }
+                    .setPositiveButton(R.string.db_dialog_positive, (dialog, which) -> {
+                        pgBar.setVisibility(View.VISIBLE);
+                        pgBar.bringToFront();
+                        try {
+                            repository.delete(currentPuzzle);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                        int i = 1;
+                        for (Puzzle puzzle: repository.getmRoomPuzzles(roomID)){
+                            puzzle.setPuzzleNum(i);
+                            try {repository.update(puzzle);}
+                            catch(Exception e) {throw new RuntimeException(e);}
+                            ++i;
+                        }
 
-                            Intent intent = new Intent(EditPuzzles.this, PuzzleList.class);
-                            intent.putExtra("name", currentRoom.getRoomName());
-                            intent.putExtra("id", currentRoom.getRoomID());
-                            startActivity(intent);
-                        }
+                        Intent intent = new Intent(EditPuzzles.this, PuzzleList.class);
+                        intent.putExtra("name", currentRoom.getRoomName());
+                        intent.putExtra("id", currentRoom.getRoomID());
+                        startActivity(intent);
                     })
-                    .setNegativeButton(R.string.db_dialog_negative, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            return;
-                        }
+                    .setNegativeButton(R.string.db_dialog_negative, (dialog, which) -> {
+
                     }).show();
 
+        });
+        //HANDLE BACK GESTURE/BUTTON
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                pgBar.setVisibility(View.VISIBLE);
+                pgBar.bringToFront();
+                Intent intent = new Intent(EditPuzzles.this, PuzzleList.class);
+                intent.putExtra("name", currentRoom.getRoomName());
+                intent.putExtra("id", roomID);
+                startActivity(intent);
+            }
         });
     }
 }

@@ -108,7 +108,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxWidth="150sp"
-            android:text="@string/tutorial_popups_on"/>
+            android:text="@string/reset_tutorial"/>
 
         <Button
             android:id="@+id/menuSignOut"

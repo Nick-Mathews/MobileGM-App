@@ -7,9 +7,10 @@ import static org.junit.Assert.*;
 import com.packages.mobilegamemaster.Entities.Puzzle;
 
 public class PuzzleUnitTest {
-    Puzzle puzzle = new Puzzle(1, 1, 1, "Nudge", "Hint", "Solution");
+    Puzzle puzzle = new Puzzle(1, 1, "First", 1, "Nudge", "Hint", "Solution");
     int correctNum = 1;
     int incorrectNum = -1;
+    String correctName = "First";
     String correctNudge = "Nudge";
     String correctHint = "Hint";
     String correctSolution = "Solution";
@@ -17,6 +18,7 @@ public class PuzzleUnitTest {
     int getTestPuzzleID = puzzle.getPuzzleID();
     int getTestPuzzleNum = puzzle.getPuzzleNum();
     int getTestRoomID = puzzle.getRoomID();
+    String getTestName = puzzle.getPuzzleName();
     String getTestNudge = puzzle.getNudge();
     String getTestHint = puzzle.getHint();
     String getTestSolution = puzzle.getSolution();
@@ -34,6 +36,10 @@ public class PuzzleUnitTest {
     public void roomIDisCorrect() {assertEquals(correctNum, getTestRoomID);}
     @Test
     public void roomIDisIncorrect() {assertNotEquals(incorrectNum, getTestRoomID);}
+    @Test
+    public void nameIsCorrect() {assertEquals(correctName, getTestName);}
+    @Test
+    public void nameIsIncorrect() {assertNotEquals(correctName, getTestName);}
     @Test
     public void nudgeIsCorrect() {assertEquals(correctNudge, getTestNudge);}
     @Test
@@ -63,6 +69,11 @@ public class PuzzleUnitTest {
         assertEquals(2, puzzle.getRoomID());
     }
     @Test
+    public void setNameTest() {
+        puzzle.setPuzzleName("Second");
+        assertEquals("Second", puzzle.getPuzzleName());
+    }
+    @Test
     public void setNudgeTest() {
         puzzle.setNudge("N");
         assertEquals("N", puzzle.getNudge());
@@ -89,6 +100,8 @@ public class PuzzleUnitTest {
     public void roomIDIncorrect() {
         assertNotEquals(incorrectNum, puzzle.getRoomID());
     }
+    @Test
+    public void nameIncorrect() {assertNotEquals(incorrectText, puzzle.getPuzzleName());}
     @Test
     public void nudgeIncorrect() {
         assertNotEquals(incorrectText, puzzle.getNudge());

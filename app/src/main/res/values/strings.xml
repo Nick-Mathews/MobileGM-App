@@ -83,8 +83,9 @@
     <string name="sign_out">Sign Out</string>
     <string name="user">User:</string>
     <string name="loading">Loading…</string>
-    <string name="tutorial_popups_on">Tutorial Popups On</string>
+    <string name="reset_tutorial">Reset Tutorial Pop-ups</string>
     <string name="db_dialog_message">Are you sure you want to make this change?</string>
     <string name="db_dialog_positive">Yes</string>
     <string name="db_dialog_negative">No</string>
+    <string name="puzzle_name">Puzzle Name: </string>
 </resources>

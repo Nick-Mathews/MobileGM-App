@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -51,8 +52,6 @@ public class RoomList extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(editRoomAdapter);
 
-
-
         //SETUP AND CHECK FOR STARTUP DIALOG
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         boolean dialog5Checked = settings.getBoolean("dialog5Checked", false);
@@ -79,8 +78,20 @@ public class RoomList extends AppCompatActivity {
         Button finishButton = findViewById(R.id.finishButton);
         finishButton.setOnClickListener(v -> {
             pgBar.setVisibility(View.VISIBLE);
+            pgBar.bringToFront();
             Intent intent = new Intent(RoomList.this, AdminMenu.class);
             startActivity(intent);
+        });
+
+        //HANDLE BACK GESTURE/BUTTON
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                pgBar.setVisibility(View.VISIBLE);
+                pgBar.bringToFront();
+                Intent intent = new Intent(RoomList.this, AdminMenu.class);
+                startActivity(intent);
+            }
         });
         }
     }

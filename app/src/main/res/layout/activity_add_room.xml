@@ -42,31 +42,66 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_margin="15sp"
             android:gravity="center">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxWidth="150sp"
-                android:text="@string/room_name"
-                android:textSize="20sp"
-                android:labelFor="@+id/enterNameText"
-                android:textColor="?android:attr/textColorPrimary"/>
+                android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/enterNameText"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="150sp"
+                    android:text="@string/room_name"
+                    android:textSize="20sp"
+                    android:labelFor="@+id/enterNameText"
+                    android:textColor="?android:attr/textColorPrimary"/>
+
+                <EditText
+                    android:id="@+id/enterNameText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="488sp"
+                    android:minWidth="250sp"
+                    android:minHeight="48sp"
+                    android:inputType="textCapWords"
+                    android:textSize="20sp"
+                    android:autofillHints="name"
+                    android:layout_marginStart="12sp"
+                    android:textColor="?android:attr/textColorPrimary" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxWidth="488sp"
-                android:minWidth="250sp"
-                android:minHeight="48sp"
-                android:inputType="textCapWords"
-                android:textSize="20sp"
-                android:autofillHints="name"
-                android:layout_marginStart="12sp"
-                android:textColor="?android:attr/textColorPrimary" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="150sp"
+                    android:text="@string/timer_length"
+                    android:textSize="20sp"
+                    android:labelFor="@+id/enterTimeText"
+                    android:textColor="?android:attr/textColorPrimary"/>
+
+                <EditText
+                    android:id="@+id/enterTimeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="488sp"
+                    android:minWidth="250sp"
+                    android:minHeight="48sp"
+                    android:inputType="number"
+                    android:textSize="20sp"
+                    android:autofillHints="timer"
+                    android:layout_marginStart="12sp"
+                    android:textColor="?android:attr/textColorPrimary" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat

@@ -88,4 +88,7 @@
     <string name="db_dialog_positive">Yes</string>
     <string name="db_dialog_negative">No</string>
     <string name="puzzle_name">Puzzle Name: </string>
+    <string name="timer_length">Timer Length</string>
+    <string name="change_timer">Change Timer</string>
+    <string name="set_timer_length">Set Timer Length</string>
 </resources>

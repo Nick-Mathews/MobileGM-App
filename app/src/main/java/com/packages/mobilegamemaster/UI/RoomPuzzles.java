@@ -52,9 +52,11 @@ public class RoomPuzzles extends AppCompatActivity {
         });
         //POPULATE REPOSITORY, ROOM NAME, ROOM ID AND PUZZLE NUMBER
         Repository repository = new Repository(getApplication());
+
         roomName = getIntent().getStringExtra("name");
         roomID = getIntent().getIntExtra("id", -1);
         int puzzleNum = getIntent().getIntExtra("puzzle_num", -1);
+        int timerLength = getIntent().getIntExtra("timer", -1);
 
         //CREATE START TIME STRING
         startTime = timeFormat.format(Calendar.getInstance().getTime());
@@ -78,7 +80,7 @@ public class RoomPuzzles extends AppCompatActivity {
         puzzleTextView.setText(puzzleText);
 
         //START COUNTDOWN TIMER
-        CountDownTimer countDownTimer = getCountDownTimer();
+        CountDownTimer countDownTimer = getCountDownTimer(timerLength);
 
         //CREATE AND SET BUTTON FOR NUDGE
         Button nudgeButton = findViewById(R.id.nudge_button);
@@ -205,12 +207,12 @@ public class RoomPuzzles extends AppCompatActivity {
 
     //FUNCTION THAT CREATES AND RUNS A COUNTDOWN TIMER OF 60 MINUTES, WHICH CALLS ROOM LOSS ACTIVITY WHEN ON FINISH RUNS
     @NonNull
-    private CountDownTimer getCountDownTimer() {
+    private CountDownTimer getCountDownTimer(int length) {
         NumberFormat f = new DecimalFormat("00");
-        CountDownTimer countDownTimer = new CountDownTimer(3600000, 1000) {
+        CountDownTimer countDownTimer = new CountDownTimer(length, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                long min = (millisUntilFinished / 60000) % 60;
+                long min = (millisUntilFinished / 60000);
                 long sec = (millisUntilFinished / 1000) % 60;
                 String timeText = f.format(min) + ":" + f.format(sec);
                 countDownTimerView.setText(timeText);

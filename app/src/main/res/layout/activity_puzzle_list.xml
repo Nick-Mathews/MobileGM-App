@@ -99,16 +99,15 @@
             android:maxWidth="125sp"
             android:layout_marginHorizontal="4sp"
             android:id="@+id/addPuzzleButton"
-            android:text="@string/add_puzzle"
-            />
+            android:text="@string/add_puzzle" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="55sp"
             android:maxWidth="125sp"
             android:layout_marginHorizontal="4sp"
-            android:id="@+id/finishEditsButton"
-            android:text="@string/finish_edits"/>
+            android:id="@+id/changeTimerButton"
+            android:text="@string/change_timer"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -119,5 +118,15 @@
             android:text="@string/delete_room"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="55sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:maxWidth="125sp"
+        android:layout_marginHorizontal="4sp"
+        android:id="@+id/finishEditsButton"
+        android:text="@string/finish_edits"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -45,6 +45,7 @@ public class AddRoom extends AppCompatActivity {
 
         //SET ROOM NAME TEXTVIEW
         EditText nameTextView = findViewById(R.id.enterNameText);
+        EditText timeTextView = findViewById(R.id.enterTimeText);
 
         //SETUP FIRST TIME STARTUP DIALOG
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
@@ -89,6 +90,8 @@ public class AddRoom extends AppCompatActivity {
             continueButton.setEnabled(false);
             boolean roomFound = false;
             String nameText = String.valueOf(nameTextView.getText());
+            int timeInt = Integer.parseInt(timeTextView.getText().toString());
+            int milliTime = timeInt * 60000;
             if (!nameText.isEmpty()) {
                 for (Room room: repository.getmAllRooms()) {
                     if (room.getRoomName().equals(nameText)){
@@ -102,7 +105,7 @@ public class AddRoom extends AppCompatActivity {
                     } else {
                         roomID = repository.getmAllRooms().get(repository.getmAllRooms().size() - 1).getRoomID() + 1;
                     }
-                    Room newRoom = new Room(roomID, nameText);
+                    Room newRoom = new Room(roomID, nameText, milliTime);
                     try {
                         repository.insert(newRoom);
                     } catch (Exception e) {

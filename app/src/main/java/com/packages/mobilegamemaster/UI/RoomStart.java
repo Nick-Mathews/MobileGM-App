@@ -18,6 +18,9 @@ import com.packages.mobilegamemaster.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.packages.mobilegamemaster.database.Repository;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 public class RoomStart extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +35,19 @@ public class RoomStart extends AppCompatActivity {
         //SET REPOSITORY AND PROGRESS BAR
         Repository repository = new Repository(getApplication());
         ProgressBar pgBar = findViewById(R.id.progressBar);
+        NumberFormat f = new DecimalFormat("00");
 
-        //POPULATE ROOM ID AND ROOM NAME; SET ROOM NAME TO TEXT VIEW
+        //POPULATE ROOM ID AND ROOM NAME; SET ROOM NAME AND TIMER TO TEXT VIEW
         int roomID = getIntent().getIntExtra("id", -1);
         String roomName = getIntent().getStringExtra("name");
+        int roomTimer = getIntent().getIntExtra("timer", -1);
         TextView nameView = findViewById(R.id.roomNameView);
         nameView.setText(roomName);
+        TextView timerView = findViewById(R.id.countdownTimerView);
+        long min = (roomTimer / 60000);
+        long sec = (roomTimer / 1000) % 60;
+        String timerText = f.format(min) + ":" + f.format(sec);
+        timerView.setText(timerText);
 
         //CREATE START BUTTON AND SET ONCLICK LISTENER
         Button startButton = findViewById(R.id.startButton);
@@ -52,6 +62,7 @@ public class RoomStart extends AppCompatActivity {
                 Intent intent = new Intent(RoomStart.this, RoomPuzzles.class);
                 intent.putExtra("name", roomName);
                 intent.putExtra("id", roomID);
+                intent.putExtra("timer", roomTimer);
                 intent.putExtra("puzzle_num", 0);
                 startActivity(intent);
             }

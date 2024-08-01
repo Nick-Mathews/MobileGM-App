@@ -39,6 +39,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
                 Intent intent = new Intent(context, RoomStart.class);
                 intent.putExtra("id", currentRoom.getRoomID());
                 intent.putExtra("name", currentRoom.getRoomName());
+                intent.putExtra("timer", currentRoom.getRoomTime());
                 context.startActivity(intent);
             });
         }

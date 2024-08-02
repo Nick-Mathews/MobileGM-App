@@ -44,9 +44,10 @@ public class RoomStart extends AppCompatActivity {
         TextView nameView = findViewById(R.id.roomNameView);
         nameView.setText(roomName);
         TextView timerView = findViewById(R.id.countdownTimerView);
-        long min = (roomTimer / 60000);
+        long hr = (roomTimer / 3600000) % 24;
+        long min = (roomTimer / 60000) % 60;
         long sec = (roomTimer / 1000) % 60;
-        String timerText = f.format(min) + ":" + f.format(sec);
+        String timerText = f.format(hr) + ":" + f.format(min) + ":" + f.format(sec);
         timerView.setText(timerText);
 
         //CREATE START BUTTON AND SET ONCLICK LISTENER
@@ -59,7 +60,7 @@ public class RoomStart extends AppCompatActivity {
                 pgBar.setVisibility(View.INVISIBLE);
             }
             else {
-                Intent intent = new Intent(RoomStart.this, RoomPuzzles.class);
+                Intent intent = new Intent(RoomStart.this, PlayRoom.class);
                 intent.putExtra("name", roomName);
                 intent.putExtra("id", roomID);
                 intent.putExtra("timer", roomTimer);

@@ -43,7 +43,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8sp"
+            android:layout_margin="4sp"
             android:gravity="center"
             android:text="@string/room_name"
             android:textSize="20sp"
@@ -53,6 +53,7 @@
             android:id="@+id/roomNameText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="4sp"
             android:minHeight="48sp"
             android:gravity="center"
             android:text="@string/placeholder"
@@ -70,6 +71,33 @@
             android:textColor="?android:attr/textColorPrimary"
             />
 
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/room_timer"
+            android:textSize="20sp"
+            android:textColor="?android:attr/textColorPrimary"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/timer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/_60_00"
+            android:textColor="?android:attr/textColorPrimary"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.recyclerview.widget.RecyclerView

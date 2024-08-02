@@ -77,15 +77,9 @@ public class EditPuzzles extends AppCompatActivity {
         //CREATE BUTTON AND LISTENER FOR SAVE PUZZLE BUTTON
         Button saveButton = findViewById(R.id.savePuzzleButton);
         saveButton.setOnClickListener(v -> {
-            new AlertDialog.Builder(this)
-                    .setMessage(R.string.db_dialog_message)
-                    .setPositiveButton(R.string.db_dialog_positive, (dialog, which) -> {
-                        pgBar.setVisibility(View.VISIBLE);
-                        pgBar.bringToFront();
                         if (roomID == -1) {
                             Toast msg = Toast.makeText(EditPuzzles.this, "Your room ID is invalid", Toast.LENGTH_LONG);
                             msg.show();
-                            pgBar.setVisibility(View.INVISIBLE);
                         }
                         else {
                             String nameText = String.valueOf(nameEntry.getText());
@@ -97,24 +91,30 @@ public class EditPuzzles extends AppCompatActivity {
                                 msg.show();
                                 pgBar.setVisibility(View.INVISIBLE);
                             } else {
-                                currentPuzzle.setPuzzleName(nameText);
-                                currentPuzzle.setNudge(nudgeText1);
-                                currentPuzzle.setHint(hintText1);
-                                currentPuzzle.setSolution(solutionText1);
-                                try {
-                                    repository.update(currentPuzzle);
-                                } catch (Exception e) {
-                                    throw new RuntimeException(e);
-                                }
-                                Intent intent = new Intent(EditPuzzles.this, PuzzleList.class);
-                                intent.putExtra("name", currentRoom.getRoomName());
-                                intent.putExtra("id", roomID);
-                                startActivity(intent);
-                                    }
-                                }
-            })
-                    .setNegativeButton(R.string.db_dialog_negative, (dialog, which) -> {
-                    }).show();
+                                new AlertDialog.Builder(this)
+                                        .setMessage(R.string.db_dialog_message)
+                                        .setPositiveButton(R.string.db_dialog_positive, (dialog, which) -> {
+                                            pgBar.setVisibility(View.VISIBLE);
+                                            pgBar.bringToFront();
+                                            currentPuzzle.setPuzzleName(nameText);
+                                            currentPuzzle.setNudge(nudgeText1);
+                                            currentPuzzle.setHint(hintText1);
+                                            currentPuzzle.setSolution(solutionText1);
+                                            try {
+                                                repository.update(currentPuzzle);
+                                            } catch (Exception e) {
+                                                throw new RuntimeException(e);
+                                            }
+                                            Intent intent = new Intent(EditPuzzles.this, PuzzleList.class);
+                                            intent.putExtra("name", currentRoom.getRoomName());
+                                            intent.putExtra("id", roomID);
+                                            startActivity(intent);
+                                    })
+                                        .setNegativeButton(R.string.db_dialog_negative, (dialog, which) -> {
+                                }).show();
+                            }
+            }
+
         });
 
         //CREATE BUTTON AND LISTENER FOR CANCEL CHANGES BUTTON
@@ -131,35 +131,31 @@ public class EditPuzzles extends AppCompatActivity {
 
         //CREATE BUTTON AND LISTENER FOR DELETE PUZZLE BUTTON
         Button deletePuzzleButton = findViewById(R.id.deletePuzzleButton);
-        deletePuzzleButton.setOnClickListener(v -> {
-            new AlertDialog.Builder(this).
-                    setMessage(R.string.db_dialog_message)
-                    .setPositiveButton(R.string.db_dialog_positive, (dialog, which) -> {
-                        pgBar.setVisibility(View.VISIBLE);
-                        pgBar.bringToFront();
-                        try {
-                            repository.delete(currentPuzzle);
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
-                        int i = 1;
-                        for (Puzzle puzzle: repository.getmRoomPuzzles(roomID)){
-                            puzzle.setPuzzleNum(i);
-                            try {repository.update(puzzle);}
-                            catch(Exception e) {throw new RuntimeException(e);}
-                            ++i;
-                        }
+        deletePuzzleButton.setOnClickListener(v -> new AlertDialog.Builder(this).
+                setMessage(R.string.db_dialog_message)
+                .setPositiveButton(R.string.db_dialog_positive, (dialog, which) -> {
+                    pgBar.setVisibility(View.VISIBLE);
+                    pgBar.bringToFront();
+                    try {
+                        repository.delete(currentPuzzle);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                    int i = 1;
+                    for (Puzzle puzzle: repository.getmRoomPuzzles(roomID)){
+                        puzzle.setPuzzleNum(i);
+                        try {repository.update(puzzle);}
+                        catch(Exception e) {throw new RuntimeException(e);}
+                        ++i;
+                    }
 
-                        Intent intent = new Intent(EditPuzzles.this, PuzzleList.class);
-                        intent.putExtra("name", currentRoom.getRoomName());
-                        intent.putExtra("id", currentRoom.getRoomID());
-                        startActivity(intent);
-                    })
-                    .setNegativeButton(R.string.db_dialog_negative, (dialog, which) -> {
-
-                    }).show();
-
-        });
+                    Intent intent = new Intent(EditPuzzles.this, PuzzleList.class);
+                    intent.putExtra("name", currentRoom.getRoomName());
+                    intent.putExtra("id", currentRoom.getRoomID());
+                    startActivity(intent);
+                })
+                .setNegativeButton(R.string.db_dialog_negative, (dialog, which) -> {
+                }).show());
         //HANDLE BACK GESTURE/BUTTON
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override

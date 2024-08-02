@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:layout_gravity="center"
-        style="@android:style/Widget.DeviceDefault.ProgressBar.Large"        app:layout_constraintBottom_toBottomOf="parent"
+        style="@android:style/Widget.DeviceDefault.ProgressBar.Large"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -77,6 +78,11 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
@@ -100,6 +106,14 @@
                     android:autofillHints="timer"
                     android:layout_marginStart="12sp"
                     android:textColor="?android:attr/textColorPrimary" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/time_in_minutes"
+                    android:textSize="14sp"
+                    android:gravity="start"
+                    android:textColor="?android:attr/textColorPrimary"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>

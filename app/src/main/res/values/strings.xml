@@ -91,4 +91,6 @@
     <string name="timer_length">Timer Length</string>
     <string name="change_timer">Change Timer</string>
     <string name="set_timer_length">Set Timer Length</string>
+    <string name="time_in_minutes">Time in minutes</string>
+    <string name="room_timer">Room Timer</string>
 </resources>

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -52,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
         //POPULATE REPOSITORY, SET ROOM LIST, AND ADD ROOM LIST TO THE ADAPTER
         repository = new Repository(getApplication());
         List<Room> allRooms = repository.getmAllRooms();
-        final RoomAdapter roomAdapter = new RoomAdapter(this);
-        roomAdapter.setRooms(allRooms);
+        final MainRoomAdapter mainRoomAdapter = new MainRoomAdapter(this);
+        mainRoomAdapter.setRooms(allRooms);
 
         //CHECK IF REPOSITORY IS EMPTY
         if (repository.getmAllPasswords().isEmpty()) {
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         //SET LAYOUT MANAGER AND ADAPTER ON RECYCLER VIEW
         RecyclerView recyclerView = findViewById(R.id.chooseGameRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(roomAdapter);
+        recyclerView.setAdapter(mainRoomAdapter);
 
         //SET TOOLBAR TO ACTIONBAR
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -124,6 +125,12 @@ public class MainActivity extends AppCompatActivity {
         username = loginDialog.findViewById(R.id.username);
         password = loginDialog.findViewById(R.id.password);
         loginDialog.show();
+        password.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                signInButton.callOnClick();
+            }
+            return true;
+        });
 
         if(item.getItemId()==android.R.id.home){
             this.finish();

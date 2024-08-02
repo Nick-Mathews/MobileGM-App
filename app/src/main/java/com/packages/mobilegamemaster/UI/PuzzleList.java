@@ -46,11 +46,15 @@ public class PuzzleList extends AppCompatActivity {
         String roomName = getIntent().getStringExtra("name");
         Room currentRoom = repository.getmRoom(roomID);
         List<Room> allRooms = repository.getmAllRooms();
+        int timer = currentRoom.getRoomTime();
+        String timerText = timer / 60000 + " minutes";
         ProgressBar pgBar = findViewById(R.id.progressBar);
 
-        //SET ROOM NAME
+        //SET ROOM NAME AND TIMER
         TextView roomNameText = findViewById(R.id.roomNameText);
         roomNameText.setText(roomName);
+        TextView timerViewText = findViewById(R.id.timer);
+        timerViewText.setText(timerText);
 
         //GET INDEX OF LAST PUZZLE IN THE ROOM
         int lastIndex = roomPuzzles.size() + 1;
@@ -74,20 +78,28 @@ public class PuzzleList extends AppCompatActivity {
         //DIALOG BUTTONS FOR TIMER LENGTH UPDATE
         Button saveTimerButton = timerDialog.findViewById(R.id.okButton);
         saveTimerButton.setOnClickListener(v-> {
-            if (timerEditText.toString().isEmpty()) {
+            if ((timerEditText.toString().isEmpty())) {
                 Toast msg = Toast.makeText(this, "You must enter a valid timer length", Toast.LENGTH_LONG);
                 msg.show();
             }
             else {
-                int milliTimer = Integer.parseInt(timerEditText.getText().toString()) * 60000;
-                currentRoom.setRoomTime(milliTimer);
-                try {
-                    repository.update(currentRoom);
-                }
-                catch(Exception e) {
-                    throw new RuntimeException(e);
-                }
-                timerDialog.dismiss();
+                new AlertDialog.Builder(this)
+                        .setMessage(R.string.db_dialog_message)
+                        .setNegativeButton(R.string.db_dialog_negative, (dialog, which) -> {})
+                        .setPositiveButton(R.string.db_dialog_positive, (dialog, which) -> {
+                            int milliTimer = Integer.parseInt(timerEditText.getText().toString()) * 60000;
+                            currentRoom.setRoomTime(milliTimer);
+                            try {
+                                repository.update(currentRoom);
+                            }
+                            catch(Exception e) {
+                                throw new RuntimeException(e);
+                            }
+                            String newTimerText = timerEditText.getText().toString() + " minutes";
+                            timerViewText.setText(newTimerText);
+                            timerEditText.setText("");
+                            timerDialog.dismiss();
+                        }).show();
             }
 
         });
@@ -164,43 +176,44 @@ public class PuzzleList extends AppCompatActivity {
         });
 
         Button saveButton = renameDialog.findViewById(R.id.okButton);
-        saveButton.setOnClickListener(v -> new AlertDialog.Builder(this)
-                .setMessage(R.string.db_dialog_message)
-                .setNegativeButton(R.string.db_dialog_negative, (dialog, which) -> {
-                })
-                .setPositiveButton(R.string.db_dialog_positive, (dialog, which) -> {
+        saveButton.setOnClickListener(v -> {
                     saveButton.setEnabled(false);
                     boolean nameFound = false;
-                    String renameText = renameEditText.getText().toString();
+                    String renameText = renameEditText.getText().toString().trim();
                     if (renameText.isEmpty()) {
                         Toast msg = Toast.makeText(PuzzleList.this, "Please enter a name to save", Toast.LENGTH_LONG);
                         msg.show();
-                        renameEditText.setText("");
                         saveButton.setEnabled(true);
-                    }
-                    else {
-                        for (Room room: allRooms) {
+                    } else {
+                        for (Room room : allRooms) {
                             if (renameText.equals(room.getRoomName())) {
                                 nameFound = true;
                                 Toast msg = Toast.makeText(PuzzleList.this, "That name belongs to another room", Toast.LENGTH_LONG);
                                 msg.show();
+                                renameEditText.setText("");
                                 saveButton.setEnabled(true);
+                                break;
                             }
                         }
                         if (!nameFound) {
-                            currentRoom.setRoomName(renameText);
-                            try {
-                                repository.update(currentRoom);
-                            } catch (Exception e) {
-                                throw new RuntimeException(e);
-                            }
-                            roomNameText.setText(renameText);
-                            renameEditText.setText("");
-                            renameDialog.dismiss();
+                            new AlertDialog.Builder(this)
+                                    .setMessage(R.string.db_dialog_message)
+                                    .setNegativeButton(R.string.db_dialog_negative, (dialog, which) -> {
+                                    })
+                                    .setPositiveButton(R.string.db_dialog_positive, (dialog, which) -> {
+                                        currentRoom.setRoomName(renameText);
+                                        try {
+                                            repository.update(currentRoom);
+                                        } catch (Exception e) {
+                                            throw new RuntimeException(e);
+                                        }
+                                        roomNameText.setText(renameText);
+                                        renameEditText.setText("");
+                                        renameDialog.dismiss();
+                                    }).show();
                         }
-
                     }
-                }).show());
+                });
 
         //TAP AND HOLD FUNCTION THAT ACTIVATES RENAME ROOM DIALOG
         roomNameText.setOnLongClickListener(v -> {

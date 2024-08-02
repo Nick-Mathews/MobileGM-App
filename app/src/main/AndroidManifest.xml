@@ -48,7 +48,7 @@
             android:name=".UI.AddRoom"
             android:exported="false" />
         <activity
-            android:name=".UI.RoomPuzzles"
+            android:name=".UI.PlayRoom"
             android:exported="false" />
         <activity
             android:name=".UI.RoomStart"

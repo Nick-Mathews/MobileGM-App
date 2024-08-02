@@ -14,13 +14,13 @@ import com.packages.mobilegamemaster.R;
 
 import java.util.List;
 
-public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
+public class GameLogAdapter extends RecyclerView.Adapter<GameLogAdapter.LogViewHolder> {
     //CREATE LIST OF TIMERS AND INFLATER
     private List<Timer> mTimers;
     private final LayoutInflater mInflater;
 
     //ADAPTER CONSTRUCTOR
-    public LogAdapter(Context context) {
+    public GameLogAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
     }
 

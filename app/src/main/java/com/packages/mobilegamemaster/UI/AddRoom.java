@@ -90,8 +90,8 @@ public class AddRoom extends AppCompatActivity {
             continueButton.setEnabled(false);
             boolean roomFound = false;
             String nameText = String.valueOf(nameTextView.getText());
-            int timeInt = Integer.parseInt(timeTextView.getText().toString());
-            int milliTime = timeInt * 60000;
+            int timer = Integer.parseInt(timeTextView.getText().toString());
+            int milliTime = timer * 60000;
             if (!nameText.isEmpty()) {
                 for (Room room: repository.getmAllRooms()) {
                     if (room.getRoomName().equals(nameText)){

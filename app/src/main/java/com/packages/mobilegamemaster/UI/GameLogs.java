@@ -2,6 +2,7 @@ package com.packages.mobilegamemaster.UI;
 
 import static com.packages.mobilegamemaster.UI.MainActivity.PREFS_NAME;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -54,8 +55,8 @@ public class GameLogs extends AppCompatActivity {
         //POPULATE REPOSITORY AND TIMER LIST; SET TIMER LIST ON ADAPTER
         repository = new Repository(getApplication());
         allTimers = repository.getmAllTimers();
-        final LogAdapter logAdapter = new LogAdapter(this);
-        logAdapter.setmTimers(allTimers);
+        final GameLogAdapter gameLogAdapter = new GameLogAdapter(this);
+        gameLogAdapter.setmTimers(allTimers);
 
         //SET PROGRESS BAR
         pgBar = findViewById(R.id.progressBar);
@@ -85,7 +86,7 @@ public class GameLogs extends AppCompatActivity {
         //SET LAYOUT MANAGER AND ADAPTER ON RECYCLERVIEW
         recyclerView = findViewById(R.id.gameLogRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(logAdapter);
+        recyclerView.setAdapter(gameLogAdapter);
 
         //SET TOOLBAR AS ACTION BAR
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -105,17 +106,17 @@ public class GameLogs extends AppCompatActivity {
             }
             if (!searchTerm.isEmpty()) {
                 if (roomID == -1) {
-                    logAdapter.setmTimers(null);
-                    recyclerView.setAdapter(logAdapter);
+                    gameLogAdapter.setmTimers(null);
+                    recyclerView.setAdapter(gameLogAdapter);
                 } else {
                     roomTimers = repository.getmTimers(roomID);
-                    logAdapter.setmTimers(roomTimers);
-                    recyclerView.setAdapter(logAdapter);
+                    gameLogAdapter.setmTimers(roomTimers);
+                    recyclerView.setAdapter(gameLogAdapter);
                 }
             }
             else {
-                logAdapter.setmTimers(allTimers);
-                recyclerView.setAdapter(logAdapter);
+                gameLogAdapter.setmTimers(allTimers);
+                recyclerView.setAdapter(gameLogAdapter);
             }
             pgBar.setVisibility(View.INVISIBLE);
         });
@@ -147,26 +148,29 @@ public class GameLogs extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         if (item.getItemId() == R.id.delete_logs) {
-            pgBar.setVisibility(View.VISIBLE);
-            for (Timer timer: allTimers) {
-                try {
-                    repository.delete(timer);
-                }
-                catch(Exception e){
-                    throw new RuntimeException(e);
-                }
-            }
-            //REFRESH RECYCLERVIEW AFTER DELETING LOGS
-            allTimers = repository.getmAllTimers();
-            final LogAdapter logAdapter = new LogAdapter(this);
-            logAdapter.setmTimers(allTimers);
+            new AlertDialog.Builder(this)
+                    .setMessage(R.string.db_dialog_message)
+                    .setNegativeButton(R.string.db_dialog_negative, (dialog, which)-> {})
+                    .setPositiveButton(R.string.db_dialog_positive, (dialog, which)-> {
+                        for (Timer timer: allTimers) {
+                            try {
+                                repository.delete(timer);
+                            }
+                            catch(Exception e){
+                                throw new RuntimeException(e);
+                            }
+                        }
+                        //REFRESH RECYCLERVIEW AFTER DELETING LOGS
+                        allTimers = repository.getmAllTimers();
+                        final GameLogAdapter gameLogAdapter = new GameLogAdapter(this);
+                        gameLogAdapter.setmTimers(allTimers);
 
-            //SET LAYOUT MANAGER AND ADAPTER ON RECYCLERVIEW
-            recyclerView = findViewById(R.id.gameLogRecyclerView);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            recyclerView.setAdapter(logAdapter);
+                        //SET LAYOUT MANAGER AND ADAPTER ON RECYCLERVIEW
+                        recyclerView = findViewById(R.id.gameLogRecyclerView);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                        recyclerView.setAdapter(gameLogAdapter);
+                    }).show();
 
-            pgBar.setVisibility(View.INVISIBLE);
             return true;
         }
         if (item.getItemId() == android.R.id.home) {

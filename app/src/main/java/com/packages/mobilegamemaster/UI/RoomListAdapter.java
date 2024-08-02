@@ -16,7 +16,7 @@ import com.packages.mobilegamemaster.R;
 
 import java.util.List;
 
-public class EditRoomAdapter extends RecyclerView.Adapter<EditRoomAdapter.EditViewHolder> {
+public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.EditViewHolder> {
     //CREATE LIST OF ROOMS, CONTEXT AND INFLATER
     private List<Room> mRooms;
     private final Context context;
@@ -24,7 +24,7 @@ public class EditRoomAdapter extends RecyclerView.Adapter<EditRoomAdapter.EditVi
     ProgressBar pgBar;
 
     //ADAPTER CONSTRUCTOR
-    public EditRoomAdapter(Context context, ProgressBar pgBar) {
+    public RoomListAdapter(Context context, ProgressBar pgBar) {
         mInflater = LayoutInflater.from(context);
         this.context = context;
         this.pgBar = pgBar;
@@ -52,13 +52,13 @@ public class EditRoomAdapter extends RecyclerView.Adapter<EditRoomAdapter.EditVi
     }
     @NonNull
     @Override
-    public EditRoomAdapter.EditViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RoomListAdapter.EditViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.edit_list_item, parent, false);
         return new EditViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull EditRoomAdapter.EditViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RoomListAdapter.EditViewHolder holder, int position) {
         if (mRooms != null) {
             Room currentRoom = mRooms.get(position);
             String name = currentRoom.getRoomName();

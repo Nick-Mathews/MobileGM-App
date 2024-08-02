@@ -45,11 +45,9 @@ public class Repository {
     }
     //ALL ROOM ACCESS FUNCTIONS
     public List<Room> getmAllRooms()  {
-        databaseExecutor.execute(()->{
-            mAllRooms=mRoomDAO.getAllRooms();
-        });
+        databaseExecutor.execute(()-> mAllRooms=mRoomDAO.getAllRooms());
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -58,11 +56,9 @@ public class Repository {
     }
 
     public Room getmRoom(int roomID){
-        databaseExecutor.execute(()->{
-            mRoom = mRoomDAO.getRoom(roomID);
-        });
+        databaseExecutor.execute(()-> mRoom = mRoomDAO.getRoom(roomID));
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch(Exception e) {
             throw new RuntimeException(e);
         }
@@ -71,36 +67,30 @@ public class Repository {
         }
 
     public void delete (Room room) throws InterruptedException {
-        databaseExecutor.execute(()->{
-            mRoomDAO.delete(room);
-        });
+        databaseExecutor.execute(()-> mRoomDAO.delete(room));
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             throw new InterruptedException(e.getMessage());
         }
     }
 
     public void insert (Room room) throws InterruptedException {
-        databaseExecutor.execute(()->{
-            mRoomDAO.insert(room);
-        });
+        databaseExecutor.execute(()-> mRoomDAO.insert(room));
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             throw new InterruptedException(e.getMessage());
         }
     }
 
     public void update (Room room) throws InterruptedException {
-        databaseExecutor.execute(()->{
-            mRoomDAO.update(room);
-        });
+        databaseExecutor.execute(()-> mRoomDAO.update(room));
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             throw new InterruptedException(e.getMessage());
         }
@@ -108,12 +98,9 @@ public class Repository {
 
     //ALL PUZZLE ACCESS FUNCTIONS
     public List<Puzzle> getmAllPuzzles(){
-        databaseExecutor.execute(()->{
-            mAllPuzzles=mPuzzleDAO.getAllPuzzles();
-
-        });
+        databaseExecutor.execute(()-> mAllPuzzles=mPuzzleDAO.getAllPuzzles());
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -123,11 +110,9 @@ public class Repository {
     }
 
     public List<Puzzle> getmRoomPuzzles(int roomID){
-        databaseExecutor.execute(()->{
-            mRoomPuzzles = mPuzzleDAO.getRoomPuzzles(roomID);
-        });
+        databaseExecutor.execute(()-> mRoomPuzzles = mPuzzleDAO.getRoomPuzzles(roomID));
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch(InterruptedException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -135,11 +120,9 @@ public class Repository {
     }
 
     public Puzzle getmPuzzle(int puzzleID) {
-        databaseExecutor.execute(()-> {
-            mPuzzle = mPuzzleDAO.getPuzzle(puzzleID);
-        });
+        databaseExecutor.execute(()-> mPuzzle = mPuzzleDAO.getPuzzle(puzzleID));
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch(InterruptedException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -147,47 +130,39 @@ public class Repository {
     }
 
     public void delete (Puzzle puzzle) throws InterruptedException {
-        databaseExecutor.execute(()->{
-            mPuzzleDAO.delete(puzzle);
-        });
+        databaseExecutor.execute(()-> mPuzzleDAO.delete(puzzle));
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             throw new InterruptedException(e.getMessage());
         }
     }
 
     public void insert (Puzzle puzzle) throws InterruptedException{
-        databaseExecutor.execute(()->{
-            mPuzzleDAO.insert(puzzle);
-        });
+        databaseExecutor.execute(()-> mPuzzleDAO.insert(puzzle));
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             throw new InterruptedException(e.getMessage());
         }
     }
 
     public void update (Puzzle puzzle) throws InterruptedException {
-        databaseExecutor.execute(()->{
-            mPuzzleDAO.update(puzzle);
-        });
+        databaseExecutor.execute(()-> mPuzzleDAO.update(puzzle));
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             throw new InterruptedException(e.getMessage());
         }
     }
     //ALL TIMER ACCESS FUNCTIONS
     public List<Timer> getmAllTimers()  {
-        databaseExecutor.execute(()->{
-            mAllTimers=mTimerDAO.getAllTimers();
-        });
+        databaseExecutor.execute(()-> mAllTimers=mTimerDAO.getAllTimers());
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -196,11 +171,9 @@ public class Repository {
     }
 
     public List<Timer> getmTimers(int roomID) {
-        databaseExecutor.execute(()-> {
-            mRoomTimers=mTimerDAO.getTimers(roomID);
-        });
+        databaseExecutor.execute(()-> mRoomTimers=mTimerDAO.getTimers(roomID));
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -208,36 +181,30 @@ public class Repository {
     }
 
     public void delete (Timer timer) throws InterruptedException {
-        databaseExecutor.execute(()->{
-            mTimerDAO.delete(timer);
-        });
+        databaseExecutor.execute(()-> mTimerDAO.delete(timer));
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             throw new InterruptedException(e.getMessage());
         }
     }
 
     public void insert (Timer timer) throws InterruptedException{
-        databaseExecutor.execute(()->{
-            mTimerDAO.insert(timer);
-        });
+        databaseExecutor.execute(()-> mTimerDAO.insert(timer));
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             throw new InterruptedException(e.getMessage());
         }
     }
 
     public void update (Timer timer) throws InterruptedException {
-        databaseExecutor.execute(()->{
-            mTimerDAO.update(timer);
-        });
+        databaseExecutor.execute(()-> mTimerDAO.update(timer));
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             throw new InterruptedException(e.getMessage());
         }
@@ -245,11 +212,9 @@ public class Repository {
 
     //ALL PASSWORD ACCESS FUNCTIONS
     public List<Password> getmAllPasswords()  {
-        databaseExecutor.execute(()->{
-            mAllPasswords=mPasswordDAO.getAllPasswords();
-        });
+        databaseExecutor.execute(()-> mAllPasswords=mPasswordDAO.getAllPasswords());
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -258,11 +223,9 @@ public class Repository {
     }
 
     public Password getmPassword(int passwordID){
-        databaseExecutor.execute(()->{
-            mPassword = mPasswordDAO.getPassword(passwordID);
-        });
+        databaseExecutor.execute(()-> mPassword = mPasswordDAO.getPassword(passwordID));
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch(Exception e) {
             throw new RuntimeException(e);
         }
@@ -271,36 +234,30 @@ public class Repository {
     }
 
     public void delete (Password password) throws InterruptedException {
-        databaseExecutor.execute(()->{
-            mPasswordDAO.delete(password);
-        });
+        databaseExecutor.execute(()-> mPasswordDAO.delete(password));
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             throw new InterruptedException(e.getMessage());
         }
     }
 
     public void insert (Password password) throws InterruptedException {
-        databaseExecutor.execute(()->{
-            mPasswordDAO.insert(password);
-        });
+        databaseExecutor.execute(()-> mPasswordDAO.insert(password));
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             throw new InterruptedException(e.getMessage());
         }
     }
 
     public void update (Password password) throws InterruptedException {
-        databaseExecutor.execute(()->{
-            mPasswordDAO.update(password);
-        });
+        databaseExecutor.execute(()-> mPasswordDAO.update(password));
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             throw new InterruptedException(e.getMessage());
         }

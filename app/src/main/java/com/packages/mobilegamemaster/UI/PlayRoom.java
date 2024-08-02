@@ -29,7 +29,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class RoomPuzzles extends AppCompatActivity {
+public class PlayRoom extends AppCompatActivity {
     //DECLARE REPOSITORY AND GLOBAL VARIABLES
 
     String roomName, startTime, hint;
@@ -57,6 +57,7 @@ public class RoomPuzzles extends AppCompatActivity {
         roomID = getIntent().getIntExtra("id", -1);
         int puzzleNum = getIntent().getIntExtra("puzzle_num", -1);
         int timerLength = getIntent().getIntExtra("timer", -1);
+
 
         //CREATE START TIME STRING
         startTime = timeFormat.format(Calendar.getInstance().getTime());
@@ -116,7 +117,7 @@ public class RoomPuzzles extends AppCompatActivity {
                 if (currentPuzzle.getPuzzleNum() == allPuzzles.size()) {
                     countDownTimer.cancel();
                     Date end = Calendar.getInstance().getTime();
-                    Intent intent = new Intent(RoomPuzzles.this, RoomWin.class);
+                    Intent intent = new Intent(PlayRoom.this, RoomWin.class);
                     intent.putExtra("start_time", startTime);
                     intent.putExtra("name", roomName);
                     intent.putExtra("time_left", countDownTimerView.getText());
@@ -128,7 +129,7 @@ public class RoomPuzzles extends AppCompatActivity {
                 //RUNS WHEN SOLUTION IS CORRECT BUT YOU HAVEN'T REACHED THE LAST PUZZLE
                 else {
                     String msg = "Correct!";
-                    Toast toast = Toast.makeText(RoomPuzzles.this, msg, Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(PlayRoom.this, msg, Toast.LENGTH_LONG);
                     toast.show();
                     hintView.setText("");
 
@@ -147,7 +148,7 @@ public class RoomPuzzles extends AppCompatActivity {
             //RUNS WHEN THE ANSWER IS INCORRECT
             else {
                 String msg = "That answer is incorrect";
-                Toast toast = Toast.makeText(RoomPuzzles.this, msg, Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(PlayRoom.this, msg, Toast.LENGTH_LONG);
                 toast.show();
                 submitButton.setEnabled(true);
             }
@@ -156,42 +157,7 @@ public class RoomPuzzles extends AppCompatActivity {
         //LISTENER THAT RUNS SUBMIT BUTTON ACTION WHEN USER PRESSES ENTER ON KEYBOARD
         solutionTextView.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                String solution = currentPuzzle.getSolution();
-
-                //CHECKS FOR CORRECT SOLUTION
-                if (String.valueOf(solutionTextView.getText()).equals(solution)) {
-                    //RUNS WHEN SOLUTION IS CORRECT AND YOU'VE REACHED THE LAST PUZZLE
-                    if (currentPuzzle.getPuzzleNum() == allPuzzles.size()) {
-                        countDownTimer.cancel();
-                        Date end = Calendar.getInstance().getTime();
-                        Intent intent = new Intent(RoomPuzzles.this, RoomWin.class);
-                        intent.putExtra("start_time", startTime);
-                        intent.putExtra("name", roomName);
-                        intent.putExtra("time_left", countDownTimerView.getText());
-                        intent.putExtra("end_time", timeFormat.format(end));
-                        intent.putExtra("end_date", dateFormat.format(end));
-                        intent.putExtra("id", roomID);
-                        startActivity(intent);
-                    }
-                    //RUNS WHEN SOLUTION IS CORRECT BUT YOU HAVEN'T REACHED THE LAST PUZZLE
-                    else {
-                        String msg = "Correct!";
-                        Toast toast = Toast.makeText(RoomPuzzles.this, msg, Toast.LENGTH_LONG);
-                        toast.show();
-                        hintView.setText("");
-
-                        currentPuzzle.setPuzzleNum(currentPuzzle.getPuzzleNum() + 1);
-                        currentPuzzle.setNudge(allPuzzles.get(currentPuzzle.getPuzzleNum() - 1).getNudge());
-                        currentPuzzle.setHint(allPuzzles.get(currentPuzzle.getPuzzleNum() - 1).getHint());
-                        currentPuzzle.setSolution(allPuzzles.get(currentPuzzle.getPuzzleNum() - 1).getSolution());
-
-                        String nextPuzzleText = "Puzzle " + (currentPuzzle.getPuzzleNum());
-                        puzzleTextView.setText(nextPuzzleText);
-                        solutionTextView.setText("");
-                    }
-
-                }
-
+                submitButton.callOnClick();
             }
             return true;
         });
@@ -205,23 +171,24 @@ public class RoomPuzzles extends AppCompatActivity {
         });
     }
 
-    //FUNCTION THAT CREATES AND RUNS A COUNTDOWN TIMER OF 60 MINUTES, WHICH CALLS ROOM LOSS ACTIVITY WHEN ON FINISH RUNS
+    //FUNCTION THAT CREATES AND RUNS A COUNTDOWN TIMER WHICH CALLS ROOM LOSS ACTIVITY WHEN ON FINISH RUNS
     @NonNull
-    private CountDownTimer getCountDownTimer(int length) {
+    private CountDownTimer getCountDownTimer(long length) {
         NumberFormat f = new DecimalFormat("00");
         CountDownTimer countDownTimer = new CountDownTimer(length, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                long min = (millisUntilFinished / 60000);
+                long hr = (millisUntilFinished / 3600000) % 60;
+                long min = (millisUntilFinished / 60000) % 60;
                 long sec = (millisUntilFinished / 1000) % 60;
-                String timeText = f.format(min) + ":" + f.format(sec);
+                String timeText =f.format(hr) + ":" + f.format(min) + ":" + f.format(sec);
                 countDownTimerView.setText(timeText);
             }
 
             @Override
             public void onFinish() {
                 Date end = Calendar.getInstance().getTime();
-                Intent intent = new Intent(RoomPuzzles.this, RoomLoss.class);
+                Intent intent = new Intent(PlayRoom.this, RoomLoss.class);
                 intent.putExtra("start_time", startTime);
                 intent.putExtra("time_left", countDownTimerView.getText());
                 intent.putExtra("name", roomName);

@@ -47,10 +47,10 @@ public class RoomList extends AppCompatActivity {
 
         //SET ROOM LIST ON ADAPTER; SET LAYOUT MANAGER AND ADAPTER ON RECYCLERVIEW
         RecyclerView recyclerView = findViewById(R.id.roomListRecyclerView);
-        final EditRoomAdapter editRoomAdapter = new EditRoomAdapter(this, pgBar);
-        editRoomAdapter.setRooms(allRooms);
+        final RoomListAdapter roomListAdapter = new RoomListAdapter(this, pgBar);
+        roomListAdapter.setRooms(allRooms);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(editRoomAdapter);
+        recyclerView.setAdapter(roomListAdapter);
 
         //SETUP AND CHECK FOR STARTUP DIALOG
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);

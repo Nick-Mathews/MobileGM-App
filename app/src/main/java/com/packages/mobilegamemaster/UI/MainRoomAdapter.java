@@ -15,14 +15,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder> {
+public class MainRoomAdapter extends RecyclerView.Adapter<MainRoomAdapter.RoomViewHolder> {
     //CREATE LIST OF ROOM, CONTEXT AND INFLATER
     private List<Room> mRooms;
     private final Context context;
     private final LayoutInflater mInflater;
     int position;
 
-    public RoomAdapter(Context context) {
+    public MainRoomAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
         this.context = context;
     }
@@ -47,13 +47,13 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
 
     @NonNull
     @Override
-    public RoomAdapter.RoomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MainRoomAdapter.RoomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.room_list_item, parent, false);
         return new RoomViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RoomAdapter.RoomViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MainRoomAdapter.RoomViewHolder holder, int position) {
         if (mRooms != null) {
             Room currentRoom = mRooms.get(position);
             String name = currentRoom.getRoomName();

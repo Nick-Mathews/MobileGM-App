@@ -93,4 +93,8 @@
     <string name="set_timer_length">Set Timer Length</string>
     <string name="time_in_minutes">Time in minutes</string>
     <string name="room_timer">Room Timer</string>
+    <string name="db_user_delete">Are you sure you want to delete this user?</string>
+    <string name="db_add_user">Are you sure you want to add this user?</string>
+    <string name="db_user_update">Are you sure you want to update the users password?</string>
+    <string name="re_order_icon">Re-order icon</string>
 </resources>

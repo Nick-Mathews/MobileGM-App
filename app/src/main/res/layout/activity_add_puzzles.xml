@@ -194,7 +194,8 @@
                 android:minWidth="225sp"
                 android:maxWidth="488sp"
                 android:gravity="start|top"
-                android:inputType="textMultiLine|textCapSentences"
+                android:inputType="text|textCapSentences"
+                android:maxLines="1"
                 android:textSize="20sp"
 
                 android:textColor="?android:attr/textColorPrimary"/>

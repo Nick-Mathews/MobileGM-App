@@ -2,6 +2,7 @@
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:minWidth="205sp"
     android:orientation="vertical"
     android:layout_gravity="center"
@@ -30,17 +31,24 @@
         android:textSize="20sp"
         />
 
-    <EditText
-        android:id="@+id/password"
-        android:autofillHints="Password"
-        android:inputType="textPassword"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4sp"
-        android:fontFamily="sans-serif"
-        android:hint="@string/password"
-        android:textColor="?android:attr/textColorPrimary"
-        android:textSize="20sp"/>
+        app:endIconMode="password_toggle">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4sp"
+            android:fontFamily="sans-serif"
+            android:inputType="textPassword"
+            android:hint="@string/password"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="20sp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"

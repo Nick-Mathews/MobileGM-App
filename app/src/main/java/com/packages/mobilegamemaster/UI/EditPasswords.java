@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -76,7 +77,7 @@ public class EditPasswords extends AppCompatActivity {
                         String userNameText;
                         String newPasswordText;
                         //CHECK FOR VALID PASSWORD ID
-                        if (passwordID==-1) {
+                        if (passwordID == -1) {
                             Toast msg = Toast.makeText(EditPasswords.this, "Your username is invalid", Toast.LENGTH_LONG);
                             msg.show();
                             saveButton.setEnabled(true);
@@ -84,8 +85,8 @@ public class EditPasswords extends AppCompatActivity {
                         //CHECK PASSWORD ID FOR NEW USER
                         else {
                             if (passwordID == allPasswords.get(allPasswords.size() - 1).getPasswordID() + 1) {
-                                userNameText = String.valueOf(userNameEntry.getText());
-                                newPasswordText = String.valueOf(newPasswordEntry.getText());
+                                userNameText = String.valueOf(userNameEntry.getText()).trim();
+                                newPasswordText = String.valueOf(newPasswordEntry.getText()).trim();
                                 if (userNameText.isEmpty() || newPasswordText.isEmpty()) {
                                     Toast msg = Toast.makeText(EditPasswords.this, "You must enter username and new password before saving", Toast.LENGTH_LONG);
                                     msg.show();
@@ -94,7 +95,7 @@ public class EditPasswords extends AppCompatActivity {
                                 //INSERT NEW USER
                                 else {
                                     new AlertDialog.Builder(this)
-                                            .setMessage(R.string.db_dialog_message)
+                                            .setMessage(R.string.db_add_user)
                                             .setNegativeButton(R.string.db_dialog_negative, (dialog, which) -> saveButton.setEnabled(true))
                                             .setPositiveButton(R.string.db_dialog_positive, (dialog, which) -> {
                                                 pgBar.setVisibility(View.VISIBLE);
@@ -111,9 +112,9 @@ public class EditPasswords extends AppCompatActivity {
                                 }
                                 //CHECK FOR ALL ENTRY FIELDS AND MATCH CURRENT USER PASSWORDS PRIOR TO UPDATE
                             } else {
-                                userNameText = String.valueOf(userNameEntry.getText());
-                                String currentPasswordText = String.valueOf(currentPasswordEntry.getText());
-                                newPasswordText = String.valueOf(newPasswordEntry.getText());
+                                userNameText = String.valueOf(userNameEntry.getText()).trim();
+                                String currentPasswordText = String.valueOf(currentPasswordEntry.getText()).trim();
+                                newPasswordText = String.valueOf(newPasswordEntry.getText()).trim();
                                 if (userNameText.isEmpty() || currentPasswordText.isEmpty() || newPasswordText.isEmpty()) {
                                     Toast msg = Toast.makeText(EditPasswords.this, "You must complete all fields before saving", Toast.LENGTH_LONG);
                                     msg.show();
@@ -121,7 +122,7 @@ public class EditPasswords extends AppCompatActivity {
                                 } else {
                                     if (currentPasswordText.equals(currentPassword.getPassword())) {
                                         new AlertDialog.Builder(this)
-                                                .setMessage(R.string.db_dialog_message)
+                                                .setMessage(R.string.db_user_update)
                                                 .setNegativeButton(R.string.db_dialog_negative, (dialog, which) -> saveButton.setEnabled(true))
                                                 .setPositiveButton(R.string.db_dialog_positive, (dialog, which) -> {
                                                     pgBar.setVisibility(View.VISIBLE);
@@ -161,7 +162,7 @@ public class EditPasswords extends AppCompatActivity {
         //CREATE BUTTON AND LISTENER FOR DELETE USER BUTTON
         Button deleteUserButton = findViewById(R.id.deleteUserButton);
         deleteUserButton.setOnClickListener(v -> new AlertDialog.Builder(this)
-                .setMessage(R.string.db_dialog_message)
+                .setMessage(R.string.db_user_delete)
                 .setNegativeButton(R.string.db_dialog_negative, (dialog, which) -> {
                 })
                 .setPositiveButton(R.string.db_dialog_positive, (dialog, which) -> {
@@ -181,6 +182,7 @@ public class EditPasswords extends AppCompatActivity {
                         startActivity(intent);
                     }
                 }).show());
+
         //HANDLE BACK GESTURE/BUTTON
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
@@ -191,6 +193,13 @@ public class EditPasswords extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
 
+        //SET LISTENER FOR SOFT KEYBOARD DONE ON NEW PASSWORD EDITTEXT
+        newPasswordEntry.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                saveButton.callOnClick();
+            }
+            return true;
+        });
+    }
 }

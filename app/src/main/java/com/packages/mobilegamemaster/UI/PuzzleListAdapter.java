@@ -51,7 +51,7 @@ public class PuzzleListAdapter extends RecyclerView.Adapter<PuzzleListAdapter.Pu
     @NonNull
     @Override
     public PuzzleListAdapter.PuzzleListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.edit_list_item, parent, false);
+        View itemView = mInflater.inflate(R.layout.edit_puzzle_list_item, parent, false);
         return new PuzzleListViewHolder(itemView);
     }
 
@@ -83,6 +83,4 @@ public class PuzzleListAdapter extends RecyclerView.Adapter<PuzzleListAdapter.Pu
         mPuzzles = puzzles;
         notifyDataSetChanged();
     }
-
-
 }

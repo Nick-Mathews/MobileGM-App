@@ -3,6 +3,7 @@ package com.packages.mobilegamemaster.UI;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -225,5 +226,13 @@ public class AddPuzzles extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //SET LISTENER FOR SOFT KEYBOARD DONE FROM SOLUTION EDITTEXT, ACTIVATES NEXT PUZZLE BUTTON
+        solutionEntry.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                addNextButton.callOnClick();
+                }
+            return true;
+            });
     }
 }

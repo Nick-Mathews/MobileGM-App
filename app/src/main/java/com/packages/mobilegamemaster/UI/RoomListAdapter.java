@@ -53,7 +53,7 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.EditVi
     @NonNull
     @Override
     public RoomListAdapter.EditViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.edit_list_item, parent, false);
+        View itemView = mInflater.inflate(R.layout.edit_room_list_item, parent, false);
         return new EditViewHolder(itemView);
     }
 

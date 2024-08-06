@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -40,6 +41,7 @@ public class GameLogs extends AppCompatActivity {
     List<Timer> allTimers, roomTimers;
     RecyclerView recyclerView;
     ProgressBar pgBar;
+    EditText searchEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +54,12 @@ public class GameLogs extends AppCompatActivity {
             return insets;
         });
 
-        //POPULATE REPOSITORY AND TIMER LIST; SET TIMER LIST ON ADAPTER
+        //POPULATE REPOSITORY AND TIMER LIST; SET TIMER LIST ON ADAPTER; SET SEARCH EDITTEXT
         repository = new Repository(getApplication());
         allTimers = repository.getmAllTimers();
         final GameLogAdapter gameLogAdapter = new GameLogAdapter(this);
         gameLogAdapter.setmTimers(allTimers);
+        searchEditText = findViewById(R.id.searchEditText);
 
         //SET PROGRESS BAR
         pgBar = findViewById(R.id.progressBar);
@@ -97,7 +100,6 @@ public class GameLogs extends AppCompatActivity {
         searchButton.setOnClickListener(v -> {
             pgBar.setVisibility(View.VISIBLE);
             int roomID = -1;
-            EditText searchEditText = findViewById(R.id.searchEditText);
             String searchTerm = searchEditText.getText().toString();
             for (Room current: repository.getmAllRooms()) {
                 if (current.getRoomName().toLowerCase().contains(searchTerm.toLowerCase()) && !searchTerm.isEmpty()){
@@ -119,6 +121,14 @@ public class GameLogs extends AppCompatActivity {
                 recyclerView.setAdapter(gameLogAdapter);
             }
             pgBar.setVisibility(View.INVISIBLE);
+        });
+
+        //SET LISTENER FOR SOFT KEYBOARD DONE ON SEARCH BOX
+        searchEditText.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                searchButton.callOnClick();
+            }
+            return true;
         });
 
         //BACK NAVIGATION BUTTON

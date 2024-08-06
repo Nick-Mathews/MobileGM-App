@@ -3,8 +3,10 @@ package com.packages.mobilegamemaster.UI;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -13,10 +15,13 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +30,7 @@ import com.packages.mobilegamemaster.Entities.Room;
 import com.packages.mobilegamemaster.R;
 import com.packages.mobilegamemaster.database.Repository;
 
+import java.util.Collections;
 import java.util.List;
 
 public class PuzzleList extends AppCompatActivity {
@@ -66,6 +72,51 @@ public class PuzzleList extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(puzzleListAdapter);
 
+        //SET ITEM TOUCH HELPER TO RE-ARRANGE PUZZLE ORDER
+        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                int sourcePosition = viewHolder.getAdapterPosition();
+                int targetPosition = target.getAdapterPosition();
+                Collections.swap(roomPuzzles, sourcePosition, targetPosition);
+                puzzleListAdapter.notifyItemMoved(sourcePosition, targetPosition);
+
+                return true;
+            }
+            @Override
+            public void clearView(@NonNull RecyclerView recyclerView, @Nullable RecyclerView.ViewHolder viewHolder) {
+                    int i;
+                    Puzzle roomPuzzle;
+
+                    for (i = 0; i < roomPuzzles.size(); ++i) {
+                        roomPuzzle = roomPuzzles.get(i);
+                        roomPuzzle.setPuzzleNum(i + 1);
+
+                            try {
+                                repository.update(roomPuzzle);
+                            } catch(Exception e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    viewHolder.itemView.setBackgroundColor(Color.parseColor("#00ffffff"));
+                    }
+
+            @Override
+            public void onSelectedChanged(@Nullable RecyclerView.ViewHolder viewHolder, int actionState) {
+                super.onSelectedChanged(viewHolder, actionState);
+                int bGroundColor = Color.parseColor("#99D1D1D1");
+                if (actionState == 2) {
+                    viewHolder.itemView.setBackgroundColor(bGroundColor);
+                }
+            }
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+            }
+        });
+
+        helper.attachToRecyclerView(recyclerView);
+
         //SETUP TIMER DIALOG
         Dialog timerDialog = new Dialog(this);
         timerDialog.setContentView(R.layout.dialog_timer);
@@ -101,7 +152,14 @@ public class PuzzleList extends AppCompatActivity {
                             timerDialog.dismiss();
                         }).show();
             }
+        });
 
+        //SET LISTENER FOR SOFT KEYBOARD DONE FROM TIMER DIALOG
+        timerEditText.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                saveTimerButton.callOnClick();
+            }
+            return true;
         });
 
         Button cancelTimerButton = timerDialog.findViewById(R.id.cancelButton);
@@ -214,6 +272,14 @@ public class PuzzleList extends AppCompatActivity {
                         }
                     }
                 });
+
+        //SET LISTENER FOR SOFT KEYBOARD DONE FROM RENAME DIALOG
+        renameEditText.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                saveButton.callOnClick();
+            }
+            return true;
+        });
 
         //TAP AND HOLD FUNCTION THAT ACTIVATES RENAME ROOM DIALOG
         roomNameText.setOnLongClickListener(v -> {

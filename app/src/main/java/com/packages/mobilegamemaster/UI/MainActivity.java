@@ -125,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
         username = loginDialog.findViewById(R.id.username);
         password = loginDialog.findViewById(R.id.password);
         loginDialog.show();
+
+        //SET LISTENER FOR SOFT KEYBOARD DONE
         password.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 signInButton.callOnClick();

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -89,7 +90,7 @@ public class AddRoom extends AppCompatActivity {
             pgBar.bringToFront();
             continueButton.setEnabled(false);
             boolean roomFound = false;
-            String nameText = String.valueOf(nameTextView.getText());
+            String nameText = String.valueOf(nameTextView.getText()).trim();
             int timer = Integer.parseInt(timeTextView.getText().toString());
             int milliTime = timer * 60000;
             if (!nameText.isEmpty()) {
@@ -131,6 +132,14 @@ public class AddRoom extends AppCompatActivity {
                 pgBar.setVisibility(View.INVISIBLE);
                 continueButton.setEnabled(true);
             }
+        });
+
+        //LISTENER THAT HANDLES SOFT KEYBOARD DONE FROM ROOM TIMER EDITTEXT
+        timeTextView.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                continueButton.callOnClick();
+            }
+            return true;
         });
 
         //HANDLE BACK GESTURE/BUTTON

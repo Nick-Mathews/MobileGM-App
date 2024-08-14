@@ -38,7 +38,7 @@
             android:layout_margin="12sp"
             android:gravity="center"
             android:text="@string/edit_puzzles"
-            android:textSize="32sp"
+            android:textSize="@dimen/large_text"
             android:textStyle="bold"
             android:textColor="?android:attr/textColorPrimary"/>
 

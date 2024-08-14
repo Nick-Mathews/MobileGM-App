@@ -45,7 +45,9 @@ public class PuzzleList extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        //POPULATE REPOSITORY, ROOM ID, PUZZLE LIST, AND ROOM NAME
+        //EXECUTOR SERVICE FOR ASYNCHRONOUS PUZZLE RE-ARRANGING
+
+        //POPULATE REQUIRED VARS AND RETRIEVE INTENT EXTRAS
         Repository repository = new Repository(getApplication());
         int roomID = getIntent().getIntExtra("id", -1);
         final List<Puzzle> roomPuzzles = repository.getmRoomPuzzles(roomID);
@@ -98,15 +100,19 @@ public class PuzzleList extends AppCompatActivity {
                                 throw new RuntimeException(e);
                             }
                         }
+                if (viewHolder != null) {
                     viewHolder.itemView.setBackgroundColor(Color.parseColor("#00ffffff"));
-                    }
+                }
+            }
 
             @Override
             public void onSelectedChanged(@Nullable RecyclerView.ViewHolder viewHolder, int actionState) {
                 super.onSelectedChanged(viewHolder, actionState);
                 int bGroundColor = Color.parseColor("#99D1D1D1");
                 if (actionState == 2) {
-                    viewHolder.itemView.setBackgroundColor(bGroundColor);
+                    if (viewHolder != null) {
+                        viewHolder.itemView.setBackgroundColor(bGroundColor);
+                    }
                 }
             }
             @Override
@@ -130,8 +136,8 @@ public class PuzzleList extends AppCompatActivity {
         Button saveTimerButton = timerDialog.findViewById(R.id.okButton);
         saveTimerButton.setOnClickListener(v-> {
             if ((timerEditText.toString().isEmpty())) {
-                Toast msg = Toast.makeText(this, "You must enter a valid timer length", Toast.LENGTH_LONG);
-                msg.show();
+                Toast.makeText(this, "You must enter a valid timer length", Toast.LENGTH_LONG).show();
+
             }
             else {
                 new AlertDialog.Builder(this)
@@ -239,15 +245,13 @@ public class PuzzleList extends AppCompatActivity {
                     boolean nameFound = false;
                     String renameText = renameEditText.getText().toString().trim();
                     if (renameText.isEmpty()) {
-                        Toast msg = Toast.makeText(PuzzleList.this, "Please enter a name to save", Toast.LENGTH_LONG);
-                        msg.show();
+                        Toast.makeText(PuzzleList.this, "Please enter a name to save", Toast.LENGTH_LONG).show();
                         saveButton.setEnabled(true);
                     } else {
                         for (Room room : allRooms) {
                             if (renameText.equals(room.getRoomName())) {
                                 nameFound = true;
-                                Toast msg = Toast.makeText(PuzzleList.this, "That name belongs to another room", Toast.LENGTH_LONG);
-                                msg.show();
+                                Toast.makeText(PuzzleList.this, "That name belongs to another room", Toast.LENGTH_LONG).show();
                                 renameEditText.setText("");
                                 saveButton.setEnabled(true);
                                 break;

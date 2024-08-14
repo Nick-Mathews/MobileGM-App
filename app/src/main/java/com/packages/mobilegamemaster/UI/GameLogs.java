@@ -159,7 +159,7 @@ public class GameLogs extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         if (item.getItemId() == R.id.delete_logs) {
             new AlertDialog.Builder(this)
-                    .setMessage(R.string.db_dialog_message)
+                    .setMessage(R.string.db_logs_delete)
                     .setNegativeButton(R.string.db_dialog_negative, (dialog, which)-> {})
                     .setPositiveButton(R.string.db_dialog_positive, (dialog, which)-> {
                         for (Timer timer: allTimers) {

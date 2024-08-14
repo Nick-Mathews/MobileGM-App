@@ -60,7 +60,7 @@
     Puzzles include a Nudge, a Hint, and a Solution.</string>
     <string name="edit_room_intro">Edit/Delete Room lets you delete a Room and all of its Puzzles, or simply add or edit a Rooms puzzles.</string>
     <string name="edit_users_intro"> Edit/Delete Users lets you add new users or edit the credentials of existing users.</string>
-    <string name="report_logs_intro">The Game Logs give you a record of statistics for completed rooms. You can search by room name and se the date and
+    <string name="report_logs_intro">The Game Logs give you a record of statistics for completed rooms. You can search by room name and see the date and
     time the room was started and the time remaining at the end.</string>
     <string name="ok">Okay</string>
     <string name="search">Search</string>
@@ -97,4 +97,8 @@
     <string name="db_add_user">Are you sure you want to add this user?</string>
     <string name="db_user_update">Are you sure you want to update the users password?</string>
     <string name="re_order_icon">Re-order icon</string>
+    <string name="db_logs_delete">"Are you sure you want to delete all game logs?"</string>
+    <string name="db_puzzle_save">Are you sure you want to save these changes?</string>
+    <string name="db_puzzle_delete">Are you sure you want to delete this puzzle?</string>
+    <string name="export">Export</string>
 </resources>

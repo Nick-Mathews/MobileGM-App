@@ -128,9 +128,7 @@ public class PlayRoom extends AppCompatActivity {
                 }
                 //RUNS WHEN SOLUTION IS CORRECT BUT YOU HAVEN'T REACHED THE LAST PUZZLE
                 else {
-                    String msg = "Correct!";
-                    Toast toast = Toast.makeText(PlayRoom.this, msg, Toast.LENGTH_LONG);
-                    toast.show();
+                    Toast.makeText(PlayRoom.this, "Correct!", Toast.LENGTH_LONG).show();
                     hintView.setText("");
 
                     currentPuzzle.setPuzzleNum(currentPuzzle.getPuzzleNum()+1);
@@ -147,9 +145,7 @@ public class PlayRoom extends AppCompatActivity {
             }
             //RUNS WHEN THE ANSWER IS INCORRECT
             else {
-                String msg = "That answer is incorrect";
-                Toast toast = Toast.makeText(PlayRoom.this, msg, Toast.LENGTH_LONG);
-                toast.show();
+                Toast.makeText(PlayRoom.this, "That answer is incorrect", Toast.LENGTH_LONG).show();
                 submitButton.setEnabled(true);
             }
         });

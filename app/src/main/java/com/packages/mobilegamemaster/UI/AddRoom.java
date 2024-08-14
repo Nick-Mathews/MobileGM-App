@@ -120,15 +120,14 @@ public class AddRoom extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else {
-                    Toast msg = Toast.makeText(AddRoom.this, "That name matches an existing room", Toast.LENGTH_LONG);
-                    msg.show();
+                    Toast.makeText(AddRoom.this, "That name matches an existing room", Toast.LENGTH_LONG).show();
                     pgBar.setVisibility(View.INVISIBLE);
                     continueButton.setEnabled(true);
                 }
             }
             else{
-                Toast toast = Toast.makeText(AddRoom.this, "You must enter a valid room name to continue", Toast.LENGTH_LONG);
-                toast.show();
+                Toast.makeText(AddRoom.this, "You must enter a valid room name to continue", Toast.LENGTH_LONG).show();
+
                 pgBar.setVisibility(View.INVISIBLE);
                 continueButton.setEnabled(true);
             }

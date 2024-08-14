@@ -101,8 +101,7 @@ public class AdminMenu extends AppCompatActivity {
             editor.putBoolean("dialog5Checked", false);
             editor.apply();
             pgBar.setVisibility(View.INVISIBLE);
-            Toast msg = Toast.makeText(this, "Tutorial pop-ups enabled", Toast.LENGTH_LONG);
-            msg.show();
+            Toast.makeText(this, "Tutorial pop-ups enabled", Toast.LENGTH_LONG).show();
         });
 
         //HANDLE BACK GESTURE/BUTTON

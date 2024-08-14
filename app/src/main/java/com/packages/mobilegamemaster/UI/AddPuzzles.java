@@ -98,8 +98,8 @@ public class AddPuzzles extends AppCompatActivity {
             finishButton.setEnabled(false);
             boolean found = false;
             if (roomID == -1) {
-                Toast msg = Toast.makeText(AddPuzzles.this, "Your room ID is invalid", Toast.LENGTH_LONG);
-                msg.show();
+                Toast.makeText(AddPuzzles.this, "Your room ID is invalid", Toast.LENGTH_LONG).show();
+
                 finishButton.setEnabled(true);
                 pgBar.setVisibility(View.INVISIBLE);
             }
@@ -109,8 +109,8 @@ public class AddPuzzles extends AppCompatActivity {
                 String hintText = String.valueOf(hintEntry.getText());
                 String solutionText = String.valueOf(solutionEntry.getText());
                 if ((nudgeText.isEmpty()) || (hintText.isEmpty()) || (solutionText.isEmpty()) || (nameText.isEmpty())) {
-                    Toast msg = Toast.makeText(AddPuzzles.this, "You must complete all fields before saving", Toast.LENGTH_LONG);
-                    msg.show();
+                    Toast.makeText(AddPuzzles.this, "You must complete all fields before saving", Toast.LENGTH_LONG).show();
+
                     finishButton.setEnabled(true);
                     pgBar.setVisibility(View.INVISIBLE);
                 } else {
@@ -138,8 +138,8 @@ public class AddPuzzles extends AppCompatActivity {
                         startActivity(intent);
                     }
                     else {
-                        Toast msg = Toast.makeText(this, "Puzzle name matches an existing puzzle", Toast.LENGTH_LONG);
-                        msg.show();
+                        Toast.makeText(this, "Puzzle name matches an existing puzzle", Toast.LENGTH_LONG).show();
+
                         pgBar.setVisibility(View.INVISIBLE);
                         finishButton.setEnabled(true);
                     }
@@ -155,8 +155,8 @@ public class AddPuzzles extends AppCompatActivity {
                     addNextButton.setEnabled(false);
                     boolean found = false;
                     if (roomID == -1) {
-                        Toast msg = Toast.makeText(AddPuzzles.this, "Your room ID is invalid", Toast.LENGTH_LONG);
-                        msg.show();
+                        Toast.makeText(AddPuzzles.this, "Your room ID is invalid", Toast.LENGTH_LONG).show();
+
                         addNextButton.setEnabled(true);
                         pgBar.setVisibility(View.INVISIBLE);
                     } else {
@@ -165,8 +165,7 @@ public class AddPuzzles extends AppCompatActivity {
                         String hintText = String.valueOf(hintEntry.getText());
                         String solutionText = String.valueOf(solutionEntry.getText());
                         if ((nudgeText.isEmpty()) || (hintText.isEmpty()) || (solutionText.isEmpty()) || (nameText.isEmpty())) {
-                            Toast msg = Toast.makeText(AddPuzzles.this, "You must complete all fields before saving", Toast.LENGTH_LONG);
-                            msg.show();
+                            Toast.makeText(AddPuzzles.this, "You must complete all fields before saving", Toast.LENGTH_LONG).show();
                             addNextButton.setEnabled(true);
                             pgBar.setVisibility(View.INVISIBLE);
                         } else {
@@ -200,8 +199,7 @@ public class AddPuzzles extends AppCompatActivity {
                                 intent.putExtra("puzzle_num", nextPuzzleNum);
                                 startActivity(intent);
                             } else {
-                                Toast msg = Toast.makeText(this, "Puzzle name matches an existing puzzle", Toast.LENGTH_LONG);
-                                msg.show();
+                                Toast.makeText(this, "Puzzle name matches an existing puzzle", Toast.LENGTH_LONG).show();
                                 pgBar.setVisibility(View.INVISIBLE);
                                 addNextButton.setEnabled(true);
                             }

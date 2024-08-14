@@ -55,8 +55,8 @@ public class RoomStart extends AppCompatActivity {
         startButton.setOnClickListener(v -> {
             pgBar.setVisibility(View.VISIBLE);
             if(repository.getmRoomPuzzles(roomID).isEmpty()){
-                Toast msg = Toast.makeText(this, "Room must contain at least 1 puzzle", Toast.LENGTH_LONG);
-                msg.show();
+                Toast.makeText(this, "Room must contain at least 1 puzzle", Toast.LENGTH_LONG).show();
+
                 pgBar.setVisibility(View.INVISIBLE);
             }
             else {

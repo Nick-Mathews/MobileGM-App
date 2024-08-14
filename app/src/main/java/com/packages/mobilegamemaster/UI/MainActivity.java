@@ -159,8 +159,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //DISPLAY TOAST DIALOG IF PASSWORD IS NOT FOUND
                 if (!found) {
-                    Toast msg = Toast.makeText(MainActivity.this, "User or password incorrect", Toast.LENGTH_LONG);
-                    msg.show();
+                    Toast.makeText(MainActivity.this, "User or password incorrect", Toast.LENGTH_LONG).show();
                     pgBar.setVisibility(View.INVISIBLE);
                 }
                 username.setText("");

@@ -78,8 +78,7 @@ public class EditPuzzles extends AppCompatActivity {
         Button saveButton = findViewById(R.id.savePuzzleButton);
         saveButton.setOnClickListener(v -> {
                         if (roomID == -1) {
-                            Toast msg = Toast.makeText(EditPuzzles.this, "Your room ID is invalid", Toast.LENGTH_LONG);
-                            msg.show();
+                            Toast.makeText(EditPuzzles.this, "Your room ID is invalid", Toast.LENGTH_LONG).show();
                         }
                         else {
                             String nameText = String.valueOf(nameEntry.getText());
@@ -87,12 +86,11 @@ public class EditPuzzles extends AppCompatActivity {
                             String hintText1 = String.valueOf(hintEntry.getText());
                             String solutionText1 = String.valueOf(solutionEntry.getText());
                             if ((nudgeText1.isEmpty()) || (hintText1.isEmpty()) || (solutionText1.isEmpty()) || (nameText.isEmpty())) {
-                                Toast msg = Toast.makeText(EditPuzzles.this, "You must complete all fields before saving", Toast.LENGTH_LONG);
-                                msg.show();
+                                Toast.makeText(EditPuzzles.this, "You must complete all fields before saving", Toast.LENGTH_LONG).show();
                                 pgBar.setVisibility(View.INVISIBLE);
                             } else {
                                 new AlertDialog.Builder(this)
-                                        .setMessage(R.string.db_dialog_message)
+                                        .setMessage(R.string.db_puzzle_save)
                                         .setPositiveButton(R.string.db_dialog_positive, (dialog, which) -> {
                                             pgBar.setVisibility(View.VISIBLE);
                                             pgBar.bringToFront();
@@ -132,7 +130,7 @@ public class EditPuzzles extends AppCompatActivity {
         //CREATE BUTTON AND LISTENER FOR DELETE PUZZLE BUTTON
         Button deletePuzzleButton = findViewById(R.id.deletePuzzleButton);
         deletePuzzleButton.setOnClickListener(v -> new AlertDialog.Builder(this).
-                setMessage(R.string.db_dialog_message)
+                setMessage(R.string.db_puzzle_delete)
                 .setPositiveButton(R.string.db_dialog_positive, (dialog, which) -> {
                     pgBar.setVisibility(View.VISIBLE);
                     pgBar.bringToFront();

@@ -61,6 +61,7 @@ public class EditPasswords extends AppCompatActivity {
             userNameView = findViewById(R.id.userNameText);
             userNameView.setText(userName);
             }
+        //userNameView.setTextSize(getResources().getDimension(R.dimen.small_text));
 
             //CREATE CONTAINERS FOR THE EDITTEXT ENTRIES, POPULATE WITH CURRENT NAME
             EditText userNameEntry = findViewById(R.id.editUsernameText);
@@ -78,8 +79,7 @@ public class EditPasswords extends AppCompatActivity {
                         String newPasswordText;
                         //CHECK FOR VALID PASSWORD ID
                         if (passwordID == -1) {
-                            Toast msg = Toast.makeText(EditPasswords.this, "Your username is invalid", Toast.LENGTH_LONG);
-                            msg.show();
+                            Toast.makeText(EditPasswords.this, "Your username is invalid", Toast.LENGTH_LONG).show();
                             saveButton.setEnabled(true);
                         }
                         //CHECK PASSWORD ID FOR NEW USER
@@ -88,8 +88,7 @@ public class EditPasswords extends AppCompatActivity {
                                 userNameText = String.valueOf(userNameEntry.getText()).trim();
                                 newPasswordText = String.valueOf(newPasswordEntry.getText()).trim();
                                 if (userNameText.isEmpty() || newPasswordText.isEmpty()) {
-                                    Toast msg = Toast.makeText(EditPasswords.this, "You must enter username and new password before saving", Toast.LENGTH_LONG);
-                                    msg.show();
+                                    Toast.makeText(EditPasswords.this, "You must enter username and new password before saving", Toast.LENGTH_LONG).show();
                                     saveButton.setEnabled(true);
                                 }
                                 //INSERT NEW USER
@@ -116,8 +115,7 @@ public class EditPasswords extends AppCompatActivity {
                                 String currentPasswordText = String.valueOf(currentPasswordEntry.getText()).trim();
                                 newPasswordText = String.valueOf(newPasswordEntry.getText()).trim();
                                 if (userNameText.isEmpty() || currentPasswordText.isEmpty() || newPasswordText.isEmpty()) {
-                                    Toast msg = Toast.makeText(EditPasswords.this, "You must complete all fields before saving", Toast.LENGTH_LONG);
-                                    msg.show();
+                                    Toast.makeText(EditPasswords.this, "You must complete all fields before saving", Toast.LENGTH_LONG).show();
                                     saveButton.setEnabled(true);
                                 } else {
                                     if (currentPasswordText.equals(currentPassword.getPassword())) {
@@ -139,8 +137,7 @@ public class EditPasswords extends AppCompatActivity {
                                                 }).show();
 
                                     } else {
-                                        Toast msg = Toast.makeText(EditPasswords.this, "You must enter the current password correctly", Toast.LENGTH_LONG);
-                                        msg.show();
+                                        Toast.makeText(EditPasswords.this, "You must enter the current password correctly", Toast.LENGTH_LONG).show();
                                         saveButton.setEnabled(true);
 
                                     }

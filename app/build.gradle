@@ -3,15 +3,15 @@ plugins {
 }
 
 android {
-    namespace 'com.packages.mobilegamemaster'
+    namespace 'com.packages.mobilegamemasterapp'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.packages.mobilegamemaster"
+        applicationId "com.packages.mobilegamemasterapp"
         minSdk 26
         targetSdk 34
-        versionCode 5
-        versionName "1.4"
+        versionCode 1
+        versionName "0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
